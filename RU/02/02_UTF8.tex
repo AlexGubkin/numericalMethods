@@ -1,0 +1,840 @@
+\documentclass[12pt,xcolor=pst,aspectratio=169]{beamer}
+
+\usepackage{etex}
+
+\usetheme{Boadilla}
+\usecolortheme{wolverine}
+\setbeamercovered{transparent}
+\setbeamercolor{block body}{bg=yellow}
+
+\usepackage[utf8]{inputenc}
+\usepackage[english,russian]{babel}
+\usepackage[OT1]{fontenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\usepackage[3D]{movie15}
+\usepackage{animate}
+\usepackage{ragged2e}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{pst-all}
+
+\usepackage{tikz}
+\usetikzlibrary{
+	mindmap,
+	arrows, % стрелки
+	shapes.misc, % фигуры
+	chains, % цепочки
+	positioning, % позиционирование элементов
+	scopes, % создание дополнительных веток
+	shadows % тени
+	}
+
+\graphicspath{{pic/}}
+
+\author{\textbf{Губкин А.С.}}
+
+\title[Численные методы в физике]{Численные методы в физике}
+
+\logo{\includegraphics[width=0.1\linewidth]{LOGO_2.EPS}}
+
+\institute[ТюмФ ИТПМ СО РАН]{Тюменский филиал Института теоретической и прикладной механики\\ им. С. А. Христиановича СО РАН, г. Тюмень}
+
+\date{6 октября 2015 г.}
+
+\begin{document}
+
+\lstset{ %
+	language=[ANSI]C++,                 % выбор языка для подсветки (здесь это С++)
+	keywordstyle=\color{blue},
+	commentstyle=\color{gray},
+	basicstyle=\scriptsize,
+%basicstyle=\small\sffamily, % размер и начертание шрифта для подсветки кода
+	numbers=left,               % где поставить нумерацию строк (слева\справа)
+	numberstyle=\tiny,           % размер шрифта для номеров строк
+%stepnumber=1,                   % размер шага между двумя номерами строк
+	numbersep=4pt,                % как далеко отстоят номера строк от подсвечиваемого кода
+%backgroundcolor=\color{white}, % цвет фона подсветки - используем \usepackage{color}
+	showspaces=false,            % показывать или нет пробелы специальными отступами
+	showstringspaces=false,      % показывать или нет пробелы в строках
+	showtabs=false,             % показывать или нет табуляцию в строках
+	frame=single,              % рисовать рамку вокруг кода
+%tabsize=2,                 % размер табуляции по умолчанию равен 2 пробелам
+	captionpos=t,              % позиция заголовка вверху [t] или внизу [b] 
+	breaklines=true,           % автоматически переносить строки (да\нет)
+	breakatwhitespace=true, % переносить строки только если есть пробел
+	escapeinside={\%*}{*)}   % если нужно добавить комментарии в коде
+}
+
+%SLIDE #
+\begin{frame}
+
+	\transdissolve[duration=0.1]
+	\titlepage
+
+\end{frame}
+
+%SLIDE #
+\begin{frame}{Введение}
+
+	\transdissolve[duration=0.1]
+	\justifying
+	\large
+
+	Математическое описанее многих физических процессов приводит к дифференциальным, интегральным или к интегро-дифференциальным уравнениям, аналитическое решение которых, в большинстве случаев, получить невозможно.\\
+
+	\pause
+
+	В этом случае на помощь исследователю приходят различные \textbf{численные методы}, которые позволяют получить \textbf{приближенное решение} рассматриваемой задачи.
+
+\end{frame}
+
+
+%SLIDE #
+\begin{frame}{Вычислительная математика}
+
+	\transdissolve[duration=0.1]
+	\justifying
+	\large
+
+	\textbf{Вычислительная математика} -- раздел математики, включающий круг вопросов, связанных с производством разнообразных вычислений. В более узком понимании вычислительная математика -- \textbf{теория численных методов} решения типовых математических задач. Современная вычислительная математика включает в круг своих проблем изучение особенностей вычисления с применением компьютеров.
+
+\end{frame}
+
+%SLIDE #
+\begin{frame}{Немного истории}
+
+	\transdissolve[duration=0.1]
+	\justifying
+	\large
+
+	1917 г. Первая попытка Л.Ф. Ричардсона предсказать погоду путем численного решения (вручную!) уравнения в частных производных.\\
+	«Пока что я платил за расчет одного координатного узла лапласиана по расценке $n/18$ пенсов, где n -- число цифр, с которыми производятся вычисления. Основная ошибка вычислителей состояла в том, что они путали знаки «плюс» и «минус». Что касается скорости расчетов, то один из самых быстрых работников рассчитывал за неделю в среднем 2000 узлов лапласиана с трехзначными числами; ошибочные расчеты не оплачивались.»
+
+\end{frame}
+
+%SLIDE #
+\begin{frame}{Основные способы пространственной дискретизации}
+
+	\transdissolve[duration=0.1]
+	\justifying
+	\large
+
+	\begin{center}
+		\tikzstyle{root concept}+=[concept color=blue!80,minimum size=3.5cm]
+		\tikz[mindmap]
+			\node [concept] {Дискретизация по пространству}
+				child[concept color=red, grow=20, minimum size=2cm] {node[concept] at (0,0) {Метод конечных разностей (FDM)}}
+				child[concept color=orange, grow=0, minimum size=2cm] {node[concept] at (2,0) {Метод конечных объемов (FVM)}}
+				child[concept color=green, grow=-20, minimum size=2cm] {node[concept] at (0,0) {Метод конечных элементов (FEM)}};
+	\end{center}
+
+\end{frame}
+
+%SLIDE #
+\begin{frame}{Метод конечных разностей (Finite Difference Method)}
+
+	\transdissolve[duration=0.1]
+	\justifying
+	\large
+
+	Искомые величины -- значения переменных в узлах конечноразностной сетки:
+
+	\[
+		\omega_{h, \: \tau} = \left\lbrace x_{i} = i h, \: i = \overline{0, N_{h}}; \: t^{n} = n \tau, \: n = \overline{0, N_{t}} \right\rbrace
+	\]
+
+	\begin{center}
+		\psset{xunit=1cm,yunit=1cm,algebraic=true}
+		\begin{pspicture}(0,0)(6,4)
+			\psgrid[griddots=0, gridwidth=0pt, gridcolor=gray, gridlabels=0pt, subgriddiv=0, subgriddots=0, subgridcolor=gray](0,0)(0,0)(6,4)
+			\psaxes[Dx=10, Dy=10, subticks=0, labelFontSize=\scriptscriptstyle]{->}(0,0)(0,0)(6,4)[узлы,0][$u$,90]
+			\uput[-90](1,0){\scriptsize $i - 2$}
+			\uput[-90](2,0){\scriptsize $i - 1$}
+			\uput[-90](3,0){\scriptsize $i$}
+			\uput[-90](4,0){\scriptsize $i + 1$}
+			\uput[-90](5,0){\scriptsize $i + 2$}
+
+			\uput[90](1,1){$u_{i - 2}$}
+			\uput[90](2,2.5){$u_{i - 1}$}
+			\uput[90](3,3){$u_{i}$}
+			\uput[90](4,2.5){$u_{i + 1}$}
+			\uput[90](5,1.5){$u_{i + 2}$}
+
+			\psline[linewidth=2pt, linecolor=blue]{-o}(1,0)(1,1)
+			\psline[linewidth=2pt, linecolor=blue]{-o}(2,0)(2,2.5)
+			\psline[linewidth=2pt, linecolor=blue]{-o}(3,0)(3,3)
+			\psline[linewidth=2pt, linecolor=blue]{-o}(4,0)(4,2.5)
+			\psline[linewidth=2pt, linecolor=blue]{-o}(5,0)(5,1.5)
+		\end{pspicture}
+	\end{center}
+
+\end{frame}
+
+%SLIDE #
+\begin{frame}{Пример дискретизации}
+
+	\transdissolve[duration=0.1]
+	\justifying
+	\large
+
+	\[
+		\begin{split}
+			&\frac{\partial u}{\partial t} = \frac{\partial^{2} u}{\partial x^{2}} \Rightarrow
+			\begin{cases}
+				&\frac{\partial u}{\partial t} = \frac{u^{n + 1}_{j} - u^{n}_{j}}{\vartriangle t}; \\
+				&\frac{\partial^{2} u}{\partial x^{2}} = \frac{u^{n}_{j + 1} - 2 u^{n}_{j} + u^{n}_{j - 1}}{\vartriangle x^{2}};
+			\end{cases} \Rightarrow \\
+			&\Rightarrow \frac{u^{n + 1}_{j} - u^{n}_{j}}{\vartriangle t} = \frac{u^{n}_{j + 1} - 2 u^{n}_{j} + u^{n}_{j - 1}}{\vartriangle x^{2}}.
+		\end{split}
+	\]
+
+\end{frame}
+
+%SLIDE #
+\begin{frame}{Шаблон разностной схемы}
+
+	\transdissolve[duration=0.1]
+	\justifying
+	\large
+
+	\begin{block}{Определение}
+		\justifying
+		\textbf{Шаблон} -- это мнемоническая диаграмма, которая указывает способ образования разностной схемы, показывая точки разностной сетки, участвующие в аппроксимации.
+	\end{block}
+ 
+\end{frame}
+
+%SLIDE #
+\begin{frame}{Пример шаблона}
+
+	\transdissolve[duration=0.1]
+	\justifying
+	\large
+
+	\[
+		u_{t} + a u_{x} = 0 \Rightarrow
+			\begin{cases}
+				&\frac{u^{n + 1}_{i} - u^{n}_{i}}{\Delta t} + a \frac{u^{n}_{i} - u^{n}_{i - 1}}{\Delta x} = 0, \quad a > 0, \\
+				&\frac{u^{n + 1}_{i} - u^{n}_{i}}{\Delta t} + a \frac{u^{n}_{i + 1} - u^{n}_{i - 1}}{\Delta x} = 0, \quad a > 0, \\
+				&\frac{u^{n + 1}_{i} - u^{n}_{i}}{\Delta t} + a \frac{u^{n}_{i + 1} - u^{n}_{i}}{\Delta x} = 0, \quad a > 0.
+			\end{cases}
+	\]
+
+	\begin{center}
+		\psset{xunit=1cm,yunit=1cm,algebraic=true}
+		\begin{pspicture}(0,0)(8,3)
+			\psgrid[griddots=20, gridwidth=0pt, gridcolor=gray, gridlabels=0pt, subgriddiv=1, subgriddots=20, subgridcolor=gray](0,0)(0,0)(8,3)
+			\psaxes[Dx=1, Dy=1, subticks=1, labelFontSize=\scriptscriptstyle]{-}(0,0)(0,0)(8,3)[$N_{x}$,0][$N_{t}$,90]
+
+			\psline[linewidth=2pt, linecolor=red]{o-o}(1,1)(2,1)
+			\psline[linewidth=2pt, linecolor=red]{o-o}(2,1)(2,2)
+			\uput[-90](1,1){\scriptsize $(i - 1, n)$}
+			\uput[-90](2,1){\scriptsize $(i, n)$}
+			\uput[90](2,2){\scriptsize $(i, n + 1)$}
+
+			\psline[linewidth=2pt, linecolor=red]{o-o}(3,1)(4,1)
+			\psline[linewidth=2pt, linecolor=red]{o-o}(4,1)(5,1)
+			\psline[linewidth=2pt, linecolor=red]{o-o}(4,1)(4,2)
+			\uput[-90](3,1){\scriptsize $(i - 1, n)$}
+			\uput[-90](4,1){\scriptsize $(i, n)$}
+			\uput[-90](5,1){\scriptsize $(i + 1, n)$}
+			\uput[90](4,2){\scriptsize $(i, n + 1)$}
+
+			\psline[linewidth=2pt, linecolor=red]{o-o}(6,1)(7,1)
+			\psline[linewidth=2pt, linecolor=red]{o-o}(6,1)(6,2)
+			\uput[-90](6,1){\scriptsize $(i, n)$}
+			\uput[-90](7,1){\scriptsize $(i + 1, n)$}
+			\uput[90](6,2){\scriptsize $(i, n + 1)$}
+
+		\end{pspicture}
+	\end{center}
+ 
+\end{frame}
+
+%SLIDE #
+\begin{frame}{Шаблон в общем одномерном случае}
+
+	\transdissolve[duration=0.1]
+	\justifying
+	\large
+
+	\begin{center}
+		\psset{xunit=1cm,yunit=1cm,algebraic=true}
+		\begin{pspicture}(0,0)(8,3)
+			\psgrid[griddots=20, gridwidth=0pt, gridcolor=gray, gridlabels=0pt, subgriddiv=1, subgriddots=20, subgridcolor=gray](0,0)(0,0)(8,3)
+			\psaxes[Dx=1, Dy=1, subticks=1, labelFontSize=\scriptscriptstyle]{-}(0,0)(0,0)(8,3)[$N_{x}$,0][$N_{t}$,90]
+
+			\psline[linewidth=2pt, linecolor=red]{o-o}(1,1)(2,1)
+			\psline[linewidth=2pt, linecolor=red]{o-o}(2,1)(3,1)
+			\psline[linewidth=2pt, linecolor=red]{o-o}(3,1)(4,1)
+			\psline[linewidth=2pt, linecolor=red]{o-o}(4,1)(5,1)
+			\psline[linewidth=2pt, linecolor=red]{o-o}(5,1)(6,1)
+			\psline[linewidth=2pt, linecolor=red]{o-o}(6,1)(7,1)
+			\psline[linewidth=2pt, linecolor=red]{o-o}(4,1)(4,2)
+			\uput[-90](1,1){\scriptsize $(i - \xi, n)$}
+			\uput[-90](2,1){\scriptsize $\ldots$}
+			\uput[-90](3,1){\scriptsize $(i - 1, n)$}
+			\uput[-90](4,1){\scriptsize $(i, n)$}
+			\uput[-90](5,1){\scriptsize $(i + 1, n)$}
+			\uput[-90](6,1){\scriptsize $\ldots$}
+			\uput[-90](7,1){\scriptsize $(i + \eta, n)$}
+			\uput[90](4,2){\scriptsize $i, n + 1$}
+
+		\end{pspicture}
+	\end{center}
+ 
+\end{frame}
+
+%SLIDE #
+\begin{frame}{Метод конечных объемов (Finite Volume Method)}
+
+	\transdissolve[duration=0.1]
+	\justifying
+	\large
+
+	Искомые величины -- средние по некоторым объемам, ячейкам расчетной сетки.
+
+	\begin{center}
+		\psset{xunit=1cm,yunit=1cm,algebraic=true}
+		\begin{pspicture}(0,0)(6,4)
+			\psgrid[griddots=0, gridwidth=0pt, gridcolor=gray, gridlabels=0pt, subgriddiv=0, subgriddots=0, subgridcolor=gray](0,0)(0,0)(6,4)
+			\psaxes[Dx=10, Dy=10, subticks=0, labelFontSize=\scriptscriptstyle]{->}(0,0)(0,0)(6,4)[сетка,0][$u$,90]
+			\uput[-90]{-45}(0.5,0){\scriptsize $i - \frac{5}{2}$}
+			\uput[-90]{-45}(1,0){\scriptsize $i - 2$}
+			\uput[-90]{-45}(1.5,0){\scriptsize $i - \frac{3}{2}$}
+			\uput[-90]{-45}(2,0){\scriptsize $i - 1$}
+			\uput[-90]{-45}(2.5,0){\scriptsize $i - \frac{1}{2}$}
+			\uput[-90]{-45}(3,0){\scriptsize $i$}
+			\uput[-90]{-45}(3.5,0){\scriptsize $i + \frac{1}{2}$}
+			\uput[-90]{-45}(4,0){\scriptsize $i + 1$}
+			\uput[-90]{-45}(4.5,0){\scriptsize $i + \frac{3}{2}$}
+			\uput[-90]{-45}(5,0){\scriptsize $i + 2$}
+			\uput[-90]{-45}(5.5,0){\scriptsize $i + \frac{5}{2}$}
+
+			\uput[90](1,1){$u_{i - 2}$}
+			\uput[90](2,2.5){$u_{i - 1}$}
+			\uput[90](3,3){$u_{i}$}
+			\uput[90](4,2.5){$u_{i + 1}$}
+			\uput[90](5,1.5){$u_{i + 2}$}
+
+			\psline[linewidth=2pt, linecolor=blue]{*}(1,1)(1,1)
+			\psline[linewidth=2pt, linecolor=blue]{*}(2,2.5)(2,2.5)
+			\psline[linewidth=2pt, linecolor=blue]{*}(3,3)(3,3)
+			\psline[linewidth=2pt, linecolor=blue]{*}(4,2.5)(4,2.5)
+			\psline[linewidth=2pt, linecolor=blue]{*}(5,1.5)(5,1.5)
+
+			\psline[linewidth=1pt, linecolor=black]{-}(0.5,0)(0.5,1)
+			\psline[linewidth=1pt, linecolor=black]{-}(1.5,0)(1.5,2.5)
+			\psline[linewidth=1pt, linecolor=black]{-}(2.5,0)(2.5,3)
+			\psline[linewidth=1pt, linecolor=black]{-}(3.5,0)(3.5,3)
+			\psline[linewidth=1pt, linecolor=black]{-}(4.5,0)(4.5,2.5)
+			\psline[linewidth=1pt, linecolor=black]{-}(5.5,0)(5.5,1.5)
+
+			\psline[linewidth=1pt, linecolor=black]{-}(0.5,1)(1.5,1)
+			\psline[linewidth=1pt, linecolor=black]{-}(1.5,2.5)(2.5,2.5)
+			\psline[linewidth=1pt, linecolor=black]{-}(2.5,3)(3.5,3)
+			\psline[linewidth=1pt, linecolor=black]{-}(3.5,2.5)(4.5,2.5)
+			\psline[linewidth=1pt, linecolor=black]{-}(4.5,1.5)(5.5,1.5)
+		\end{pspicture}
+	\end{center}
+
+\end{frame}
+
+%SLIDE #
+\begin{frame}{Метод конечных объемов (Finite Volume Method)}
+
+	\transdissolve[duration=0.1]
+	\justifying
+	\large
+
+	\[
+		\frac{\partial \vec{s}}{\partial t} + \vec{\nabla} \cdot f (\vec{s}) = 0.
+	\]
+	
+	\[
+		\begin{split}
+			&\frac{\partial \vec{s}}{\partial t} + \vec{\nabla} \cdot f (\vec{s}) = 0 \Rightarrow
+			\int_{v_{i}} \frac{\partial \vec{s}}{\partial t} d v + \int_{v_{i}} \vec{\nabla} \cdot f (\vec{s}) d v = 0 \Rightarrow \\
+			&v_{i} \frac{\partial \tilde{\vec{s}}_{i}}{\partial t} + \int_{\sigma_{i}} f (\vec{s}) \cdot \vec{n} d \sigma = 0 \Rightarrow
+			\frac{\partial \tilde{\vec{s}}_{i}}{\partial t} + \frac{1}{v_{i}} \sum_{\sigma_{i}} \tilde{f} (\tilde{\vec{s}}) \cdot \vec{\sigma_{i}} = 0.
+		\end{split}
+	\]
+
+\end{frame}
+
+%SLIDE #
+\begin{frame}{МКО в случае одной пространственной переменной}
+
+	\transdissolve[duration=0.1]
+	\justifying
+	\large
+
+	В случае одной пространственной переменной предыдущее уравнение примет вид:
+	
+	\[
+		\frac{d u_{i}}{d t} + \frac{1}{\Delta x_{i}} \left( f_{i + \frac{1}{2}} - f_{i - \frac{1}{2}} \right) = 0,
+	\]
+
+	где $\Delta x_{i} = x_{i + \frac{1}{2}} - x_{i - \frac{1}{2}}$, $f_{i + \frac{1}{2}} = f \left( u^{n}_{i - \xi} \ldots u^{n}_{i + \eta} \right)$ - численный поток, $\xi$ и $\eta$ - определяют шаблон разностной схемы.
+
+\end{frame}
+
+%SLIDE #
+\begin{frame}{Метод конечных элементов (Finite Element Method)}
+
+	\transdissolve[duration=0.1]
+	\justifying
+	\large
+
+	Решение на каждом элементе записывается как суперпозиция небольшого числа базисных функций. Искомые величины -- коэффициенты разложения решения на каждом элементе.
+
+	\begin{center}
+		\psset{xunit=1cm,yunit=1cm,algebraic=true}
+		\begin{pspicture}(0,0)(6,4)
+			\psgrid[griddots=0, gridwidth=0pt, gridcolor=gray, gridlabels=0pt, subgriddiv=0, subgriddots=0, subgridcolor=gray](0,0)(0,0)(6,4)
+			\psaxes[Dx=10, Dy=10, subticks=0, labelFontSize=\scriptscriptstyle]{->}(0,0)(0,0)(6,4)[узлы,0][$u$,90]
+			\uput[-90](1,0){\scriptsize $i - 2$}
+			\uput[-90](2,0){\scriptsize $i - 1$}
+			\uput[-90](3,0){\scriptsize $i$}
+			\uput[-90](4,0){\scriptsize $i + 1$}
+			\uput[-90](5,0){\scriptsize $i + 2$}
+
+			\uput[90](1,1){$u_{i - 2}$}
+			\uput[90](2,2.5){$u_{i - 1}$}
+			\uput[90](3,3){$u_{i}$}
+			\uput[90](4,2.5){$u_{i + 1}$}
+			\uput[90](5,1.5){$u_{i + 2}$}
+
+			\psline[linewidth=2pt, linecolor=blue]{-o}(1,0)(1,1)
+			\psline[linewidth=2pt, linecolor=blue]{-o}(2,0)(2,2.5)
+			\psline[linewidth=2pt, linecolor=blue]{-o}(3,0)(3,3)
+			\psline[linewidth=2pt, linecolor=blue]{-o}(4,0)(4,2.5)
+			\psline[linewidth=2pt, linecolor=blue]{-o}(5,0)(5,1.5)
+
+			\psline[linewidth=2pt, linecolor=blue]{o-o}(1,1)(2,2.5)
+			\psline[linewidth=2pt, linecolor=blue]{o-o}(2,2.5)(3,3)
+			\psline[linewidth=2pt, linecolor=blue]{o-o}(3,3)(4,2.5)
+			\psline[linewidth=2pt, linecolor=blue]{o-o}(4,2.5)(5,1.5)
+		\end{pspicture}
+	\end{center}
+
+\end{frame}
+
+%SLIDE #
+\begin{frame}{Метод конечных элементов}
+
+	\transdissolve[duration=0.1]
+	\justifying
+	\large
+
+	\[
+		\begin{split}
+			&\hat{\textbf{L}} u + p = 0, \: \in \Omega,\\
+			&\hat{\textbf{B}} u + q = 0, \: \in \Gamma.
+		\end{split}
+	\]
+	
+	\[
+		u \approx \hat{u} = \sum^{M}_{m = 1} u_{m} N_{m}.
+	\]
+	
+	\[
+		R_{\Omega} = \sum^{M}_{m = 1} u_{m} \hat{\textbf{L}} \left( N_{m} \right) + p, \:
+		R_{\Gamma} = \sum^{M}_{m = 1} u_{m} \hat{\textbf{B}} \left( N_{m} \right) + q.
+	\]
+
+\end{frame}
+
+%SLIDE #
+\begin{frame}{Метод взвешенных невязок}
+
+	\transdissolve[duration=0.1]
+	\justifying
+	\large
+
+	Чтобы найти $u_{m}, \: m = \overline{1, M}$ невязки $R_{\Omega}$ и $R_{\Gamma}$ ортогонализируются с помощью функций $W_{s}, \: s = \overline{1, M}$, называемых \textbf{весовыми функциями}, т. е. приравниваем нулю скалярные произведения:
+
+	\[
+		\begin{split}
+			&\left( W_{s}, R_{\bar{\Omega}} \right) = \int_{\Omega} W_{s} R_{\Omega} d \Omega + \int_{\Gamma} \bar{W_{s}} R_{\Gamma} d \Gamma = \\
+			&\int_{\Omega} W_{s} \left( \sum^{M}_{m = 1} u_{m} \hat{\textbf{L}} \left( N_{m} \right) + p \right) d \Omega + \\
+			&\int_{\Gamma} \bar{W_{s}} \left( \sum^{M}_{m = 1} u_{m} \hat{\textbf{B}} \left( N_{m} \right) + q \right) d \Gamma = 0, \: s = 1 \ldots M.
+		\end{split}
+	\]
+
+\end{frame}
+
+%SLIDE #
+\begin{frame}{Метод взвешенных невязок}
+
+	\transdissolve[duration=0.1]
+	\justifying
+	\large
+
+	Различные варианты метода взвешенных невязок отличаются способом задания весовых функций $W_{s}, \: s = \overline{1, M}$.
+
+	\begin{itemize}
+		\item Метод поточечной коллокации: $W_{s} = \delta \left( \vec{r} - \vec{r}_{s} \right), \: s = \overline{1, M}$;
+		\item Метод Галеркина (\textbf{наиболее популярен!}): $W_{s} = N_{s}, \: s = \overline{1, M}$;
+		\item Метод наименьших квадратов (минимизация функционала):
+			\[
+				I \left( u_{1}, \: u_{2}, \: ... , u_{M} \right) = \frac{1}{2} \int_{\overline{\Omega}} R^{2}_{\overline{\Omega}} d \Omega
+			\].
+	\end{itemize}
+
+\end{frame}
+
+%SLIDE #
+\begin{frame}{Согласованность}
+
+	\transdissolve[duration=0.1]
+	\justifying
+	\large
+
+	После дискретизации получаем систему алгебраических уравнений, которую нам и предстоит решать. Говорят, что такая система алгебраических уравнений \textbf{согласуется} с исходным дифференциальным уравнением в частных производных, если в пределе, при стремлении размеров ячеек сетки к нулю, система алгебраических уравнний эквивалентна дифференциальному уравнению в каждом  узле разностной сетки.
+
+\end{frame}
+
+%SLIDE #
+\begin{frame}{Согласованность}
+
+	\transdissolve[duration=0.1]
+	\justifying
+	\large
+
+	Пусть дана система уравнений:
+
+	\[
+		\frac{d \textbf{u}}{d t} = \hat{\textbf{L}} \textbf{u},
+	\]
+	
+	где в общем случае $\hat{\textbf{L}}$ -- нелинейный оператор.\\
+
+	После дискретизации имеем:
+
+	\[
+		\textbf{u}^{n+1} = \hat{\textbf{T}} (\triangle t, \triangle x) \textbf{u}^{n},
+	\]
+
+	где $\hat{\textbf{T}}$ -- оператор перехода.
+
+\end{frame}
+
+%SLIDE #
+\begin{frame}{Согласованность}
+
+	\transdissolve[duration=0.1]
+	\justifying
+	\large
+
+	\[
+		\frac{d \textbf{u}}{d t} \approx \frac{\textbf{u}^{n + 1} - \textbf{u}^{n}}{\triangle t} \equiv \frac{\hat{\textbf{T}} (\triangle t, \triangle x) \textbf{u}_{e} - \textbf{u}_{e}}{\triangle t}
+	\]
+
+	\begin{block}{Условие согласованности разностной схемы}
+
+		Разностная схема \textbf{аппроксимирует уравнение} (или согласована с уравнением), если:
+
+		\[
+			\lim_{\triangle t \rightarrow 0} \lim_{\triangle x \rightarrow 0} \left| \left| \left( \frac{\hat{\textbf{T}} (\triangle t, \triangle x) - \textbf{I}}{\triangle t} - \hat{\textbf{L}} \right) \textbf{u}_{e} \right| \right| = 0, \: \left( \frac{\triangle t}{\triangle x} \right) \rightarrow \beta.
+		\]
+
+	\end{block}
+
+\end{frame}
+
+%SLIDE #
+\begin{frame}{Аппроксимация}
+
+	\transdissolve[duration=0.1]
+	\justifying
+	\large
+
+	Пусть $u_{e} (x, t)$ -- точное решение. Тогда локальная ошибка аппроксимации записывается как:
+
+	\[
+		LTE = u^{n + 1}_{e} - \hat{\textbf{T}} u^{n}_{e} = O \left( \triangle t \sum_{p , q \geq 0, p + q = l} \triangle t^{p} \triangle x^{q} \right).
+	\]
+
+	В этом случае порядок локальной ошибки аппроксимации равен $l + 1$, а порядок схемы $l$.
+
+\end{frame}
+
+%SLIDE #
+\begin{frame}{Пример}
+
+	\transdissolve[duration=0.1]
+	\justifying
+	\large
+
+	Схема с разностями против потока для линейного уравнения переноса $u_{t} + a u_{x} = 0$:
+
+	\[
+		\begin{split}
+			&\frac{u^{n + 1}_{i} - u^{n}_{i}}{\triangle t} + a \frac{u^{n}_{i} - u^{n}_{i - 1}}{\triangle x} = 0, \\
+			&\left( \hat{\textbf{T}} u^{n}_{e} \right)_{j} = u^{n}_{e, j} - \sigma \left( u^{n}_{e, j} - u^{n}_{e, j - 1} \right), \: \sigma = a \triangle t / \triangle x, \\
+			&LTE = u^{n + 1}_{e} - \hat{\textbf{T}} u^{n}_{e} = \left( u_{e, t} + a u_{e, x} \right) \triangle t +\\
+			& + O \left( \triangle t \triangle x + \triangle t^{2} \right) = \triangle t O \left( \triangle x + \triangle t \right).
+		\end{split}
+	\]
+
+\end{frame}
+
+%SLIDE #
+\begin{frame}{Устойчивость}
+
+	\transdissolve[duration=0.1]
+	\justifying
+	\large
+
+	Обозначим вектор ошибки, появляющейся на $n$ - м шагу, через $\varepsilon^{n} = u^{n} - u^{n}_{e}$.\\
+
+	Матрица перехода $G$ определяется как $\varepsilon^{n + 1} = G \varepsilon^{n}$.\\
+
+	Для линейного уравнения матрица перехода $G$ эквивалентна оператору перехода $\hat{\textbf{T}}$.\\
+
+	В общем случае:
+
+	\[
+		G = \frac{\partial}{\partial \textbf{u}} \left( \hat{\textbf{T}} \textbf{u} \right), \: G_{\mu \nu} = \frac{\partial u^{n + 1}_{\mu}}{\partial u^{n}_{\nu}}.
+	\]
+
+\end{frame}
+
+%SLIDE #
+\begin{frame}{Устойчивость}
+
+	\transdissolve[duration=0.1]
+	\justifying
+	\large
+
+	\begin{block}{Условие устойчивости}
+
+		Метод устойчив, если $\parallel \varepsilon^{n + 1} \parallel = \parallel u^{n + 1} - u^{n + 1}_{e} \parallel$ может быть ограничена $\parallel \varepsilon^{n} \parallel$, умноженной на константу, независящую как от $u^{n}$, так и от $ u^{n}_{e}$:
+
+		\[
+			\parallel \varepsilon^{n + 1} \parallel \leq \left( 1 + K \triangle t \right) \parallel \varepsilon^{n} \parallel.
+		\]
+
+	\end{block}
+
+	\textbf{Должно быть} $\textbf{K = 0}$\textbf{!}\\
+
+	Если уравнение перехода приведено к диагональному виду $\varepsilon^{n + 1}_{\mu} = g_{\mu} \varepsilon^{n}_{\mu}$, тогда для устойчивости надо потребовать, чтобы норма каждого собственного вектора ошибки не возрастала, откуда получаем:
+
+	\[
+		\vert g_{\mu} \vert = \sqrt{ g_{\mu}  g^{*}_{\mu}} < 1 \mbox{для всех} \: \mu.
+	\]
+
+\end{frame}
+
+%SLIDE #
+\begin{frame}{Анализ устойчивости по фон Нейману}
+
+	\transdissolve[duration=0.1]
+	\justifying
+	\large
+
+	Пусть оператор перехода $\hat{\textbf{T}} (\triangle t, \triangle x)$ равен постоянной величине. Тогда можно рассмотреть устойчивость фурье-моды зависимой переменной $u^{n}_{j} = \hat{u}^{n}_{j} e^{i k x_{j}}$ и потребовать ограниченности ее амплитуды. Для устойчивости множитель перехода $g$ (или для системы уравнений собственные значения матрицы перехода $g_{\mu}$) должен не превосходит по модулю единицу $\vert g \vert \leq 1$, для всех фурье-мод.\\
+
+\end{frame}
+
+%SLIDE #
+\begin{frame}{Пример №1}
+
+	\transdissolve[duration=0.1]
+	\justifying
+	\large
+
+	Разности против потока:
+
+	\[
+		\begin{split}
+			&u_{t} + a u_{x} = 0 , \: \frac{u^{n + 1}_{i} - u^{n}_{i}}{\triangle t} + a \frac{u^{n}_{i} - u^{n}_{i - 1}}{\triangle x} = 0 , \\
+			&u^{n + 1}_{i} = u^{n}_{i} - \sigma \left( u^{n}_{i} - u^{n}_{i - 1} \right) , \: \sigma = a \triangle t / \triangle x , \\
+			&\hat{u}^{n + 1}_{k} = \hat{u}^{n}_{k} - \sigma \left( \hat{u}^{n}_{k} - e^{- i k \triangle x} \hat{u}^{n}_{k} \right) \Rightarrow \\
+			& \Rightarrow g = 1 - \sigma + \sigma e^{- i k \triangle x} \\
+			& \Rightarrow |g| = \left( \left( 1 - \sigma + \sigma \cos k \triangle x \right)^{2} + \sigma^2 \sin^{2} k \triangle x \right)^{\frac{1}{2}}.
+		\end{split}
+	\]
+
+    Условие устойчивости: $\sigma = a \frac{\triangle t}{\triangle x} \leq 1$.\\
+
+\end{frame}
+
+%SLIDE #
+\begin{frame}{Пример №2}
+
+	\transdissolve[duration=0.1]
+	\justifying
+	\large
+
+	Разности по потоку:
+
+	\[
+		\begin{split}
+			&u_{t} + a u_{x} = 0 , \: \frac{u^{n + 1}_{i} - u^{n}_{i}}{\triangle t} + a \frac{u^{n}_{i + 1} - u^{n}_{i}}{\triangle x} = 0,
+		\end{split}
+	\]
+
+	\pause
+
+	\[
+		\begin{split}
+			&u^{n + 1}_{i} = u^{n}_{i} - \sigma \left( u^{n}_{i + 1} - u^{n}_{i} \right), \: \sigma = a \triangle t / \triangle x, \\
+			&\hat{u}^{n + 1}_{k} = \hat{u}^{n}_{k} - \sigma \left( e^{i k \triangle x} \hat{u}^{n}_{k} - \hat{u}^{n}_{k} \right) \Rightarrow \\
+			& \Rightarrow g = 1 + \sigma - \sigma e^{i k \triangle x} \Rightarrow \\
+			&\Rightarrow |g| = \left( \left( 1 + \sigma - \sigma \cos k \triangle x \right)^{2} + \sigma^2 \sin^{2} k \triangle x \right)^{\frac{1}{2}} > 1 .
+		\end{split}
+	\]
+
+    \textbf{Схема всегда неустойчива!}\\
+
+\end{frame}
+
+%SLIDE #
+\begin{frame}{Пример №3}
+
+	\transdissolve[duration=0.1]
+	\justifying
+	\large
+
+	Центральные разности:
+
+	\[
+		\begin{split}
+			&u_{t} + a u_{x} = 0 , \: \frac{u^{n + 1}_{i} - u^{n}_{i}}{\triangle t} + a \frac{u^{n}_{i + 1} - u^{n}_{i - 1}}{2 \triangle x} = 0,
+		\end{split}
+	\]
+
+	\pause
+
+	\[
+		\begin{split}
+			&u^{n + 1}_{i} = u^{n}_{i} - \sigma / 2 \left( u^{n}_{i + 1} - u^{n}_{i - 1} \right), \: \sigma = a \triangle t / \triangle x, \\
+			&\hat{u}^{n + 1}_{k} = \hat{u}^{n}_{k} - \sigma / 2 \left( e^{i k \triangle x} \hat{u}^{n}_{k} - e^{- i k \triangle x} \hat{u}^{n}_{k} \right) \Rightarrow \\
+			& \Rightarrow g = 1 - i \sigma / 2 \sin k \triangle x \Rightarrow |g| = \left( 1 + \sigma^{2} / 4 \sin^{2} k \triangle x \right)^{\frac{1}{2}} > 1 .
+		\end{split}
+	\]
+
+    \textbf{Схема всегда неустойчива!}\\
+
+\end{frame}
+
+%SLIDE #
+\begin{frame}{Пример №4}
+
+	\transdissolve[duration=0.1]
+	\justifying
+	\large
+
+	Схема Лакса:
+
+	\[
+		\begin{split}
+			&u_{t} + a u_{x} = 0 , \\
+			&\frac{u^{n + 1}_{i} - (u^{n}_{i+1} + u^{n}_{i-1})/2}{\triangle t} + a \frac{u^{n}_{i + 1} - u^{n}_{i - 1}}{2 \triangle x} = 0 \Rightarrow
+		\end{split}
+	\]
+
+	\pause
+
+	\[
+		\begin{split}
+			& \Rightarrow g = \cos k \triangle x - i \sigma \sin k \triangle x \\
+			& \Rightarrow |g| = \left( \cos^{2} k \triangle x + \sigma^{2} \sin^{2} k \triangle x \right)^{\frac{1}{2}} .
+		\end{split}
+	\]
+
+    Схема устойчива при: $\sigma = a \frac{\triangle t}{\triangle x} \leq 1$.\\
+
+\end{frame}
+
+%SLIDE #
+\begin{frame}{Пример №5}
+
+	\transdissolve[duration=0.1]
+	\justifying
+	\large
+
+	Метод с перешагиванием (метод «чехарда»):
+
+	\[
+		\begin{split}
+			&u_{t} + a u_{x} = 0 , \\
+			&\frac{u^{n + 1}_{i} - u^{n - 1}_{i}}{2 \triangle t} + a \frac{u^{n}_{i + 1} - u^{n}_{i - 1}}{2 \triangle x} = 0 \Rightarrow \\
+			& \Rightarrow g = \pm (1 - \sigma^{2} \sin^{2} k \triangle x)^{\frac{1}{2}} - i \sigma \sin k \triangle x \\
+			& \Rightarrow |g| = 1 .
+		\end{split}
+	\]
+
+    Схема устойчива при: $\sigma = a \frac{\triangle t}{\triangle x} \leq 1$.\\
+
+\end{frame}
+
+%SLIDE #
+\begin{frame}{Пример №6}
+
+	\transdissolve[duration=0.1]
+	\justifying
+	\large
+
+	Метод Лакса -- Вендроффа:
+
+	\[
+		\begin{split}
+			&u_{t} + a u_{x} = 0 , \\
+			&u^{n + 1}_{i} = u^{n}_{i} - \frac{a \triangle t}{2 \triangle x} (u^{n}_{i + 1} - u^{n}_{i - 1}) + \\
+			& + \frac{a^{2} \triangle t^{2}}{2 \triangle x^{2}} (u^{n}_{i + 1} - 2 u^{n}_{i} + u^{n}_{i - 1}) \Rightarrow \\
+			& \Rightarrow g = 1 - \sigma^{2} (1 - \cos k \triangle x) - i \sigma \sin k \triangle x \\
+			& \Rightarrow |g| = \left( 1 - \sigma^{2} (1 - \cos k \triangle x))^2 + \sigma^{2} \sin^{2} k \triangle x \right)^{\frac{1}{2}} .
+		\end{split}
+	\]
+
+    Схема устойчива при: $\sigma = a \frac{\triangle t}{\triangle x} \leq 1$.\\
+
+\end{frame}
+
+%SLIDE #
+\begin{frame}{Пример №7}
+
+	\transdissolve[duration=0.1]
+	\justifying
+	\large
+
+	Метод Мак-Кормака (разности против потока):
+
+	\[
+		\begin{split}
+			&u_{t} + a u_{x} = 0 , \\
+			&\bar{u}^{n + 1}_{i} = u^{n}_{i} - \frac{a \triangle t}{\triangle x} (u^{n}_{i} - u^{n}_{i - 1}) , \\
+			&u^{n + 1}_{i} = \left[ u^{n}_{i} + \bar{u}^{n + 1}_{i} - \frac{a \triangle t}{\triangle x} (\bar{u}^{n + 1}_{i} - \bar{u}^{n + 1}_{i - 1}) \right. \\
+			& \left. - \frac{a \triangle t}{2 \triangle x} (u^{n}_{i} - 2 u^{n}_{i - 1} + u^{n}_{i - 2}) \right] \Rightarrow
+		\end{split}
+	\]
+
+\end{frame}
+
+%SLIDE #
+\begin{frame}{Пример №7}
+
+	\transdissolve[duration=0.1]
+	\justifying
+	\large
+
+	\[
+		\begin{split}
+			& \Rightarrow g = 1 - 2 \sigma \left[ \sigma + 2 (1 - \sigma) \sin^{2} \frac{k \triangle x}{2} \right] \sin^{2} \frac{k \triangle x}{2} - \\
+			& - i \sigma \sin k \triangle x \left[ 1 + 2 (1 - \sigma) \sin^{2} \frac{k \triangle x}{2} \right] .
+		\end{split}
+	\]
+
+    Схема устойчива при: $\sigma = a \frac{\triangle t}{\triangle x} \leq 2$.\\
+
+\end{frame}
+
+\end{document}

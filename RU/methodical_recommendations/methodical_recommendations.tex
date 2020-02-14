@@ -1,0 +1,649 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[english,russian]{babel}
+\usepackage[OT1]{fontenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
+\usepackage{pgfplots}
+\author{Gubkin A.S.}
+\title{Методические рекомендации к численному решению модельных уравнений математической физики}
+\begin{document}
+
+	\maketitle
+
+    \section*{Задача №0}
+
+		Решить численно задачу Коши для одномерного волнового уравнения:
+
+		\begin{equation}
+			\begin{cases}
+				& \frac{\partial u}{\partial t} + a \frac{\partial u}{\partial x} = 0, \\
+				& u \left( x, 0 \right) =
+					\begin{cases}
+						& 1, \: 0.1 \leqslant x \leqslant 0.3, \\
+						& 0, \: x < 0.1, x > 0.3.
+					\end{cases}
+			\end{cases},
+		\end{equation}
+
+        \begin{center}
+        \begin{tikzpicture}
+        \begin{axis}[
+	        title=Initial condition,
+	        xlabel={$x$},
+	        ylabel={$u \left( x, 0 \right)$},
+	        minor tick num=0,
+	        height=0.1\paperheight, 
+	        width=0.6\paperwidth,
+	        xmin=0,
+	        xmax=1,
+	        ymin=0,
+	        ymax=1.1
+        ]
+        \addplot[
+            black,
+            very thick,
+            domain=0:1,
+            samples=1000
+        ] {(x>0.1 && x<0.3) ? 1: 0};
+        \end{axis}
+        \end{tikzpicture}
+        \end{center}
+
+        Введем равномерную сетку по пространству и времени с шагом $\triangle x$ и $\triangle t$ соответственно и аппроксимируем частные производные следующими аналогами:
+
+        \begin{equation}
+			\frac{\partial u}{\partial t} \approx \frac{u^{n+1}_{i} - u^{n}_{i}}{\triangle t}, \qquad
+			\frac{\partial u}{\partial x} \approx \frac{u^{n}_{i} - u^{n}_{i-1}}{\triangle x},
+		\end{equation}
+
+		получим дискретный аналог
+		
+		\begin{equation}
+			\frac{u^{n+1}_{i} - u^{n}_{i}}{\triangle t} + a \frac{u^{n}_{i} - u^{n}_{i-1}}{\triangle x} = 0,
+		\end{equation}
+
+        где $a$ - скорость распространения волны. При численном решении удобно положить $a=1$.\\
+
+		\textbf{\large Замечание!!!}\\
+
+		Предложенный метод является условно устойчивыми, т.е. устойчивый процесс вычисления можно получить при соблюдении определенных условий. В данном случае шаги по времени и координате должны удовлетворять следующему условию:
+
+		\begin{equation}
+				Co = a \frac{\triangle t}{\triangle x} \leq 1.
+		\end{equation}
+
+	\newpage
+
+	\section*{Задача №1}
+
+		Решать начально-краевую задачу для одномерного уравнения диффузии:
+
+		\begin{equation}
+			\begin{cases}
+				\frac{\partial u}{\partial t} = a \frac{\partial^{2} u}{\partial x^{2}}, \\
+				u \left( 0, t \right) = 400, \\
+				u \left( 1, t \right) = 300, \\
+				u \left( x, 0 \right) =
+				    \begin{cases}
+						& 400, \: x \leqslant 0.5, \\
+						& 300, \: x > 0.5.
+					\end{cases}
+			\end{cases}
+		\end{equation}
+
+        \begin{center}
+        \begin{tikzpicture}
+        \begin{axis}[
+	        title=Initial condition,
+	        xlabel={$x$},
+	        ylabel={$u \left( x, 0 \right)$},
+	        minor tick num=0,
+	        height=0.1\paperheight, 
+	        width=0.6\paperwidth,
+	        xmin=0,
+	        xmax=1,
+	        ymin=300,
+	        ymax=410
+        ]
+        \addplot[
+            black,
+            very thick,
+            domain=0:1,
+            samples=1000
+        ] {(x<=0.5) ? 400: 300};
+        \end{axis}
+        \end{tikzpicture}
+        \end{center}
+
+		где $u$ -- искомая функция, которая может принимать различный физический смысл: температура, давление, концентрация и т.д., $a$ - коэффициент температуропроводности / пьезопроводности / диффузии и т.д.
+
+		Введем равномерную сетку по пространству и времени с шагом $\triangle x$ и $\triangle t$ соответственно и аппроксимируем частные производные следующими аналогами:
+
+		\begin{equation}
+			\begin{split}
+				& \frac{\partial u}{\partial t} \approx \frac{u^{n+1}_{j} - u^{n}_{j}}{\triangle t}, \\
+				& \frac{\partial^{2} u}{\partial x^{2}} \approx \frac{u^{n+1}_{j+1} - 2 u^{n+1}_{j} + u^{n+1}_{j-1}}{\triangle x^{2}},
+			\end{split}
+		\end{equation}
+
+		где $n$ -- временной индекс, $j$ -- пространственный индекс.\\
+
+		Подставим эти аппроксимации в уравнение и получим конечноразностный аналог исходного уравнения:
+
+		\begin{equation}
+			\frac{u^{n+1}_{j} - u^{n}_{j}}{\triangle t} = a \frac{u^{n+1}_{j+1} - 2 u^{n+1}_{j} + u^{n+1}_{j-1}}{\triangle x^{2}}.
+		\end{equation}
+
+		Этот конечноразностный аналог не позволяет явно выразить значение $u$ на верхнем временном слое, т.к. схема неявная. Поэтому для нахождения $u^{n+1}_{j}$ нужно привлекать дополнительные алгоритмы для решения системы линейных алгебраических уравнений (далее СЛАУ).\\
+		СЛАУ назывется уравнение вида
+		
+		\begin{equation}
+			\mathbf{A} \cdot \vec{\mathbf{x}} = \vec{\mathbf{b}},
+		\end{equation}
+
+		где $\mathbf{A}$ -- матрица коэффициентов СЛАУ или просто матрица СЛАУ, $\vec{\mathbf{x}}$ -- вектор искомых величин (в данном случае вектор, состоящий из значений искомой функции в узлах сетки), $\vec{\mathbf{b}}$ -- вектор свободных членов.\\
+
+		В алгебраической форме СЛАУ из $N$ уравнений будет иметь вид:
+
+		\begin{equation}
+			\begin{cases}
+				a_{11} x_{1} + a_{12} x_{2} + a_{13} x_{3} + \cdots + a_{1N} x_{N} = b_{1} \\
+				a_{21} x_{1} + a_{22} x_{2} + a_{23} x_{3} + \cdots + a_{2N} x_{N} = b_{2} \\
+				\cdots \\
+				a_{N1} x_{1} + a_{N2} x_{2} + a_{N3} x_{3} + \cdots + a_{NN} x_{N} = b_{N}
+			\end{cases}.
+		\end{equation}
+
+		Составим матрицу $\mathbf{A}$ и вектор $\vec{\mathbf{b}}$ для нашего конечноразностного аналога на $n+1$-ом временном слое. Предположим, что пространство разбито на $N$ отрезков одинакового размера, перепишем конечноразностное уравнение:
+
+		\begin{equation}
+			- a \frac{\triangle t}{\triangle x^{2}} u^{n+1}_{j-1} + \left( 1 + 2 a \frac{\triangle t}{\triangle x^{2}} \right) u^{n+1}_{j} - a \frac{\triangle t}{\triangle x^{2}} u^{n+1}_{j+1} = u^{n}_{j}.
+		\end{equation}
+
+		Теперь, записывая последовательно каждое уравнение для $j=1 \div N - 1$ получим СЛАУ:
+
+		\begin{equation}
+			\begin{cases}
+				\left( 1 + 2 a \frac{\triangle t}{\triangle x^{2}} \right) u^{n+1}_{1} - a \frac{\triangle t}{\triangle x^{2}} u^{n+1}_{2} &= u^{n}_{1} + a \frac{\triangle t}{\triangle x^{2}} u^{n+1}_{0} \\
+				- a \frac{\triangle t}{\triangle x^{2}} u^{n+1}_{1} + \left( 1 + 2 a \frac{\triangle t}{\triangle x^{2}} \right) u^{n+1}_{2} - a \frac{\triangle t}{\triangle x^{2}} u^{n+1}_{3} &= u^{n}_{2} \\
+				- a \frac{\triangle t}{\triangle x^{2}} u^{n+1}_{2} + \left( 1 + 2 a \frac{\triangle t}{\triangle x^{2}} \right) u^{n+1}_{3} - a \frac{\triangle t}{\triangle x^{2}} u^{n+1}_{4} &= u^{n}_{3} \\
+				- a \frac{\triangle t}{\triangle x^{2}} u^{n+1}_{3} + \left( 1 + 2 a \frac{\triangle t}{\triangle x^{2}} \right) u^{n+1}_{4} - a \frac{\triangle t}{\triangle x^{2}} u^{n+1}_{5} &= u^{n}_{4} \\
+				\cdots \\
+				- a \frac{\triangle t}{\triangle x^{2}} u^{n+1}_{N-2} + \left( 1 + 2 a \frac{\triangle t}{\triangle x^{2}} \right) u^{n+1}_{N-1} &= u^{n}_{N-1} + a \frac{\triangle t}{\triangle x^{2}} u^{n+1}_{N}.
+			\end{cases}
+		\end{equation}
+
+		Таким образом, матрица $\mathbf{A}$ и вектор свободных членов $\vec{\mathbf{b}}$ будут
+
+		\begin{equation}
+			\mathbf{A} =
+			\begin{pmatrix}
+				1 + 2 a \frac{\triangle t}{\triangle x^{2}} & - a \frac{\triangle t}{\triangle x^{2}} & 0 & 0 & 0 & 0 & \ldots & 0 \\
+				- a \frac{\triangle t}{\triangle x^{2}} & 1 + 2 a \frac{\triangle t}{\triangle x^{2}} & - a \frac{\triangle t}{\triangle x^{2}} & 0 & 0 & 0 & \ldots & 0 \\
+				0 & - a \frac{\triangle t}{\triangle x^{2}} & 1 + 2 a \frac{\triangle t}{\triangle x^{2}} & - a \frac{\triangle t}{\triangle x^{2}} & 0 & 0 & \ldots & 0 \\
+				0 & 0 & - a \frac{\triangle t}{\triangle x^{2}} & 1 + 2 a \frac{\triangle t}{\triangle x^{2}} & - a \frac{\triangle t}{\triangle x^{2}} & 0 & \ldots & 0 \\
+				0 & 0 & 0 & - a \frac{\triangle t}{\triangle x^{2}} & 1 + 2 a \frac{\triangle t}{\triangle x^{2}} & - a \frac{\triangle t}{\triangle x^{2}} & \ldots & 0 \\
+				& & & \cdots \\
+				0 & 0 & \ldots & 0 & 0 & - a \frac{\triangle t}{\triangle x^{2}} & 1 + 2 a \frac{\triangle t}{\triangle x^{2}} & - a \frac{\triangle t}{\triangle x^{2}} \\
+				0 & 0 & \ldots & 0 & 0 & 0 & - a \frac{\triangle t}{\triangle x^{2}} & 1 + 2 a \frac{\triangle t}{\triangle x^{2}}
+			\end{pmatrix}			
+		\end{equation}
+
+		\begin{equation}
+			\vec{\mathbf{b}} =
+			\begin{pmatrix}
+				u^{n}_{1} + a \frac{\triangle t}{\triangle x^{2}} u^{n+1}_{0} \\
+				u^{n}_{2} \\
+				u^{n}_{3} \\
+				u^{n}_{4} \\
+				\vdots \\
+				u^{n}_{N-1} + a \frac{\triangle t}{\triangle x^{2}} u^{n+1}_{N}
+			\end{pmatrix}
+		\end{equation}
+
+		Для решения СЛАУ существует множество методов, прямых и итерационных. Автор данного методического пособия настоятельно рекомендует пользоваться итерационными методами, к примеру такими как метод Якоби или метод Гаусса-Зейделя.\\
+
+		Для решения СЛАУ методом Якоби или Гаусса-Зейделя перепишем ее в эквивалентной форе:
+
+		\begin{equation}
+			\mathbf{D} \cdot \vec{\mathbf{x}} - \mathbf{E} \cdot \vec{\mathbf{x}} - \mathbf{F} \cdot \vec{\mathbf{x}} = \vec{\mathbf{b}},
+		\end{equation}
+
+		где $\mathbf{D}, \: \mathbf{E}, \: \mathbf{F}$ -- диагональная, верхняя треугольная и нижняя треугольная матрицы соответственно:\\
+
+		\begin{equation}
+			\mathbf{D} =
+			\begin{pmatrix}
+				d_{11}	&0		&\cdots &0		\\
+				0		&d_{22}	&\ddots	&\vdots	\\
+				\vdots	&\ddots	&\ddots &0		\\
+				0		&\cdots	&0		&d_{NN}	\\
+			\end{pmatrix},
+		\end{equation}
+
+		\begin{equation}
+			\mathbf{E} =
+			\begin{pmatrix}
+				e_{11}	&e_{12}	&\cdots &e_{1N}			\\
+				0		&e_{22}	&\ddots	&\vdots			\\
+				\vdots	&\ddots	&\ddots &e_{N-1 \: N}	\\
+				0		&\cdots	&0		&e_{NN}			\\
+			\end{pmatrix},
+		\end{equation}
+
+		\begin{equation}
+			\mathbf{F} =
+			\begin{pmatrix}
+				f_{11}	&0		&\cdots			&0		\\
+				f_{21}	&f_{22}	&\ddots			&\vdots	\\
+				\vdots	&\ddots	&\ddots			&0		\\
+				f_{N1}	&\cdots	&f_{N \: N-1}	&f_{NN}	\\
+			\end{pmatrix}.
+		\end{equation}
+
+		Предположим, что мы имеем некотрое $k$-е приблежение к точному решению $\vec{\mathbf{x}}$, тогда
+
+		\begin{equation}
+			\mathbf{D} \cdot \vec{\mathbf{x}}^{(k)} - \mathbf{E} \cdot \vec{\mathbf{x}}^{(k)} - \mathbf{F} \cdot \vec{\mathbf{x}}^{(k)} \neq \vec{\mathbf{b}},
+		\end{equation}
+
+		но мы можем потребовать выполнения равенства заменив одно из вхождений $\vec{\mathbf{x}}^{(k)}$ на $\vec{\mathbf{x}}^{(k+1)}$, тем самым получив итерационное сотношение. К примеру метод Якоби можно получить, заменив $\vec{\mathbf{x}}^{(k)}$ на $\vec{\mathbf{x}}^{(k+1)}$ при матрице $\mathbf{D}$:
+
+		\begin{equation}
+			\mathbf{D} \cdot \vec{\mathbf{x}}^{(k+1)} - \mathbf{E} \cdot \vec{\mathbf{x}}^{(k)} - \mathbf{F} \cdot \vec{\mathbf{x}}^{(k)} = \vec{\mathbf{b}}.
+		\end{equation}
+
+		Выразим $\vec{\mathbf{x}}^{(k+1)}$, получим:
+
+		\begin{equation}
+			\vec{\mathbf{x}}^{(k+1)} = \mathbf{D}^{-1} \mathbf{E} \cdot \vec{\mathbf{x}}^{(k)} + \mathbf{D}^{-1} \mathbf{F} \cdot \vec{\mathbf{x}}^{(k)} + \mathbf{D}^{-1} \cdot \vec{\mathbf{b}}.
+		\end{equation}
+
+		Метод Гаусса-Зейделя можно получить, заменив $\vec{\mathbf{x}}^{(k)}$ на $\vec{\mathbf{x}}^{(k+1)}$ при матрице $\mathbf{F}$:
+
+		\begin{equation}
+			\vec{\mathbf{x}}^{(k+1)} = \mathbf{F}^{-1} \mathbf{D} \cdot \vec{\mathbf{x}}^{(k)} - \mathbf{F}^{-1} \mathbf{E} \cdot \vec{\mathbf{x}}^{(k)} - \mathbf{F}^{-1} \cdot \vec{\mathbf{b}}.
+		\end{equation}
+
+		Обратный метод Гаусса-Зейделя получим, заменив $\vec{\mathbf{x}}^{(k)}$ на $\vec{\mathbf{x}}^{(k+1)}$ при матрице $\mathbf{E}$:
+
+		\begin{equation}
+			\vec{\mathbf{x}}^{(k+1)} = \mathbf{E}^{-1} \mathbf{D} \cdot \vec{\mathbf{x}}^{(k)} - \mathbf{E}^{-1} \mathbf{F} \cdot \vec{\mathbf{x}}^{(k)} - \mathbf{E}^{-1} \cdot \vec{\mathbf{b}}.
+		\end{equation}
+
+		\textbf{\large Замечания!!!}\\
+
+		Для исходной задачи хранить матрицы $\mathbf{D}, \: \mathbf{E}, \: \mathbf{F}$ не обязательно и даже вредно. Поскольку структура матрицы $\mathbf{A}$ трехдиагональная, то можно явно использовать коэффициенты матриц в итерационном соотношении. К примеру для метода Якоби итерационное соотношение будет иметь вид:
+
+		\begin{equation}
+			u^{n+1 \: (k+1)}_{j} = \frac{1}{\left( 1 + 2 a \frac{\triangle t}{\triangle x^{2}} \right)} \left( a \frac{\triangle t}{\triangle x^{2}} u^{n+1 \: (k)}_{j+1} + a \frac{\triangle t}{\triangle x^{2}} u^{n+1 \: (k)}_{j-1} + u^{n}_{j} \right), \: j = 1 \div (N - 1),
+		\end{equation}
+
+		для метода Гаусса-Зейделя:
+
+		\begin{equation}
+			u^{n+1 \: (k+1)}_{j} = \frac{1}{\left( 1 + 2 a \frac{\triangle t}{\triangle x^{2}} \right)} \left( a \frac{\triangle t}{\triangle x^{2}} u^{n+1 \: (k)}_{j+1} + a \frac{\triangle t}{\triangle x^{2}} u^{n+1 \: (k+1)}_{j-1} + u^{n}_{j} \right), \: j = 1 \div (N - 1),
+		\end{equation}
+
+		для обратного метода Гаусса-Зейделя:
+
+		\begin{equation}
+			u^{n+1 \: (k+1)}_{j} = \frac{1}{\left( 1 + 2 a \frac{\triangle t}{\triangle x^{2}} \right)} \left( a \frac{\triangle t}{\triangle x^{2}} u^{n+1 \: (k+1)}_{j+1} + a \frac{\triangle t}{\triangle x^{2}} u^{n+1 \: (k)}_{j-1} + u^{n}_{j} \right), \: j = (N - 1) \div 1.
+		\end{equation}
+
+		Данные итерационные соотношения "крутятся" в цикле \textbf{do - while} до тех пор пока не будет достигнуто одно из условий:
+	
+		\begin{equation}
+			\frac{\left\Vert \vec{\mathbf{x}}^{(k + 1)} - \vec{\mathbf{x}}^{(k)} \right\Vert}{\left\Vert \vec{\mathbf{x}}^{(k + 1)} + \vec{\mathbf{x}}^{(k)} \right\Vert} \leqslant \varepsilon,
+		\end{equation}
+
+		\begin{equation}
+			\frac{\left\Vert \vec{\mathbf{r}}^{(k + 1)} \right\Vert}{\left\Vert \vec{\mathbf{x}}^{(k + 1)} \right\Vert} \leqslant \varepsilon,
+		\end{equation}
+
+		где $\left\Vert \vec{\mathbf{x}}^{(k + 1)} \right\Vert = \sqrt{\sum^{N-1}_{j=1} \left( u^{n+1 \: (k+1)}_{j} \right)^{2}}$ -- модуль вектора решения, $\left\Vert \vec{\mathbf{r}}^{(k + 1)} \right\Vert = \left\Vert \mathbf{A} \cdot \vec{\mathbf{x}}^{(k+1)} - \vec{\mathbf{b}}\right\Vert$ -- невязка приблеженного решения на $(k+1)$-й итерации.
+
+		\newpage
+
+	\section*{Задача №2}
+
+		Решить численно задачу Коши для одномерного гиперболического закона сохранения:
+
+		\begin{equation}
+			\begin{cases}
+				& \frac{\partial u}{\partial t} + \frac{\partial f \left( u \right)}{\partial x} = 0, \\
+				& u \left( x, 0 \right) =
+					\begin{cases}
+						& 1, \: 0.1 \leqslant x \leqslant 0.3, \\
+						& 0, \: x \leqslant 0.1, x \geqslant 0.3.
+					\end{cases}
+			\end{cases},
+		\end{equation}
+
+        \begin{center}
+        \begin{tikzpicture}
+        \begin{axis}[
+	        title=Initial condition,
+	        xlabel={$x$},
+	        ylabel={$u \left( x, 0 \right)$},
+	        minor tick num=0,
+	        height=0.1\paperheight, 
+	        width=0.6\paperwidth,
+	        xmin=0,
+	        xmax=1,
+	        ymin=0,
+	        ymax=1.1
+        ]
+        \addplot[
+            black,
+            very thick,
+            domain=0:1,
+            samples=1000
+        ] {(x>0.1 && x<0.3) ? 1: 0};
+        \end{axis}
+        \end{tikzpicture}
+        \end{center}
+
+		где $u$ -- сохраняемая величина, $f \left( u \right)$ -- поток величины $u$.\\
+		
+		Для данной задачи положим $f \left( u \right) = \frac{u^{2}}{2}$, тогда уравнение будет называться невязким уравнением Бюргерса.\\
+
+		Введем равномерную сетку по пространству с шагом $\triangle x$ и проинтегрируем исходное уравнение по ячейке $\triangle x \times \triangle t$:
+
+		\begin{equation}
+			\iint\limits_{\triangle x \times \triangle t} \frac{\partial u}{\partial t} dt dx + \iint\limits_{\triangle x \times \triangle t} \frac{\partial f \left( u \right)}{\partial x} dt dx = 0,
+		\end{equation}
+
+		получим дискретный аналог
+		
+		\begin{equation}
+			\frac{u^{n+1}_{i} - u^{n}_{i}}{\triangle t} + \frac{f_{i+\frac{1}{2}} - f_{i-\frac{1}{2}}}{\triangle x} = 0,
+		\end{equation}
+
+		где $u^{n}_{i}$ -- среднее значение величины $u$ в $i$-й ячейке, $f_{i+\frac{1}{2}}$ и $f_{i-\frac{1}{2}}$ -- численные потоки величины $u$ на правой и левой грянях $i$-й ячейки соответственно.\\
+
+		Существует множество подходов вычисления численного потока на гранях ячеек. Один из таких подходов заключается в явном вычислении численного потока через известные на данном временном слое величины. Такой подход называется метод потоков (англ. \textbf{flux method}).\\
+
+		Простейший метод в рамках данного подхода:
+		
+		\begin{equation}
+			\begin{split}
+				&f_{i+\frac{1}{2}} = \frac{1}{2} \left( f_{i+1} + f_{i} \right) - \frac{\triangle x}{2 \triangle t} \left( u_{i+1} - u_{i} \right), \\
+				&f_{i-\frac{1}{2}} = \frac{1}{2} \left( f_{i} + f_{i-1} \right) - \frac{\triangle x}{2 \triangle t} \left( u_{i} - u_{i-1} \right),
+			\end{split}
+		\end{equation}
+
+		называется методом \textbf{Лакса-Фридрихса} (Lax-Friedrichs, 1954).\\
+		
+		Метод \textbf{Лакса-Вендрофа} (Lax-Wendroff, 1960)
+
+		\begin{equation}
+			\begin{split}
+				&f_{i+\frac{1}{2}} = \frac{1}{2} \left( f_{i+1} + f_{i} \right) - \frac{1}{2} a^{2}_{i+\frac{1}{2}} \frac{\triangle t}{\triangle x} \left( u_{i+1} - u_{i} \right), \\
+				&f_{i-\frac{1}{2}} = \frac{1}{2} \left( f_{i} + f_{i-1} \right) - \frac{1}{2} a^{2}_{i-\frac{1}{2}} \frac{\triangle t}{\triangle x} \left( u_{i} - u_{i-1} \right),
+			\end{split}
+		\end{equation}
+
+		где величины $a_{i+\frac{1}{2}}$ и $a_{i-\frac{1}{2}}$ вычисляются следующим образом
+
+		\begin{equation}
+			\begin{split}
+				&a_{i+\frac{1}{2}} =
+					\begin{cases}
+						&\frac{f_{i+1} - f_{i}}{u_{i+1} - u_{i}}, \: u_{i+1} \neq u_{i} \\
+						&f^{\prime} \left( u_{i} \right), \: u_{i+1} = u_{i}
+					\end{cases}, \\
+				&a_{i-\frac{1}{2}} =
+					\begin{cases}
+						&\frac{f_{i} - f_{i-1}}{u_{i} - u_{i-1}}, \: u_{i} \neq u_{i-1} \\
+						&f^{\prime} \left( u_{i-1} \right), \: u_{i} = u_{i-1}
+					\end{cases}.
+			\end{split}
+		\end{equation}
+
+		Схема \textbf{upwind}
+
+		\begin{equation}
+			\begin{split}
+				&f_{i+\frac{1}{2}} =
+					\begin{cases}
+						&f_{i}, \: a_{i+\frac{1}{2}} \geq 0 \\
+						&f_{i+1}, \: a_{i+\frac{1}{2}} < 0
+					\end{cases}, \\
+				&f_{i-\frac{1}{2}} =
+					\begin{cases}
+						&f_{i-1}, \: a_{i-\frac{1}{2}} \geq 0 \\
+						&f_{i}, \: a_{i-\frac{1}{2}} < 0
+					\end{cases}.
+			\end{split}
+		\end{equation}
+
+		очень проста в реализации, имеет хорошую устойчивость и даёт приемлемый результат.\\
+
+		\textbf{\large Замечание!!!}\\
+
+		Все рассмотренные выше схемы являются условно устойчивыми, т.е. устойчивый процесс вычисления можно получить при соблюдении определенных условий. В данном случае шаги по времени и координате должны удовлетворять следующему условию:
+
+		\begin{equation}
+				Co = \max_{i} \left| a_{i} \right| \frac{\triangle t}{\triangle x} \leq 1, \: a_{i} = \left. \frac{\partial f}{\partial u} \right|_{u_{i}}
+		\end{equation}
+
+	\newpage
+
+	\section*{Задача №3}
+
+		Решить численно задачу Коши для одномерного гиперболического закона сохранения:
+
+		\begin{equation}
+			\begin{cases}
+				& \frac{\partial u}{\partial t} + \frac{\partial}{\partial x} \left( \frac{u^{2}}{u^{2} + \frac{1}{4} \left( 1 - u^{2} \right)^{2}} \right) = 0, \\
+				& u \left( x, 0 \right) =
+					\begin{cases}
+						& \frac{3}{4}, \: x \leq 0, \\
+						& 0, \: x > 0.
+					\end{cases}
+			\end{cases}.
+		\end{equation}
+
+		Данная задача отличается от передыдущей только видом функции потока $f \left( u \right) = \frac{u^{2}}{u^{2} + \frac{1}{4} \left( 1 - u^{2} \right)^{2}}$, поэтому решать ее следует так же как аналогичную задачу для уравнения Бюргерса.\\
+
+		Данное уравнение возникает в задаче двухфазной фильтрации несжимаемых флюидов без учета капиллярных сил.\\
+
+		Запишем уравнения неразрывности для каждой фазы
+
+        \[
+                m s_{1t} + w_{1x} = 0,
+        \]
+
+        \[
+                m s_{2t} + w_{2x} = 0,
+        \]
+
+		где $s_{1,2}$ -- насыщенность, $m$ -- пористость.\\
+
+		Скорости фильтрации $w_{1,2}$ подчиняются уравнению Дарси
+
+        \[
+                w_{1} = \frac{Q_{1}}{S} = - k \frac{k_{1}(s)}{\mu_{1}} p_{x},
+        \]
+
+        \[
+                w_{2} = \frac{Q_{2}}{S} = - k \frac{k_{2}(s)}{\mu_{2}} p_{x},
+        \]
+
+		где $Q_{1,2}$ -- объемные расходы через сечение $S$, $k$ -- абсолютная проницаемость, $k_{1,2}$ -- относительные фазовые прроицаемости, $\mu_{1,2}$ -- динамические вязкости, $p_{x}$ -- градиент давления.
+
+        Предполагается, что $s = s_{1}$ (либо $s = s_{2}$).\\
+
+        Для двухфазного течения $s_{1}$ и $s_{2}$ связаны очевидным соотношением
+
+        \[
+                s_{1} + s_{2} = 1.
+        \]
+
+        Складывая уравнения неразрывности, получим
+
+        \[
+                \left( w_{1} + w_{2} \right)_{x} = 0,
+        \]
+
+        откуда найдем интеграл
+
+        \[
+                w_{1} + w_{2} = w(t) \: \mbox{или} \: Q_{1} + Q_{2} = Q(t).
+        \]
+
+		Исключим градиент давления
+
+        \[
+                \frac{w_{1}}{w_{2}} = \frac{k_{1}(s)}{\frac{\mu_{1}}{\mu_{2}} k_{2}(s)}.
+        \]
+
+        Используя соотношение $w_{1} + w_{2} = w(t)$, получим
+
+        \[
+                \frac{w_{1}}{w(t)} = \frac{k_{1}(s)}{k_{1}(s) + \frac{\mu_{1}}{\mu_{2}} k_{2}(s)} = f(s) \: \mbox{- функция Баклея-Леверетта}.
+        \]
+
+        Поэтому
+
+        \[
+                w_{1} = f(s) w(t) \: \mbox{и} \: w_{2} = (1 - f(s)) w(t).
+        \]
+
+        Подставим последнее соотношение для $w_{1}$ в уравнение неразрывности для первой фазы, получим
+
+        \[
+                m s_{t} + w(t) f(s)_{x} = 0.
+        \]
+
+        Для случая, когда $w(t)/m = 1$
+
+        \[
+                s_{t} + f(s)_{x} = 0,
+        \]
+
+		что с точностью до обозначений совпадает с исходным уравнением.\\
+
+        \textbf{\large Замечание!!!}\\
+
+        Рекомендуется использовать схему \textbf{upwind}.
+
+		\newpage
+
+	\section*{Задача №4}
+
+        IMPES
+		\newpage
+
+	\section*{Задача №5}
+
+		Решить численно задачу Коши для одномерных уравнений газовой динамики:
+
+		\begin{equation}
+			\begin{cases}
+				&\begin{split}
+					&\frac{\partial \rho}{\partial t} + \frac{\partial \rho u}{\partial x} = 0, \\
+					&\frac{\partial \rho u}{\partial t} + \frac{\partial \left( \rho u^{2} + p \right)}{\partial x} = 0, \\
+					&\frac{\partial \rho e}{\partial t} + \frac{\partial \left( \rho e + p \right) u}{\partial x} = 0, \\
+					&p = \left( \gamma - 1 \right) \rho \varepsilon,
+				\end{split} \\
+				&\rho =
+					\begin{cases}
+						&1, \: x \leq 0.5 \\
+						&0.125, \: x > 0.5
+					\end{cases}, \\
+				&u =
+					\begin{cases}
+						&0, \: x \leq x_{0} \\
+						&0, \: x > x_{0}
+					\end{cases}, \\
+				&p =
+					\begin{cases}
+						&1, \: x \leq x_{0} \\
+						&0.1, \: x > x_{0}
+					\end{cases}.
+			\end{cases}
+		\end{equation}
+
+		Здесь $\rho$ -- это плотность, $u$ -- скорость движения газа, $e = \varepsilon + \frac{1}{2} u^{2}$ -- полная энергия единицы массы, $\varepsilon$ -- удельная внутрення энергия, $p$ -- давление, $\gamma$ -- показатель адиабаты (для воздуха равен 1.4).\\
+
+		Преобозначим консервативные переменные и варазим функции потока и уравнение состояния через них:
+	
+		\begin{equation}
+			\left.
+				\begin{split}
+					\rho &= s_{1} \\
+					\rho u &= s_{2} \\
+					\rho e &= s_3
+				\end{split}
+			\right\rbrace
+			\Rightarrow
+			\left\lbrace
+				\begin{split}
+					&\frac{\partial s_{1}}{\partial t} + \frac{\partial s_{2}}{\partial x} = 0 \\
+					&\frac{\partial s_{2}}{\partial t} + \frac{\partial}{\partial x} \left( \frac{s^{2}_{2}}{s_{1}} + p \right) = 0 \\
+					&\frac{\partial s_{3}}{\partial t} + \frac{\partial}{\partial x} \left( \left( s_{3} + p \right) \frac{s_{2}}{s_{1}} \right) = 0 \\
+					&p = \left( \gamma - 1 \right) \left( s_{3} - \frac{s^{2}_{2}}{2 s_{1}} \right)
+				\end{split}
+			\right. ,
+		\end{equation}
+
+	или в векторнойформе:
+
+	\begin{equation}
+		\begin{split}
+			&\frac{\partial \vec{\textbf{s}}}{\partial t} + \frac{\partial \vec{\textbf{f}} \left( \vec{\textbf{s}} \right)}{\partial x} = 0, \\
+			&\vec{\textbf{s}} =
+				\begin{pmatrix}
+					s_{1} \\
+					s_{2} \\
+					s_{3}
+				\end{pmatrix}, \:
+			\vec{\textbf{f}} \left( \vec{\textbf{s}}\right) =
+				\begin{pmatrix}
+					s_{2} \\
+					\frac{s^{2}_{2}}{s_{1}} + p \\
+					\left( s_{3} + p \right) \frac{s_{2}}{s_{1}}
+				\end{pmatrix}.			
+		\end{split}
+	\end{equation}
+
+	Автор данного пособия рекомендует решать данную систему двухшаговым методом Лакса-Вендрофа поскольку это позволит избежать вычисления якобиана:\\
+
+	\textbf{первый шаг}
+
+	\begin{equation}
+		\begin{split}
+			&\vec{\textbf{s}}^{n+\frac{1}{2}}_{i+\frac{1}{2}} = \frac{1}{2} \left( \vec{\textbf{s}}^{n}_{i+1} + \vec{\textbf{s}}^{n}_{i} \right) - \frac{\triangle t}{2 \triangle x} \left( \vec{\textbf{f}} \left( \vec{\textbf{s}}^{n}_{i+1} \right) - \vec{\textbf{f}} \left( \vec{\textbf{s}}^{n}_{i} \right) \right), \\
+			&\vec{\textbf{s}}^{n+\frac{1}{2}}_{i-\frac{1}{2}} = \frac{1}{2} \left( \vec{\textbf{s}}^{n}_{i} + \vec{\textbf{s}}^{n}_{i-1} \right) - \frac{\triangle t}{2 \triangle x} \left( \vec{\textbf{f}} \left( \vec{\textbf{s}}^{n}_{i} \right) - \vec{\textbf{f}} \left( \vec{\textbf{s}}^{n}_{i-1} \right) \right),
+		\end{split}
+	\end{equation}
+
+	\textbf{второй шаг}
+
+	\begin{equation}
+		\vec{\textbf{s}}^{n+1}_{i} = \vec{\textbf{s}}^{n}_{i} - \frac{\triangle t}{\triangle x} \left( \vec{\textbf{f}} \left( \vec{\textbf{s}}^{n+\frac{1}{2}}_{i+\frac{1}{2}} \right) - \vec{\textbf{f}} \left( \vec{\textbf{s}}^{n+\frac{1}{2}}_{i-\frac{1}{2}} \right) \right).
+	\end{equation}
+
+	\textbf{\large Замечания!!!}\\
+
+	Так как порядок схемы Лакса-Вендрофа второй, то в решении обязательно появятся дисперсионные высокочастотные составляющие, которые могут привести к "разваливанию" решения. Чтобы решить это проблему, на втором шаге необходимо ввести член с искусственной вязкостью:
+	
+	\begin{equation}
+		\vec{\textbf{s}}^{n+1}_{i} = \vec{\textbf{s}}^{n}_{i} - \frac{\triangle t}{\triangle x} \left( \vec{\textbf{f}} \left( \vec{\textbf{s}}^{n+\frac{1}{2}}_{i+\frac{1}{2}} \right) - \vec{\textbf{f}} \left( \vec{\textbf{s}}^{n+\frac{1}{2}}_{i-\frac{1}{2}} \right) \right) + \mu_{a} \left( \vec{\textbf{s}}^{n}_{i+1} - 2 \vec{\textbf{s}}^{n}_{i} + \vec{\textbf{s}}^{n}_{i-1} \right).
+	\end{equation}
+
+	Искусственная вязкость $\mu_{a}$ подбирается экспериментально из серии расчетов.\\
+
+	Схема Лакса-Вендрофа является условно устойчивой, поэтому шаг по времени должен удовлетворять условию устойчивости:
+
+	\begin{equation}
+		Co = \max_{i} \left\lbrace \left| u_{i} - c_{i} \right|, \left| u_{i} \right|, \left| u_{i} + c_{i} \right| \right\rbrace \frac{\triangle t}{\triangle x} \leq 1, \: c_{i} = \sqrt{\gamma \frac{p_{i}}{\rho_{i}}}.
+	\end{equation}
+
+\end{document}
