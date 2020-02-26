@@ -182,6 +182,44 @@
 \end{frame}
 
 %SLIDE #
+\begin{frame}{Теорема Лагранжа о среднем значении}
+
+	\transdissolve[duration=0.1]
+	\justifying
+	\large
+
+	 Теорема о конечном приращении утверждает, что если функция $f$ непрерывна на отрезке $ \left[ a ; b \right]$ и дифференцируема в интервале $\left( a ; b \right)$, то найдётся такая точка $c \in \left( a ; b \right)$, что
+
+    \[
+        \frac{f(b) - f(a)}{b - a} = f'(c).
+    \]
+
+\end{frame}
+
+%SLIDE #
+\begin{frame}{Аппроксимация производной}
+
+	\transdissolve[duration=0.1]
+	\justifying
+	\large
+
+    Производной функции $u(x,t)$ по $x$ в точке $x_{0}, t_{0}$ называется предел
+
+	\[
+        \left. \frac{\partial u}{\partial x} \right|_{x_{0}, t_{0}} = \lim_{\triangle x \rightarrow 0} \frac{u \left( x_{0} + \triangle x, t_{0} \right) - u \left( x_{0}, t_{0} \right)}{\triangle x}.
+    \]
+
+    Если $\triangle x$ будет мало, но конечно, то
+
+    \[
+        \left. \frac{\partial u}{\partial x} \right|_{x_{0}, t_{0}} \approx \frac{u \left( x_{0} + \triangle x, t_{0} \right) - u \left( x_{0}, t_{0} \right)}{\triangle x}.
+    \]
+
+    Это следует из теоремы о конечном приращении.
+
+\end{frame}
+
+%SLIDE #
 \begin{frame}{Пример дискретизации}
 
 	\transdissolve[duration=0.1]
@@ -515,50 +553,69 @@
 
 	Пусть дана система уравнений:
 
-%    \[
-%        \frac{d \textbf{u}}{d t} = \hat{\textbf{L}} \textbf{u},
-%	\]
+    \[
+        \frac{d \textbf{u}}{d t} = \hat{\textbf{L}} \textbf{u},
+    \]
 
-	\[
-        \hat{\textbf{L}} \textbf{u} = 0,
-	\]
+%    \[
+%        \hat{\textbf{L}} \textbf{u} = 0,
+%    \]
 	
 	где в общем случае $\hat{\textbf{L}}$ -- нелинейный оператор.\\
 
 	После дискретизации имеем:
 
-%	\[
-%		\textbf{u}^{n + 1} = \hat{\textbf{T}} (\triangle t, \triangle x) \textbf{u}^{n},
-%	\]
+    \[
+        \textbf{u}^{n + 1} = \hat{\textbf{T}} (\triangle t, \triangle x) \textbf{u}^{n},
+    \]
 
-	\[
-		\hat{\textbf{T}} (\triangle t, \triangle x) \textbf{u}^{n} = 0,
-	\]
+%    \[
+%        \hat{\textbf{T}} (\triangle t, \triangle x) \textbf{u}^{n} = 0,
+%    \]
 
-	где $\hat{\textbf{T}}$ -- дискретный оператор.
+	где $\hat{\textbf{T}}$ -- дискретный оператор (перехода/эволюционный).
 
 \end{frame}
 
 %SLIDE #
 \begin{frame}{Согласованность}
 
-	\transdissolve[duration=0.1]
-	\justifying
-	\large
+    \transdissolve[duration=0.1]
+    \justifying
+    \large
 
-%	\[
-%		\frac{d \textbf{u}}{d t} \approx \frac{\textbf{u}^{n + 1} - \textbf{u}^{n}}{\triangle t} \equiv \frac{\hat{\textbf{T}} (\triangle t, \triangle x) \textbf{u}_{e} - \textbf{u}_{e}}{\triangle t}
-%	\]
+    Пусть $\textbf{u}_{e}$ -- точное решение исходной системы.
 
-	Пусть $\textbf{u}_{e}$ -- точное решение исходной системы, тогда говорят, что численная схема \textbf{аппроксимирует уравнение} (или согласована с уравнением), если:
+    \[
+        \frac{d \textbf{u}}{d t} \approx \frac{\textbf{u}^{n + 1} - \textbf{u}^{n}}{\triangle t} \equiv \frac{\hat{\textbf{T}} (\triangle t, \triangle x) \textbf{u}_{e} - \textbf{u}_{e}}{\triangle t}
+    \]
 
-%	\[
-%		\lim_{\triangle t \rightarrow 0} \lim_{\triangle x \rightarrow 0} \left| \left| \left( \frac{\hat{\textbf{T}} (\triangle t, \triangle x) - \textbf{I}}{\triangle t} - \hat{\textbf{L}} \right) \textbf{u}_{e} \right| \right| = 0, \: \left( \frac{\triangle t}{\triangle x} \right) \rightarrow \beta.
-%	\]
+    Говорят, что численная схема \textbf{аппроксимирует уравнение} (или согласована с уравнением), если:
 
-	\[
-		\lim_{\triangle t \rightarrow 0} \lim_{\triangle x \rightarrow 0} \left( \hat{\textbf{T}} (\triangle t, \triangle x) \textbf{u}_{e} \right) = \hat{\textbf{L}} \textbf{u}_{e}, \: \left( \frac{\triangle t}{\triangle x} \right) \rightarrow \beta.
-	\]
+    \[
+        \lim_{\triangle t \rightarrow 0} \lim_{\triangle x \rightarrow 0} \left| \left| \left( \frac{\hat{\textbf{T}} (\triangle t, \triangle x) - \textbf{I}}{\triangle t} - \hat{\textbf{L}} \right) \textbf{u}_{e} \right| \right| = 0, \: \left( \frac{\triangle t}{\triangle x} \right) \rightarrow \beta.
+    \]
+
+%    \[
+%        \lim_{\triangle t \rightarrow 0} \lim_{\triangle x \rightarrow 0} \left( \hat{\textbf{T}} (\triangle t, \triangle x) \textbf{u}_{e} \right) = \hat{\textbf{L}} \textbf{u}_{e}, \: \left( \frac{\triangle t}{\triangle x} \right) \rightarrow \beta.
+%    \]
+
+\end{frame}
+
+%SLIDE #
+\begin{frame}{Пример}
+
+    \transdissolve[duration=0.1]
+    \justifying
+    \large
+
+    Схема с разностями против потока для линейного уравнения переноса:
+
+    \[
+        u_{t} + a u_{x} = 0 \Rightarrow \frac{u^{n + 1}_{i} - u^{n}_{i}}{\triangle t} + a \frac{u^{n}_{i} - u^{n}_{i - 1}}{\triangle x} = 0
+    \]
+
+    
 
 \end{frame}
 
