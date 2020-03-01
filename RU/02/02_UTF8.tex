@@ -150,8 +150,12 @@
 
 	Искомые величины -- значения переменных в узлах конечноразностной сетки:
 
+%    \[
+%		\omega_{h, \: \tau} = \left\lbrace x_{i} = i h, \: i = \overline{0, N_{h}}; \: t^{n} = n \tau, \: n = \overline{0, N_{t}} \right\rbrace
+%	\]
+	
 	\[
-		\omega_{h, \: \tau} = \left\lbrace x_{i} = i h, \: i = \overline{0, N_{h}}; \: t^{n} = n \tau, \: n = \overline{0, N_{t}} \right\rbrace
+		\omega_{\triangle x, \: \triangle y} = \left\lbrace x_{i} = i \triangle x, \: i = \overline{0, N_{\triangle x}}; \: y_{i} = j \triangle y, \: j = \overline{0, N_{\triangle y}} \right\rbrace
 	\]
 
 	\begin{center}
@@ -165,11 +169,11 @@
 			\uput[-90](4,0){\scriptsize $i + 1$}
 			\uput[-90](5,0){\scriptsize $i + 2$}
 
-			\uput[90](1,1){$u_{i - 2}$}
-			\uput[90](2,2.5){$u_{i - 1}$}
-			\uput[90](3,3){$u_{i}$}
-			\uput[90](4,2.5){$u_{i + 1}$}
-			\uput[90](5,1.5){$u_{i + 2}$}
+			\uput[90](1,1){$u_{i - 2, j}$}
+			\uput[90](2,2.5){$u_{i - 1, j}$}
+			\uput[90](3,3){$u_{i, j}$}
+			\uput[90](4,2.5){$u_{i + 1, j}$}
+			\uput[90](5,1.5){$u_{i + 2, j}$}
 
 			\psline[linewidth=2pt, linecolor=blue]{-o}(1,0)(1,1)
 			\psline[linewidth=2pt, linecolor=blue]{-o}(2,0)(2,2.5)
@@ -179,6 +183,77 @@
 		\end{pspicture}
 	\end{center}
 
+\end{frame}
+
+%SLIDE #
+\begin{frame}{Конечно-разностная сетка}
+
+    \transdissolve[duration=0.1]
+    \justifying
+    \large
+
+	\begin{center}
+		\psset{xunit=1cm,yunit=1cm,algebraic=true}
+		\begin{pspicture}(0,0)(6,6)
+			\psgrid[griddots=0, gridwidth=0pt, gridcolor=gray, gridlabels=0pt, subgriddiv=0, subgriddots=0, subgridcolor=gray](0,0)(0,0)(6,6)
+			\psaxes[Dx=10, Dy=10, subticks=0, labelFontSize=\scriptscriptstyle]{-}(0,0)(0,0)(6,6)[$N_{\triangle x}$,0][$N_{\triangle y}$,90]
+
+            \uput[-90](1,0){\scriptsize $i - 2$}
+            \uput[-90](2,0){\scriptsize $i - 1$}
+            \uput[-90](3,0){\scriptsize $i$}
+            \uput[-90](4,0){\scriptsize $i + 1$}
+            \uput[-90](5,0){\scriptsize $i + 2$}
+
+            \uput[180](0,1){\scriptsize $j - 2$}
+            \uput[180](0,2){\scriptsize $j - 1$}
+            \uput[180](0,3){\scriptsize $j$}
+            \uput[180](0,4){\scriptsize $j + 1$}
+            \uput[180](0,5){\scriptsize $j + 2$}
+
+            \psline[linewidth=2pt, linecolor=red]{o-o}(1,1)(1,1)
+            \psline[linewidth=2pt, linecolor=red]{o-o}(2,1)(2,1)
+            \psline[linewidth=2pt, linecolor=red]{o-o}(3,1)(3,1)
+            \psline[linewidth=2pt, linecolor=red]{o-o}(4,1)(4,1)
+            \psline[linewidth=2pt, linecolor=red]{o-o}(5,1)(5,1)
+
+            \psline[linewidth=2pt, linecolor=red]{o-o}(1,2)(1,2)
+            \psline[linewidth=2pt, linecolor=red]{o-o}(2,2)(2,2)
+            \psline[linewidth=2pt, linecolor=red]{o-o}(3,2)(3,2)
+            \psline[linewidth=2pt, linecolor=red]{o-o}(4,2)(4,2)
+            \psline[linewidth=2pt, linecolor=red]{o-o}(5,2)(5,2)
+
+            \psline[linewidth=2pt, linecolor=red]{o-o}(1,3)(1,3)
+            \psline[linewidth=2pt, linecolor=red]{o-o}(2,3)(2,3)
+            \psline[linewidth=2pt, linecolor=red]{o-o}(3,3)(3,3)
+            \psline[linewidth=2pt, linecolor=red]{o-o}(4,3)(4,3)
+            \psline[linewidth=2pt, linecolor=red]{o-o}(5,3)(5,3)
+
+            \psline[linewidth=2pt, linecolor=red]{o-o}(1,4)(1,4)
+            \psline[linewidth=2pt, linecolor=red]{o-o}(2,4)(2,4)
+            \psline[linewidth=2pt, linecolor=red]{o-o}(3,4)(3,4)
+            \psline[linewidth=2pt, linecolor=red]{o-o}(4,4)(4,4)
+            \psline[linewidth=2pt, linecolor=red]{o-o}(5,4)(5,4)
+
+            \psline[linewidth=2pt, linecolor=red]{o-o}(1,5)(1,5)
+            \psline[linewidth=2pt, linecolor=red]{o-o}(2,5)(2,5)
+            \psline[linewidth=2pt, linecolor=red]{o-o}(3,5)(3,5)
+            \psline[linewidth=2pt, linecolor=red]{o-o}(4,5)(4,5)
+            \psline[linewidth=2pt, linecolor=red]{o-o}(5,5)(5,5)
+
+            \psline[linewidth=2pt, linecolor=red]{o-o}(2,3)(3,3)
+            \psline[linewidth=2pt, linecolor=red]{o-o}(3,3)(4,3)
+            \psline[linewidth=2pt, linecolor=red]{o-o}(3,3)(3,4)
+            \psline[linewidth=2pt, linecolor=red]{o-o}(3,3)(3,2)
+
+            \uput[-90](2,3){\scriptsize $u_{i - 1, j}$}
+            \uput[-45](3,3){\scriptsize $u_{i, j}$}
+            \uput[-90](4,3){\scriptsize $u_{i + 1, j}$}
+            \uput[90](3,4){\scriptsize $u_{i, j + 1}$}
+            \uput[-90](3,2){\scriptsize $u_{i, j - 1}$}
+
+		\end{pspicture}
+	\end{center}
+ 
 \end{frame}
 
 %SLIDE #
@@ -203,19 +278,56 @@
 	\justifying
 	\large
 
-    Производной функции $u(x,t)$ по $x$ в точке $x_{0}, t_{0}$ называется предел
+    Производной функции $u(x, y)$ по $x$ в точке $x_{0}, y_{0}$ называется предел
 
 	\[
-        \left. \frac{\partial u}{\partial x} \right|_{x_{0}, t_{0}} = \lim_{\triangle x \rightarrow 0} \frac{u \left( x_{0} + \triangle x, t_{0} \right) - u \left( x_{0}, t_{0} \right)}{\triangle x}.
+        \left. \frac{\partial u}{\partial x} \right|_{x_{0}, y_{0}} = \lim_{\triangle x \rightarrow 0} \frac{u \left( x_{0} + \triangle x, y_{0} \right) - u \left( x_{0}, y_{0} \right)}{\triangle x}.
     \]
 
     Если $\triangle x$ будет мало, но конечно, то
 
     \[
-        \left. \frac{\partial u}{\partial x} \right|_{x_{0}, t_{0}} \approx \frac{u \left( x_{0} + \triangle x, t_{0} \right) - u \left( x_{0}, t_{0} \right)}{\triangle x}.
+        \left. \frac{\partial u}{\partial x} \right|_{x_{0}, y_{0}} \approx \frac{u \left( x_{0} + \triangle x, y_{0} \right) - u \left( x_{0}, y_{0} \right)}{\triangle x}.
     \]
 
     Это следует из теоремы о конечном приращении.
+
+\end{frame}
+
+%SLIDE #
+\begin{frame}{Точность разностной аппроксимации}
+
+    \transdissolve[duration=0.1]
+    \justifying
+    \large
+
+    Проверить точность разностной аппроксимации производной можно, разложив функцию и в ряд Тейлора или по формуле Тейлора с остаточным членом. Выразим $u \left( x_{0} + \triangle x, y_{0} \right)$ через значения функции и ее производных в точке $\left( x_{0}, y_{0} \right)$:
+
+    \[
+        \begin{split}
+            &u \left( x_{0} + \triangle x, y_{0} \right) = u \left( x_{0}, y_{0} \right) + \boxed{\left. \frac{\partial u}{\partial x} \right|_{0} \triangle x} + \left. \frac{\partial^{2} u}{\partial x^{2}} \right|_{0} \frac{\left( \triangle x \right)^{2}}{2!} + \ldots + \\
+            &+ \left. \frac{\partial^{n-1} u}{\partial x^{n-1}} \right|_{0} \frac{\left( \triangle x \right)^{n-1}}{\left( n - 1 \right)!} + \left. \frac{\partial^{n} u}{ \partial x^{n}} \right|_{\xi} \frac{\left( \triangle x \right)^{n}}{\left( n \right)!}, \: x_{0} \leq \xi \leq x_{0} + \triangle x.
+        \end{split}
+    \]
+
+\end{frame}
+
+%SLIDE #
+\begin{frame}{Точность разностной аппроксимации}
+
+    \transdissolve[duration=0.1]
+    \justifying
+    \large
+
+    \[
+        \left. \frac{\partial u}{\partial x} \right|_{0} = \frac{u \left( x_{0} + \triangle x, y_{0} \right) - u \left( x_{0}, y_{0} \right)}{\triangle x} - \left. \frac{\partial^{2} u}{\partial x^{2}} \right|_{0} \frac{\triangle x}{2!} - \ldots.
+    \]
+
+    \[
+        \left. \frac{\partial u}{\partial x} \right|_{i, j} = \frac{u_{i + 1, j} - u_{i, j}}{\triangle x} + \mathit{O} \left( \triangle x \right).
+    \]
+
+    Погрешностью аппроксимации называется разность значений частной производной и ее конечно-разностного аналога.
 
 \end{frame}
 
@@ -230,12 +342,29 @@
 		\begin{split}
 			&\frac{\partial u}{\partial t} = \frac{\partial^{2} u}{\partial x^{2}} \Rightarrow
 			\begin{cases}
-				&\frac{\partial u}{\partial t} = \frac{u^{n + 1}_{j} - u^{n}_{j}}{\vartriangle t}; \\
-				&\frac{\partial^{2} u}{\partial x^{2}} = \frac{u^{n}_{j + 1} - 2 u^{n}_{j} + u^{n}_{j - 1}}{\vartriangle x^{2}};
+				&\frac{\partial u}{\partial t} \approx \frac{u^{n + 1}_{i} - u^{n}_{i}}{\vartriangle t}; \\
+				&\frac{\partial^{2} u}{\partial x^{2}} \approx \frac{u^{n}_{i + 1} - 2 u^{n}_{i} + u^{n}_{i - 1}}{\left( \triangle x \right)^{2}};
 			\end{cases} \Rightarrow \\
-			&\Rightarrow \frac{u^{n + 1}_{j} - u^{n}_{j}}{\vartriangle t} = \frac{u^{n}_{j + 1} - 2 u^{n}_{j} + u^{n}_{j - 1}}{\vartriangle x^{2}}.
+			&\Rightarrow \frac{u^{n + 1}_{i} - u^{n}_{i}}{\triangle t} = \frac{u^{n}_{i + 1} - 2 u^{n}_{i} + u^{n}_{i - 1}}{\left(\triangle x\right)^{2}}.
 		\end{split}
 	\]
+
+    \begin{center}
+		\psset{xunit=1cm,yunit=1cm,algebraic=true}
+		\begin{pspicture}(0,0)(8,3)
+			\psgrid[griddots=0, gridwidth=0pt, gridcolor=gray, gridlabels=0pt, subgriddiv=0, subgriddots=0, subgridcolor=gray](0,0)(0,0)(8,3)
+			\psaxes[Dx=10, Dy=10, subticks=0, labelFontSize=\scriptscriptstyle]{-}(0,0)(0,0)(8,3)[$N_{x}$,0][$N_{t}$,90]
+
+			\psline[linewidth=2pt, linecolor=red]{o-o}(3,1)(4,1)
+			\psline[linewidth=2pt, linecolor=red]{o-o}(4,1)(5,1)
+			\psline[linewidth=2pt, linecolor=red]{o-o}(4,1)(4,2)
+			\uput[-90](3,1){\scriptsize $(i - 1, n)$}
+			\uput[-90](4,1){\scriptsize $(i, n)$}
+			\uput[-90](5,1){\scriptsize $(i + 1, n)$}
+			\uput[90](4,2){\scriptsize $(i, n + 1)$}
+
+		\end{pspicture}
+	\end{center}
 
 \end{frame}
 
@@ -254,85 +383,143 @@
 \end{frame}
 
 %SLIDE #
-\begin{frame}{Шаблон в общем одномерном случае}
+\begin{frame}{Погрешность дискретизации}
 
 	\transdissolve[duration=0.1]
 	\justifying
 	\large
 
-	\begin{center}
-		\psset{xunit=1cm,yunit=1cm,algebraic=true}
-		\begin{pspicture}(0,0)(8,3)
-			\psgrid[griddots=20, gridwidth=0pt, gridcolor=gray, gridlabels=0pt, subgriddiv=1, subgriddots=20, subgridcolor=gray](0,0)(0,0)(8,3)
-			\psaxes[Dx=1, Dy=1, subticks=1, labelFontSize=\scriptscriptstyle]{-}(0,0)(0,0)(8,3)[$N_{x}$,0][$N_{t}$,90]
+    Пусть $u_{e}$ -- точное решение исходного уравнения. Подставим в него следующие разложения:
 
-			\psline[linewidth=2pt, linecolor=red]{o-o}(1,1)(2,1)
-			\psline[linewidth=2pt, linecolor=red]{o-o}(2,1)(3,1)
-			\psline[linewidth=2pt, linecolor=red]{o-o}(3,1)(4,1)
-			\psline[linewidth=2pt, linecolor=red]{o-o}(4,1)(5,1)
-			\psline[linewidth=2pt, linecolor=red]{o-o}(5,1)(6,1)
-			\psline[linewidth=2pt, linecolor=red]{o-o}(6,1)(7,1)
-			\psline[linewidth=2pt, linecolor=red]{o-o}(4,1)(4,2)
-			\uput[-90](1,1){\scriptsize $(i - \xi, n)$}
-			\uput[-90](2,1){\scriptsize $\ldots$}
-			\uput[-90](3,1){\scriptsize $(i - 1, n)$}
-			\uput[-90](4,1){\scriptsize $(i, n)$}
-			\uput[-90](5,1){\scriptsize $(i + 1, n)$}
-			\uput[-90](6,1){\scriptsize $\ldots$}
-			\uput[-90](7,1){\scriptsize $(i + \eta, n)$}
-			\uput[90](4,2){\scriptsize $i, n + 1$}
+    \[
+        \frac{\partial u_{e}}{\partial t} = \frac{\left( u_{e} \right)^{n + 1}_{i} - \left( u_{e} \right)^{n}_{i}}{\vartriangle t} - \left. \frac{\partial^{2} u_{e}}{\partial t^{2}} \right|_{n, i} \frac{\triangle t}{2} + \ldots ,
+    \]
 
-		\end{pspicture}
-	\end{center}
- 
+    \[
+        \frac{\partial^{2} u_{e}}{\partial x^{2}} = \frac{\left( u_{e} \right)^{n}_{i + 1} - 2 \left( u_{e} \right)^{n}_{i} + \left( u_{e} \right)^{n}_{i - 1}}{\left( \triangle x \right)^{2}} + \left. \frac{\partial^{4} u_{e}}{\partial x^{4}} \right|_{n, i} \frac{\left( \triangle x \right)^{2}}{12} + \ldots ,
+    \]
+
+    тогда
+
+    \[
+        \begin{split}
+            &\frac{\partial u_{e}}{\partial t} - \frac{\partial^{2} u_{e}}{\partial x^{2}} = \frac{\left( u_{e} \right)^{n + 1}_{i} - \left( u_{e} \right)^{n}_{i}}{\triangle t} - \frac{\left( u_{e} \right)^{n}_{i + 1} - 2 \left( u_{e} \right)^{n}_{i} + \left( u_{e} \right)^{n}_{i - 1}}{\left(\triangle x\right)^{2}} \\
+            &- \left. \frac{\partial^{2} u_{e}}{\partial t^{2}} \right|_{n, i} \frac{\triangle t}{2} + \left. \frac{\partial^{4} u_{e}}{\partial x^{4}} \right|_{n, i} \frac{\left( \triangle x \right)^{2}}{12} + \ldots.
+        \end{split}
+    \]
+
 \end{frame}
 
-%SLIDE #
-\begin{frame}{Пример шаблона}
+%%SLIDE #
+%\begin{frame}{Пример шаблона}
+%
+%	\transdissolve[duration=0.1]
+%	\justifying
+%	\large
+%
+%	\[
+%		\frac{u^{n + 1}_{i} - u^{n}_{i}}{\triangle t} = \frac{u^{n}_{i + 1} - 2 u^{n}_{i} + u^{n}_{i - 1}}{\left( \triangle x \right)^{2}}
+%	\]
+%
+%	\begin{center}
+%		\psset{xunit=1cm,yunit=1cm,algebraic=true}
+%		\begin{pspicture}(0,0)(8,3)
+%			\psgrid[griddots=0, gridwidth=0pt, gridcolor=gray, gridlabels=0pt, subgriddiv=0, subgriddots=0, subgridcolor=gray](0,0)(0,0)(8,3)
+%			\psaxes[Dx=10, Dy=10, subticks=0, labelFontSize=\scriptscriptstyle]{-}(0,0)(0,0)(8,3)[$N_{x}$,0][$N_{t}$,90]
+%
+%			\psline[linewidth=2pt, linecolor=red]{o-o}(3,1)(4,1)
+%			\psline[linewidth=2pt, linecolor=red]{o-o}(4,1)(5,1)
+%			\psline[linewidth=2pt, linecolor=red]{o-o}(4,1)(4,2)
+%			\uput[-90](3,1){\scriptsize $(i - 1, n)$}
+%			\uput[-90](4,1){\scriptsize $(i, n)$}
+%			\uput[-90](5,1){\scriptsize $(i + 1, n)$}
+%			\uput[90](4,2){\scriptsize $(i, n + 1)$}
+%
+%		\end{pspicture}
+%	\end{center}
+% 
+%\end{frame}
 
-	\transdissolve[duration=0.1]
-	\justifying
-	\large
+%%SLIDE #
+%\begin{frame}{Шаблон в общем одномерном случае}
+%
+%    \transdissolve[duration=0.1]
+%    \justifying
+%    \large
+%
+%	\begin{center}
+%		\psset{xunit=1cm,yunit=1cm,algebraic=true}
+%		\begin{pspicture}(0,0)(8,3)
+%			\psgrid[griddots=20, gridwidth=0pt, gridcolor=gray, gridlabels=0pt, subgriddiv=1, subgriddots=20, subgridcolor=gray](0,0)(0,0)(8,3)
+%			\psaxes[Dx=1, Dy=1, subticks=1, labelFontSize=\scriptscriptstyle]{-}(0,0)(0,0)(8,3)[$N_{x}$,0][$N_{t}$,90]
+%
+%			\psline[linewidth=2pt, linecolor=red]{o-o}(1,1)(2,1)
+%			\psline[linewidth=2pt, linecolor=red]{o-o}(2,1)(3,1)
+%			\psline[linewidth=2pt, linecolor=red]{o-o}(3,1)(4,1)
+%			\psline[linewidth=2pt, linecolor=red]{o-o}(4,1)(5,1)
+%			\psline[linewidth=2pt, linecolor=red]{o-o}(5,1)(6,1)
+%			\psline[linewidth=2pt, linecolor=red]{o-o}(6,1)(7,1)
+%			\psline[linewidth=2pt, linecolor=red]{o-o}(4,1)(4,2)
+%			\uput[-90](1,1){\scriptsize $(i - \xi, n)$}
+%			\uput[-90](2,1){\scriptsize $\ldots$}
+%			\uput[-90](3,1){\scriptsize $(i - 1, n)$}
+%			\uput[-90](4,1){\scriptsize $(i, n)$}
+%			\uput[-90](5,1){\scriptsize $(i + 1, n)$}
+%			\uput[-90](6,1){\scriptsize $\ldots$}
+%			\uput[-90](7,1){\scriptsize $(i + \eta, n)$}
+%			\uput[90](4,2){\scriptsize $i, n + 1$}
+%
+%		\end{pspicture}
+%	\end{center}
+% 
+%\end{frame}
 
-	\[
-		u_{t} + a u_{x} = 0 \Rightarrow
-			\begin{cases}
-				&\frac{u^{n + 1}_{i} - u^{n}_{i}}{\Delta t} + a \frac{u^{n}_{i} - u^{n}_{i - 1}}{\Delta x} = 0, \quad a > 0, \\
-				&\frac{u^{n + 1}_{i} - u^{n}_{i}}{\Delta t} + a \frac{u^{n}_{i + 1} - u^{n}_{i - 1}}{\Delta x} = 0, \quad a > 0, \\
-				&\frac{u^{n + 1}_{i} - u^{n}_{i}}{\Delta t} + a \frac{u^{n}_{i + 1} - u^{n}_{i}}{\Delta x} = 0, \quad a > 0.
-			\end{cases}
-	\]
-
-	\begin{center}
-		\psset{xunit=1cm,yunit=1cm,algebraic=true}
-		\begin{pspicture}(0,0)(8,3)
-			\psgrid[griddots=20, gridwidth=0pt, gridcolor=gray, gridlabels=0pt, subgriddiv=1, subgriddots=20, subgridcolor=gray](0,0)(0,0)(8,3)
-			\psaxes[Dx=1, Dy=1, subticks=1, labelFontSize=\scriptscriptstyle]{-}(0,0)(0,0)(8,3)[$N_{x}$,0][$N_{t}$,90]
-
-			\psline[linewidth=2pt, linecolor=red]{o-o}(1,1)(2,1)
-			\psline[linewidth=2pt, linecolor=red]{o-o}(2,1)(2,2)
-			\uput[-90](1,1){\scriptsize $(i - 1, n)$}
-			\uput[-90](2,1){\scriptsize $(i, n)$}
-			\uput[90](2,2){\scriptsize $(i, n + 1)$}
-
-			\psline[linewidth=2pt, linecolor=red]{o-o}(3,1)(4,1)
-			\psline[linewidth=2pt, linecolor=red]{o-o}(4,1)(5,1)
-			\psline[linewidth=2pt, linecolor=red]{o-o}(4,1)(4,2)
-			\uput[-90](3,1){\scriptsize $(i - 1, n)$}
-			\uput[-90](4,1){\scriptsize $(i, n)$}
-			\uput[-90](5,1){\scriptsize $(i + 1, n)$}
-			\uput[90](4,2){\scriptsize $(i, n + 1)$}
-
-			\psline[linewidth=2pt, linecolor=red]{o-o}(6,1)(7,1)
-			\psline[linewidth=2pt, linecolor=red]{o-o}(6,1)(6,2)
-			\uput[-90](6,1){\scriptsize $(i, n)$}
-			\uput[-90](7,1){\scriptsize $(i + 1, n)$}
-			\uput[90](6,2){\scriptsize $(i, n + 1)$}
-
-		\end{pspicture}
-	\end{center}
- 
-\end{frame}
+%%SLIDE #
+%\begin{frame}{Пример шаблона}
+%
+%	\transdissolve[duration=0.1]
+%	\justifying
+%	\large
+%
+%	\[
+%		u_{t} + a u_{x} = 0 \Rightarrow
+%			\begin{cases}
+%				&\frac{u^{n + 1}_{i} - u^{n}_{i}}{\Delta t} + a \frac{u^{n}_{i} - u^{n}_{i - 1}}{\Delta x} = 0, \quad a > 0, \\
+%				&\frac{u^{n + 1}_{i} - u^{n}_{i}}{\Delta t} + a \frac{u^{n}_{i + 1} - u^{n}_{i - 1}}{\Delta x} = 0, \quad a > 0, \\
+%				&\frac{u^{n + 1}_{i} - u^{n}_{i}}{\Delta t} + a \frac{u^{n}_{i + 1} - u^{n}_{i}}{\Delta x} = 0, \quad a > 0.
+%			\end{cases}
+%	\]
+%
+%	\begin{center}
+%		\psset{xunit=1cm,yunit=1cm,algebraic=true}
+%		\begin{pspicture}(0,0)(8,3)
+%			\psgrid[griddots=20, gridwidth=0pt, gridcolor=gray, gridlabels=0pt, subgriddiv=1, subgriddots=20, subgridcolor=gray](0,0)(0,0)(8,3)
+%			\psaxes[Dx=1, Dy=1, subticks=1, labelFontSize=\scriptscriptstyle]{-}(0,0)(0,0)(8,3)[$N_{x}$,0][$N_{t}$,90]
+%
+%			\psline[linewidth=2pt, linecolor=red]{o-o}(1,1)(2,1)
+%			\psline[linewidth=2pt, linecolor=red]{o-o}(2,1)(2,2)
+%			\uput[-90](1,1){\scriptsize $(i - 1, n)$}
+%			\uput[-90](2,1){\scriptsize $(i, n)$}
+%			\uput[90](2,2){\scriptsize $(i, n + 1)$}
+%
+%			\psline[linewidth=2pt, linecolor=red]{o-o}(3,1)(4,1)
+%			\psline[linewidth=2pt, linecolor=red]{o-o}(4,1)(5,1)
+%			\psline[linewidth=2pt, linecolor=red]{o-o}(4,1)(4,2)
+%			\uput[-90](3,1){\scriptsize $(i - 1, n)$}
+%			\uput[-90](4,1){\scriptsize $(i, n)$}
+%			\uput[-90](5,1){\scriptsize $(i + 1, n)$}
+%			\uput[90](4,2){\scriptsize $(i, n + 1)$}
+%
+%			\psline[linewidth=2pt, linecolor=red]{o-o}(6,1)(7,1)
+%			\psline[linewidth=2pt, linecolor=red]{o-o}(6,1)(6,2)
+%			\uput[-90](6,1){\scriptsize $(i, n)$}
+%			\uput[-90](7,1){\scriptsize $(i + 1, n)$}
+%			\uput[90](6,2){\scriptsize $(i, n + 1)$}
+%
+%		\end{pspicture}
+%	\end{center}
+% 
+%\end{frame}
 
 %%SLIDE #
 %\begin{frame}{Метод конечных объемов (Finite Volume Method)}
@@ -534,6 +721,28 @@
 %\end{frame}
 
 %SLIDE #
+\begin{frame}{Ошибки}
+
+    \transdissolve[duration=0.1]
+    \justifying
+    \large
+
+    \begin{center}
+        \begin{tabular}{|c|c|c|}
+            $u_{t} + a u_{x} = 0$
+            &
+            $\frac{u^{n + 1}_{i} - u^{n}_{i}}{\triangle t} + a \frac{u^{n}_{i} - u^{n}_{i - 1}}{\triangle x} = 0$
+            &
+            $\frac{u^{n + 1}_{i} - u^{n}_{i}}{\triangle t} + a \frac{u^{n}_{i} - u^{n}_{i - 1}}{\triangle x} = 0$ + ЭВМ
+            \\
+            $\Downarrow$ & $\Downarrow$ & $\Downarrow$ \\
+            $u_{e} \left( x, t\right)$ & $\left( u_{e} \right)^{n}_{i} + \mathit{O} \left( \triangle x \right)$ & $\left( u_{e} \right)^{n}_{i} + \mathit{O} \left( \triangle x \right) + \varepsilon$ \\
+        \end{tabular}
+    \end{center}
+
+\end{frame}
+
+%SLIDE #
 \begin{frame}{Согласованность}
 
 	\transdissolve[duration=0.1]
@@ -592,9 +801,13 @@
 
     Говорят, что численная схема \textbf{аппроксимирует уравнение} (или согласована с уравнением), если:
 
-    \[
-        \lim_{\triangle t \rightarrow 0} \lim_{\triangle x \rightarrow 0} \left| \left| \left( \frac{\hat{\textbf{T}} (\triangle t, \triangle x) - \textbf{I}}{\triangle t} - \hat{\textbf{L}} \right) \textbf{u}_{e} \right| \right| = 0, \: \left( \frac{\triangle t}{\triangle x} \right) \rightarrow \beta.
+\[
+        \lim_{\triangle t \rightarrow 0} \lim_{\triangle x \rightarrow 0} \left( \frac{\hat{\textbf{T}} (\triangle t, \triangle x) - \textbf{I}}{\triangle t} \right) \textbf{u}_{e} = \hat{\textbf{L}} \textbf{u}_{e}, \: \left( \frac{\triangle t}{\triangle x} \right) \rightarrow \beta.
     \]
+
+%    \[
+%        \lim_{\triangle t \rightarrow 0} \lim_{\triangle x \rightarrow 0} \left| \left| \left( \frac{\hat{\textbf{T}} (\triangle t, \triangle x) - \textbf{I}}{\triangle t} - \hat{\textbf{L}} \right) \textbf{u}_{e} \right| \right| = 0, \: \left( \frac{\triangle t}{\triangle x} \right) \rightarrow \beta.
+%    \]
 
 %    \[
 %        \lim_{\triangle t \rightarrow 0} \lim_{\triangle x \rightarrow 0} \left( \hat{\textbf{T}} (\triangle t, \triangle x) \textbf{u}_{e} \right) = \hat{\textbf{L}} \textbf{u}_{e}, \: \left( \frac{\triangle t}{\triangle x} \right) \rightarrow \beta.
@@ -609,13 +822,62 @@
     \justifying
     \large
 
+    Условие безусловно выполняется, если погрешность аппроксимации убывает при измельчении сетки, т. е. если погрешность аппроксимации имеет порядок $\mathit{O} \left( \triangle x, \triangle t \right)$ и т.д. Однако если порядок погрешности аппроксимации равен, например, $\mathit{O} \left( \frac{\triangle t}{\triangle x} \right)$, то схема будет согласованной лишь в том случае, когда измельчение сетки проводится в соответствии с условием $\mathit{O} \left( \frac{\triangle t}{\triangle x} \right) \rightarrow 0$.
+
+\end{frame}
+
+%SLIDE #
+\begin{frame}{Пример}
+
+    \transdissolve[duration=0.1]
+    \justifying
+    \large
+
+    В качестве примера рассмотрим схему Дюфорта -- Франкела [DuFort, Frankel, 1953] для уравнения теплопроводности:
+
+    \[
+        \frac{u^{n + 1}_{i} - u^{n - 1}_{i}}{2 \triangle t} = \frac{u^{n}_{i + 1} - u^{n + 1}_{i} - u^{n - 1}_{i}+ u^{n}_{i - 1}}{\left(\triangle x\right)^{2}}.
+    \]
+
+    Главный член погрешности аппроксимации этой схемы, вычисленный с использованием ряда Тейлора, равен
+
+    \[
+       \left. \frac{\partial^{4} u_{e}}{\partial x^{4}} \right|_{n, i} \frac{\left( \triangle x \right)^{2}}{12} -  \left. \frac{\partial^{2} u_{e}}{\partial t^{2}} \right|_{n, i} \left( \frac{\triangle t}{\triangle x} \right)^{2} - \left. \frac{\partial^{3} u_{e}}{\partial x^{3}} \right|_{n, i} \frac{\left( \triangle x \right)^{2}}{6}.
+    \]
+
+\end{frame}
+
+%SLIDE #
+\begin{frame}{Пример}
+
+    \transdissolve[duration=0.1]
+    \justifying
+    \large
+
+    При $\left( \frac{\triangle t}{\triangle x} \right) \rightarrow \beta$ имеем
+
+    \[
+        \frac{\partial u}{\partial t} + \beta^{2} \frac{\partial^{2} u}{\partial t^{2}} = \frac{\partial^{2} u}{\partial x^{2}}
+    \]
+
+    \begin{center}
+        \textbf{Гиперболическое уравнение!}
+    \end{center}
+
+\end{frame}
+
+%SLIDE #
+\begin{frame}{Пример}
+
+    \transdissolve[duration=0.1]
+    \justifying
+    \large
+
     Схема с разностями против потока для линейного уравнения переноса:
 
     \[
-        u_{t} + a u_{x} = 0 \Rightarrow \frac{u^{n + 1}_{i} - u^{n}_{i}}{\triangle t} + a \frac{u^{n}_{i} - u^{n}_{i - 1}}{\triangle x} = 0
-    \]
-
-    
+        u_{t} + a u_{x} = 0 \Rightarrow \frac{u^{n + 1}_{i} - u^{n}_{i}}{\triangle t} + a \frac{u^{n}_{i} - u^{n}_{i - 1}}{\triangle x} = 0.
+    \]    
 
 \end{frame}
 
