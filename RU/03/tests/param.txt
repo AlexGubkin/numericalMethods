@@ -1,0 +1,13 @@
+project_name= tests;
+GNUPLOT_HOME= "/usr/bin";
+FFMPEG_HOME= "/usr/bin";
+U1= 1;
+U2= 0;
+c0= 1;
+L= 1;
+N_x= 200;
+modeling_time= 1.0;
+Co= 0.1;
+write_interval= 0.005;
+mu_a= 60;
+
