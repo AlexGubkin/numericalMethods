@@ -18,7 +18,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage[english,russian]{babel}
 \usepackage[OT1]{fontenc}
-\usepackage{amsmath}
+\usepackage{amsmath, bm}
 \usepackage{amsfonts}
 \usepackage{amssymb}
 \usepackage{graphicx}
@@ -383,6 +383,21 @@
 \end{frame}
 
 %SLIDE #
+\begin{frame}{Сокращенная запись производных}
+
+	\transdissolve[duration=0.1]
+	\justifying
+	\large
+
+    Для сокращения записи производных довольно часто используют следующие обозначения:
+
+    \[
+        \frac{\partial u}{\partial t} = u_{t}, \: \frac{\partial u}{\partial x} = u_{x}, \: \frac{\partial^{2} u}{\partial t^{2}} = u_{tt}, \: \frac{\partial^{2} u}{\partial t \partial x} = u_{tx}, \: \frac{\partial^{2} u}{\partial x \partial t} = u_{xt}, \: \frac{\partial^{2} u}{\partial x \partial x} = u_{xx}.
+    \]
+
+\end{frame}
+
+%SLIDE #
 \begin{frame}{Погрешность дискретизации}
 
 	\transdissolve[duration=0.1]
@@ -729,14 +744,14 @@
 
     \begin{center}
         \begin{tabular}{|c|c|c|}
-            $u_{t} + a u_{x} = 0$
+            $\frac{\partial u}{\partial t} = \frac{\partial^{2} u}{\partial x^{2}}$
             &
-            $\frac{u^{n + 1}_{i} - u^{n}_{i}}{\triangle t} + a \frac{u^{n}_{i} - u^{n}_{i - 1}}{\triangle x} = 0$
+            $\frac{u^{n + 1}_{i} - u^{n}_{i}}{\triangle t} = \frac{u^{n}_{i + 1} - 2 u^{n}_{i} + u^{n}_{i - 1}}{\left(\triangle x\right)^{2}}$
             &
-            $\frac{u^{n + 1}_{i} - u^{n}_{i}}{\triangle t} + a \frac{u^{n}_{i} - u^{n}_{i - 1}}{\triangle x} = 0$ + ЭВМ
+            $\frac{u^{n + 1}_{i} - u^{n}_{i}}{\triangle t} = \frac{u^{n}_{i + 1} - 2 u^{n}_{i} + u^{n}_{i - 1}}{\left(\triangle x\right)^{2}}$ + ЭВМ
             \\
             $\Downarrow$ & $\Downarrow$ & $\Downarrow$ \\
-            $u_{e} \left( x, t\right)$ & $\left( u_{e} \right)^{n}_{i} + \mathit{O} \left( \triangle x \right)$ & $\left( u_{e} \right)^{n}_{i} + \mathit{O} \left( \triangle x \right) + \varepsilon$ \\
+            $u = u_{e} \left( x, t\right)$ & $u^{n}_{i} = \left( u_{e} \right)^{n}_{i} + \mathit{O} \left( \triangle x \right)$ & $u^{n}_{i} = \left( u_{e} \right)^{n}_{i} + \mathit{O} \left( \triangle x \right) + \varepsilon$ \\
         \end{tabular}
     \end{center}
 
@@ -879,6 +894,21 @@
         u_{t} + a u_{x} = 0 \Rightarrow \frac{u^{n + 1}_{i} - u^{n}_{i}}{\triangle t} + a \frac{u^{n}_{i} - u^{n}_{i - 1}}{\triangle x} = 0.
     \]    
 
+    Подставим вместо $u^{n + 1}_{i}$ и $u^{n}_{i - 1}$ их выражения в виде ряда Тейлора:
+
+    \[
+		\begin{split}
+			&u^{n + 1}_{i} = u^{n}_{i} + u_{t} \triangle t + \frac{u_{tt}}{2} \triangle t^{2} + \frac{u_{ttt}}{6} \triangle t^{3} + O(\triangle t^{4}),\\
+			&u^{n}_{i - 1} = u^{n}_{i} - u_{x} \triangle x + \frac{u_{xx}}{2} \triangle x^{2} - \frac{u_{xxx}}{6} \triangle x^{3} + O(\triangle x^{4}).
+		\end{split}
+	\]
+
+    Главный член погрешности аппроксимации этой схемы $\left( \left( \frac{\triangle t}{\triangle x} \right) \rightarrow \beta \right)$:
+
+    \[
+        -\frac{u_{tt}}{2} \triangle t + a \frac{u_{xx}}{2} \triangle x \rightarrow 0
+    \]
+
 \end{frame}
 
 %SLIDE #
@@ -888,35 +918,39 @@
 	\justifying
 	\large
 
-	Пусть $u_{e} (x, t)$ -- точное решение. Тогда локальная ошибка аппроксимации записывается как:
+    Под порядком аппроксимации понимают показатель степени главного члена погрешности аппроксимации. \\
+
+	Локальная ошибка аппроксимации записывается как:
 
 	\[
-		LTE = u^{n + 1}_{e} - \hat{\textbf{T}} u^{n}_{e} = O \left( \triangle t \sum_{p , q \geq 0, p + q = l} \triangle t^{p} \triangle x^{q} \right).
+		u^{n + 1}_{e} - \hat{\textbf{T}} u^{n}_{e} = O \left( \triangle t \sum_{p , q \geq 0, p + q = l} \triangle t^{p} \triangle x^{q} \right),
 	\]
+
+    где $u_{e} (x, t)$ -- точное решение.
 
 	В этом случае порядок локальной ошибки аппроксимации равен $l + 1$, а порядок схемы $l$.
 
 \end{frame}
 
-%SLIDE #
-\begin{frame}{Пример}
-
-	\transdissolve[duration=0.1]
-	\justifying
-	\large
-
-	Схема с разностями против потока для линейного уравнения переноса $u_{t} + a u_{x} = 0$:
-
-	\[
-		\begin{split}
-			&\frac{u^{n + 1}_{i} - u^{n}_{i}}{\triangle t} + a \frac{u^{n}_{i} - u^{n}_{i - 1}}{\triangle x} = 0, \\
-			&\left( \hat{\textbf{T}} u^{n}_{e} \right)_{j} = u^{n}_{e, j} - \sigma \left( u^{n}_{e, j} - u^{n}_{e, j - 1} \right), \: \sigma = a \triangle t / \triangle x, \\
-			&LTE = u^{n + 1}_{e} - \hat{\textbf{T}} u^{n}_{e} = \left( u_{e, t} + a u_{e, x} \right) \triangle t +\\
-			& + O \left( \triangle t \triangle x + \triangle t^{2} \right) = \triangle t O \left( \triangle x + \triangle t \right).
-		\end{split}
-	\]
-
-\end{frame}
+%%SLIDE #
+%\begin{frame}{Пример}
+%
+%	\transdissolve[duration=0.1]
+%	\justifying
+%	\large
+%
+%	Схема с разностями против потока для линейного уравнения переноса $u_{t} + a u_{x} = 0$:
+%
+%	\[
+%		\begin{split}
+%			&\frac{u^{n + 1}_{i} - u^{n}_{i}}{\triangle t} + a \frac{u^{n}_{i} - u^{n}_{i - 1}}{\triangle x} = 0, \\
+%			&\left( \hat{\textbf{T}} u^{n}_{e} \right)_{j} = u^{n}_{e, j} - \sigma \left( u^{n}_{e, j} - u^{n}_{e, j - 1} \right), \: \sigma = a \triangle t / \triangle x, \\
+%			&LTE = u^{n + 1}_{e} - \hat{\textbf{T}} u^{n}_{e} = \left( u_{e, t} + a u_{e, x} \right) \triangle t +\\
+%			& + O \left( \triangle t \triangle x + \triangle t^{2} \right) = \triangle t O \left( \triangle x + \triangle t \right).
+%		\end{split}
+%	\]
+%
+%\end{frame}
 
 %SLIDE #
 \begin{frame}{Устойчивость}
@@ -925,9 +959,9 @@
 	\justifying
 	\large
 
-	Обозначим вектор ошибки, появляющейся на $n$ - м шагу, через $\varepsilon^{n} = u^{n} - u^{n}_{e}$.\\
+	Обозначим вектор ошибки, появляющейся на $n$ - м шагу, через $\bm{\varepsilon}^{n} = \mathbf{u}^{n} - \mathbf{u}^{n}_{e}$.\\
 
-	Матрица перехода $G$ определяется как $\varepsilon^{n + 1} = G \varepsilon^{n}$.\\
+	Матрица перехода $G$ определяется как $\bm{\varepsilon}^{n + 1} = G \bm{\varepsilon}^{n}$.\\
 
 	Для линейного уравнения матрица перехода $G$ эквивалентна оператору перехода $\hat{\textbf{T}}$.\\
 
@@ -948,17 +982,34 @@
 
 	\begin{block}{Условие устойчивости}
 
-		Метод устойчив, если $\parallel \varepsilon^{n + 1} \parallel = \parallel u^{n + 1} - u^{n + 1}_{e} \parallel$ может быть ограничена $\parallel \varepsilon^{n} \parallel$, умноженной на константу, независящую как от $u^{n}$, так и от $ u^{n}_{e}$:
+		Метод устойчив, если $\parallel \bm{\varepsilon}^{n + 1} \parallel = \parallel u^{n + 1} - u^{n + 1}_{e} \parallel$ может быть ограничена величиной $\parallel \bm{\varepsilon}^{n} \parallel$, умноженной на константу, независящую как от $u^{n}$, так и от $ u^{n}_{e}$:
 
 		\[
-			\parallel \varepsilon^{n + 1} \parallel \leq \left( 1 + K \triangle t \right) \parallel \varepsilon^{n} \parallel.
+			\parallel \bm{\varepsilon}^{n + 1} \parallel \leq \left( 1 + K \triangle t \right) \parallel \bm{\varepsilon}^{n} \parallel.
 		\]
 
 	\end{block}
 
-	\textbf{Должно быть} $\textbf{K = 0}$\textbf{!}\\
+	\begin{center}
+	    \textbf{Должно быть} $\textbf{K = 0}$\textbf{!}
+	\end{center}
 
-	Если уравнение перехода приведено к диагональному виду $\varepsilon^{n + 1}_{\mu} = g_{\mu} \varepsilon^{n}_{\mu}$, тогда для устойчивости надо потребовать, чтобы норма каждого собственного вектора ошибки не возрастала, откуда получаем:
+\end{frame}
+
+%SLIDE #
+\begin{frame}{Устойчивость}
+
+	\transdissolve[duration=0.1]
+	\justifying
+	\large
+
+	Если уравнение перехода приведено к диагональному виду $\bm{\varepsilon}^{n + 1}_{\mu} = g_{\mu} \bm{\varepsilon}^{n}_{\mu}$, тогда для устойчивости надо потребовать, чтобы норма каждого собственного вектора ошибки не возрастала,
+
+    \[
+        \parallel \bm{\varepsilon}^{n + 1} \parallel \leq \parallel \bm{\varepsilon}^{n} \parallel ,
+    \]
+	
+	откуда получаем:
 
 	\[
 		\vert g_{\mu} \vert = \sqrt{ g_{\mu}  g^{*}_{\mu}} < 1 \mbox{для всех} \: \mu.
@@ -973,7 +1024,15 @@
 	\justifying
 	\large
 
-	Пусть оператор перехода $\hat{\textbf{T}} (\triangle t, \triangle x)$ равен постоянной величине. Тогда можно рассмотреть устойчивость фурье-моды зависимой переменной $u^{n}_{j} = \hat{u}^{n}_{j} e^{i k x_{j}}$ и потребовать ограниченности ее амплитуды. Для устойчивости множитель перехода $g$ (или для системы уравнений собственные значения матрицы перехода $g_{\mu}$) должен не превосходит по модулю единицу $\vert g \vert \leq 1$, для всех фурье-мод.\\
+	Пусть оператор перехода $\hat{\textbf{T}} (\triangle t, \triangle x)$ равен постоянной величине. Тогда можно рассмотреть устойчивость фурье-моды зависимой переменной
+
+    \[
+        u^{n}_{j} = \hat{u}^{n}_{j} e^{i k x_{j}} = \hat{u}^{n}_{j} \left( \cos \left( k x_{j} \right) + \sin \left( k x_{j} \right) \right)
+    \]
+
+	и потребовать ограниченности ее амплитуды. \\
+
+	Для устойчивости множитель перехода $g$ (или для системы уравнений собственные значения матрицы перехода $g_{\mu}$) должен не превосходит по модулю единицу $\vert g \vert \leq 1$, для всех фурье-мод.\\
 
 \end{frame}
 

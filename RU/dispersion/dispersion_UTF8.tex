@@ -1,0 +1,175 @@
+\documentclass[10pt,xcolor=pst,aspectratio=169]{beamer}
+
+\usepackage{etex}
+
+%\usetheme{Boadilla}
+%\usecolortheme{wolverine}
+\usecolortheme{dolphin}
+%\setbeamercovered{transparent}
+%\setbeamercolor{block body}{bg=yellow}
+
+\addtobeamertemplate{navigation symbols}{}{%
+\usebeamerfont{footline}%
+\usebeamercolor[fg]{footline}%
+\hspace{1em}%
+\insertframenumber/\inserttotalframenumber
+}
+
+\usepackage[utf8]{inputenc}
+\usepackage[english,russian]{babel}
+\usepackage[OT1]{fontenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\usepackage[3D]{movie15}
+\usepackage{animate}
+\usepackage{ragged2e}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{pst-all}
+
+\usepackage{tikz}
+\usetikzlibrary{
+	mindmap,
+	arrows, % стрелки
+	shapes.misc, % фигуры
+	chains, % цепочки
+	positioning, % позиционирование элементов
+	scopes, % создание дополнительных веток
+	shadows % тени
+	}
+
+\graphicspath{{pic/}}
+
+\author{\textbf{Губкин А.С.}}
+
+\title[Численные методы в физике]{Численные методы в физике}
+
+\logo{\includegraphics[width=0.1\linewidth]{LOGO_2.EPS}}
+
+\institute[ТюмФ ИТПМ СО РАН]{Тюменский филиал Института теоретической и прикладной механики\\ им. С. А. Христиановича СО РАН, г. Тюмень}
+
+%\date{6 октября 2015 г.}
+
+\begin{document}
+
+\lstset{ %
+	language=[ANSI]C++,                 % выбор языка для подсветки (здесь это С++)
+	keywordstyle=\color{blue},
+	commentstyle=\color{gray},
+	basicstyle=\scriptsize,
+%basicstyle=\small\sffamily, % размер и начертание шрифта для подсветки кода
+	numbers=left,               % где поставить нумерацию строк (слева\справа)
+	numberstyle=\tiny,           % размер шрифта для номеров строк
+%stepnumber=1,                   % размер шага между двумя номерами строк
+	numbersep=4pt,                % как далеко отстоят номера строк от подсвечиваемого кода
+%backgroundcolor=\color{white}, % цвет фона подсветки - используем \usepackage{color}
+	showspaces=false,            % показывать или нет пробелы специальными отступами
+	showstringspaces=false,      % показывать или нет пробелы в строках
+	showtabs=false,             % показывать или нет табуляцию в строках
+	frame=single,              % рисовать рамку вокруг кода
+%tabsize=2,                 % размер табуляции по умолчанию равен 2 пробелам
+	captionpos=t,              % позиция заголовка вверху [t] или внизу [b] 
+	breaklines=true,           % автоматически переносить строки (да\нет)
+	breakatwhitespace=true, % переносить строки только если есть пробел
+	escapeinside={\%*}{*)}   % если нужно добавить комментарии в коде
+}
+
+%SLIDE #
+\begin{frame}
+
+	\transdissolve[duration=0.1]
+	\titlepage
+
+\end{frame}
+
+%SLIDE #
+\begin{frame}{Диссипация и дисперсия численного решения}
+
+	\transdissolve[duration=0.1]
+	\justifying
+	\large
+
+	Определим диссипацию и диспесиию для дифференциального волнового уравнения. Возьмем решение в виде:
+
+	\[
+		u(x, t) = u_{0} \exp{(i (\omega t - k x))},
+	\]
+
+	где $\omega = 2 \pi \nu$ -- круговая частота, $k = 2 \pi / \lambda$ -- волновое число.\\
+
+	Подставив это решение в волновое уравнение, получим зависимость $\omega = \omega(k)$, которая называется \textbf{дисперсионным соотношением}.\\
+
+	Если $\omega$ -- комплексное число, волна затухает!
+
+	\[
+		\exp{((- Im \omega) t)} = \exp{(- \gamma t)}.
+	\]
+
+\end{frame}
+
+%SLIDE #
+\begin{frame}{Фазовая и групповая скорость}
+
+	\transdissolve[duration=0.1]
+	\justifying
+	\large
+
+	\textbf{Фазовая скорость} -- это скорость, с которой движется фаза или отдельной гармоники:
+
+	\[
+		\frac{Re \omega}{k} = c_{f}.
+	\]
+
+	\textbf{Групповая скорость} -- это скорость волнового пакета, состоящего из гармонических волн с близкими волновыми числами (Передача энергии осуществляется с групповой скоростью!):
+
+	\[
+		\frac{d}{d k} Re \omega = c_{g}.
+	\]
+
+\end{frame}
+
+%SLIDE #
+\begin{frame}{Дисперсия волн}
+
+	\transdissolve[duration=0.1]
+	\justifying
+	\large
+
+	Если фазовая/групповая скорость зависит от $k$, то гармоники с разными волновыми числами распространяются с разными скоростями. Такое явление называется \textbf{дисперсией}.
+
+\end{frame}
+
+%SLIDE #
+\begin{frame}{Пример №1}
+
+	\transdissolve[duration=0.1]
+	\justifying
+	\large
+
+	\[
+		\frac{\partial^{2} u}{\partial t^{2}} = c^{2} \frac{\partial^{2} u}{\partial x^{2}} \Rightarrow - \omega^{2} = - c^{2} k^{2} \Rightarrow \omega = c k \Rightarrow \frac{Re \omega}{k} = \frac{d}{d k} Re \omega = c.
+	\]
+	
+	Точное решение -- волна без дисперсии и затухания.
+
+\end{frame}
+
+%SLIDE #
+\begin{frame}{Пример №2}
+
+	\transdissolve[duration=0.1]
+	\justifying
+	\large
+
+	\[
+		\frac{\partial u}{\partial t} + c \frac{\partial u}{\partial x} = \mu \frac{\partial^{2} u}{\partial x^{2}} \Rightarrow i \omega - i c k = - \mu k^{2} \Rightarrow \omega(k) = c k + i \mu k^{2}.
+	\]
+	
+	Точное решение -- затухающая недиспергирующая волна.
+
+\end{frame}
+
+\end{document}
