@@ -30,7 +30,7 @@
 \usepackage{color}
 \usepackage{pst-all}
 
-\usepackage{tikz}
+\usepackage{tikz,pgfplots}
 \usetikzlibrary{
 	mindmap,
 	arrows, % стрелки
@@ -82,6 +82,233 @@
 
 	\transdissolve[duration=0.1]
 	\titlepage
+
+\end{frame}
+
+%SLIDE #
+\begin{frame}{Линейные волны, распространяющиеся без затухания}
+
+	\transdissolve[duration=0.1]
+	\justifying
+	\large
+
+    Рассмотрим далее общие свойства линейных волн, распространяющихся в одномерном пространстве без диссипации. В этом случае независимыми переменными являются $t$ и $x$. Волновая система может описываться одной или более зависимыми переменными; рассмотрим пока одну переменную и обозначим ее $u$.\\
+
+    (Иногда употребялют оборот волны с диссипацией и дисперсией -- с точки зрения физики это не верно)
+
+\end{frame}
+
+%SLIDE #
+\begin{frame}{Фаза и фазовая скорость}
+
+	\transdissolve[duration=0.1]
+	\justifying
+	\large
+
+    Рассмотрим волновое изменение зависимой переменной $u \left( x, t \right)$ в виде:
+
+    \[
+		u \left( x, t \right) = u_{0} \operatorname{Re} \left\lbrace e^{i \theta} \right\rbrace = u_{0} \cos \left( \theta \right) .
+	\]
+
+    $\theta$ -- фаза, линейная по независимым переменным
+
+    \[
+        \theta = k x - \omega t + \alpha,
+    \]
+
+    $k$ -- волновое число, $\omega$ -- круговая частота.
+
+    Фаза будет оставаться постоянной для наблюдателя, который движется со скоростью
+
+    \[
+        \frac{d x}{d t} = \frac{\omega}{k} = c.
+    \]
+
+    Действительно
+
+    \[
+        \frac{d \theta}{d t} = \frac{\partial \theta}{\partial t} + \frac{d x}{d t} \frac{\partial \theta}{\partial x} = - \omega + \frac{\omega}{k} k = 0.
+    \]
+
+\end{frame}
+
+%SLIDE #
+\begin{frame}{Дисперсионное соотношение}
+
+	\transdissolve[duration=0.1]
+	\justifying
+	\large
+
+    В общем случае для распространяющихся волн существует функциональное соотношение $f \left( \omega, k \right)$, связывающее частоту и волновое число. Обычно это соотношение имеет вид зависимости частоты от волнового числа $k$:
+
+    \[
+        \omega = W \left( k \right).
+    \]
+
+    Соотношение такого типа обычно называют дисперсионным соотношением или уравнением.
+
+    Тогда \textbf{фазовая скорость} также зависит от волнового числа:
+
+    \[
+        c = \frac{\omega}{k} = \frac{W \left( k \right)}{k}.
+    \]
+
+    В случае, когда фазовая скорость не зависит от волнового числа (или от частоты), говорят, что волна распространяется без дисперсии. В таком случае функция $W$ имеет простой вид:
+
+    \[
+        W \left( k \right) = c k.
+    \]
+
+\end{frame}
+
+%SLIDE #
+\begin{frame}{Интеграл Фурье}
+
+	\transdissolve[duration=0.1]
+	\justifying
+	\large
+
+	Пусть задано начальное распределение $u \left( x, 0 \right)$. Если это начальное распределение не гармонично, то его можно представить с помощью интеграла Фурье как суперпозицию синусоидальных функций.
+
+    \[
+        u \left( x, 0 \right) = \frac{1}{2 \pi} \int\limits_{-\infty}^{\infty} \bar{u} \left( p, 0 \right) e^{i p x} dp ,
+    \]
+
+    \[
+        \bar{u} \left( p, 0 \right) = \int\limits_{-\infty}^{\infty} \bar{u} \left( x, 0 \right) e^{- i p x} dx .
+    \]
+
+\end{frame}
+
+%SLIDE #
+\begin{frame}{Дисперсия}
+
+	\transdissolve[duration=0.1]
+	\justifying
+	\large
+
+    Поскольку система предполагается линейной, каждая из гармонических компонент изменяется как $e^{i \theta}$ c частотой $W \left( k \right) = c k$. Полное решение в любой последующий момент времени $t$ может быть получено путем обратного преобразования Фурье.\\
+
+    В бездисперсионном случае этот процесс вновь приводит к начальному распределению, смещенному на расстояние $c t$. То есть, решение можно выразить в виде
+
+    \[
+        u \left( x, t \right) = u \left( x - c t, 0 \right).
+    \]
+
+Если же волна распространяется с дисперсией, то рассуждения теряют силу. В этом случае каждая компонента Фурье распространяется со своей скоростью.
+
+\end{frame}
+
+%SLIDE #
+\begin{frame}{Групповая скорость}
+
+	\transdissolve[duration=0.1]
+	\justifying
+	\large
+
+    Производная от правой части дисперсионного соотношения имеет размерность скорости
+
+    \[
+        C \left( k \right) = \frac{d W}{d k}.
+    \]
+
+    Это величина называется \textbf{групповой скорость}.
+
+\end{frame}
+
+%SLIDE #
+\begin{frame}{Интерпретация групповой скорости}
+
+	\transdissolve[duration=0.1]
+	\justifying
+	\large
+
+    Выберем некоторое значение $k$ и соответствующее ему значение $\omega = W \left( k \right)$ как исходные величины и допустим, что кволновому числу добавляется малое возмущение $\pm \triangle k$. Соответствующее возмущенное значение частоты может быть аппроксимировано первыми двумя членами ряда Тейлора:
+
+    \[
+        \omega + \triangle \omega = W \left( k + \triangle k \right) \approx \omega + C \triangle k .
+    \]
+
+    \[
+        \omega - \triangle \omega = W \left( k - \triangle k \right) \approx \omega - C \triangle k .
+    \]
+
+    Соответствующие фазы
+
+    \[
+        \theta_{+} = \left( k + \triangle k \right) x - \left( \omega + \triangle \omega \right) t = \theta + \triangle k \left( x - C t \right) .
+    \]
+
+    \[
+        \theta_{-} = \left( k - \triangle k \right) x - \left( \omega - \triangle \omega \right) t = \theta - \triangle k \left( x - C t \right) .
+    \]
+
+\end{frame}
+
+\begin{frame}{Интерпретация групповой скорости}
+
+	\transdissolve[duration=0.1]
+	\justifying
+	\large
+
+    Решение, соответствующее этим двум фазам
+
+    \[
+        \begin{split}
+            u \left( x, t \right) & = u_{+} \left( x, t \right) + u_{-} \left( x, t \right) = u_{0} \left( \cos \left( \theta_{+} \right) + \cos \left( \theta_{-} \right) \right) = \\
+            & = u_{0} \left( \cos \left( \theta + \triangle k \left( x - C t \right) \right) + \cos \left( \theta - \triangle k \left( x - C t \right) \right) \right) = \\
+            & = 2 u_{0} \cos \left( \theta \right) \cos \left( \triangle k \left( x - C t \right) \right) .
+        \end{split}
+    \]
+
+    Его можно рассматривать как волну с исходными волновым числом и частотой, модулированную по амплитуде множителем $\cos \left( \triangle k \left( x - C t \right) \right)$.
+
+    \begin{center}
+        \begin{tikzpicture}
+        \begin{axis}[
+	        title=Solution,
+	        xlabel={$x$},
+	        ylabel={$u \left( x, t \right)$},
+	        minor tick num=0,
+	        height=0.4\paperheight, 
+	        width=0.6\paperwidth,
+	        xmin=0,
+	        xmax=3*pi,
+	        ymin=-1.1,
+	        ymax=1.1
+        ]
+        \addplot[
+            blue,
+            very thick,
+            domain=0:3*pi,
+            samples=100
+        ] {cos(deg(x))};
+        \addplot[
+            red,
+            very thick,
+            domain=0:3*pi,
+            samples=100
+        ] {-cos(deg(x))};
+        \addplot[
+            black,
+            very thick,
+            domain=0:3*pi,
+            samples=1000
+        ] {cos(deg(x))*cos(deg(20*x))};
+        \end{axis}
+        \end{tikzpicture}
+    \end{center}
+
+\end{frame}
+
+\begin{frame}{Интерпретация групповой скорости}
+
+	\transdissolve[duration=0.1]
+	\justifying
+	\large
+
+    
 
 \end{frame}
 
