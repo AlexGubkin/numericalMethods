@@ -23,7 +23,7 @@
 \usepackage{amssymb}
 \usepackage{graphicx}
 \usepackage{wrapfig}
-\usepackage[3D]{movie15}
+%\usepackage[3D]{movie15}
 \usepackage{animate}
 \usepackage{ragged2e}
 \usepackage{listings}
@@ -32,14 +32,14 @@
 
 \usepackage{tikz,pgfplots}
 \usetikzlibrary{
-	mindmap,
-	arrows, % стрелки
-	shapes.misc, % фигуры
-	chains, % цепочки
-	positioning, % позиционирование элементов
-	scopes, % создание дополнительных веток
-	shadows % тени
-	}
+    mindmap,
+    arrows, % стрелки
+    shapes.misc, % фигуры
+    chains, % цепочки
+    positioning, % позиционирование элементов
+    scopes, % создание дополнительных веток
+    shadows % тени
+    }
 
 \graphicspath{{pic/}}
 
@@ -56,41 +56,41 @@
 \begin{document}
 
 \lstset{ %
-	language=[ANSI]C++,                 % выбор языка для подсветки (здесь это С++)
-	keywordstyle=\color{blue},
-	commentstyle=\color{gray},
-	basicstyle=\scriptsize,
+    language=[ANSI]C++,                 % выбор языка для подсветки (здесь это С++)
+    keywordstyle=\color{blue},
+    commentstyle=\color{gray},
+    basicstyle=\scriptsize,
 %basicstyle=\small\sffamily, % размер и начертание шрифта для подсветки кода
-	numbers=left,               % где поставить нумерацию строк (слева\справа)
-	numberstyle=\tiny,           % размер шрифта для номеров строк
+    numbers=left,               % где поставить нумерацию строк (слева\справа)
+    numberstyle=\tiny,           % размер шрифта для номеров строк
 %stepnumber=1,                   % размер шага между двумя номерами строк
-	numbersep=4pt,                % как далеко отстоят номера строк от подсвечиваемого кода
+    numbersep=4pt,                % как далеко отстоят номера строк от подсвечиваемого кода
 %backgroundcolor=\color{white}, % цвет фона подсветки - используем \usepackage{color}
-	showspaces=false,            % показывать или нет пробелы специальными отступами
-	showstringspaces=false,      % показывать или нет пробелы в строках
-	showtabs=false,             % показывать или нет табуляцию в строках
-	frame=single,              % рисовать рамку вокруг кода
+    showspaces=false,            % показывать или нет пробелы специальными отступами
+    showstringspaces=false,      % показывать или нет пробелы в строках
+    showtabs=false,             % показывать или нет табуляцию в строках
+    frame=single,              % рисовать рамку вокруг кода
 %tabsize=2,                 % размер табуляции по умолчанию равен 2 пробелам
-	captionpos=t,              % позиция заголовка вверху [t] или внизу [b] 
-	breaklines=true,           % автоматически переносить строки (да\нет)
-	breakatwhitespace=true, % переносить строки только если есть пробел
-	escapeinside={\%*}{*)}   % если нужно добавить комментарии в коде
+    captionpos=t,              % позиция заголовка вверху [t] или внизу [b] 
+    breaklines=true,           % автоматически переносить строки (да\нет)
+    breakatwhitespace=true, % переносить строки только если есть пробел
+    escapeinside={\%*}{*)}   % если нужно добавить комментарии в коде
 }
 
 %SLIDE #
 \begin{frame}
 
-	\transdissolve[duration=0.1]
-	\titlepage
+    \transdissolve[duration=0.1]
+    \titlepage
 
 \end{frame}
 
 %SLIDE #
 \begin{frame}{Линейные волны, распространяющиеся без затухания}
 
-	\transdissolve[duration=0.1]
-	\justifying
-	\large
+    \transdissolve[duration=0.1]
+    \justifying
+    \large
 
     Рассмотрим далее общие свойства линейных волн, распространяющихся в одномерном пространстве без диссипации. В этом случае независимыми переменными являются $t$ и $x$. Волновая система может описываться одной или более зависимыми переменными; рассмотрим пока одну переменную и обозначим ее $u$.\\
 
@@ -101,15 +101,15 @@
 %SLIDE #
 \begin{frame}{Фаза и фазовая скорость}
 
-	\transdissolve[duration=0.1]
-	\justifying
-	\large
+    \transdissolve[duration=0.1]
+    \justifying
+    \large
 
     Рассмотрим волновое изменение зависимой переменной $u \left( x, t \right)$ в виде:
 
     \[
-		u \left( x, t \right) = u_{0} \operatorname{Re} \left\lbrace e^{i \theta} \right\rbrace = u_{0} \cos \left( \theta \right) .
-	\]
+        u \left( x, t \right) = u_{0} \operatorname{Re} \left\lbrace e^{i \theta} \right\rbrace = u_{0} \cos \left( \theta \right) .
+    \]
 
     $\theta$ -- фаза, линейная по независимым переменным
 
@@ -136,9 +136,9 @@
 %SLIDE #
 \begin{frame}{Дисперсионное соотношение}
 
-	\transdissolve[duration=0.1]
-	\justifying
-	\large
+    \transdissolve[duration=0.1]
+    \justifying
+    \large
 
     В общем случае для распространяющихся волн существует функциональное соотношение $f \left( \omega, k \right)$, связывающее частоту и волновое число. Обычно это соотношение имеет вид зависимости частоты от волнового числа $k$:
 
@@ -165,11 +165,11 @@
 %SLIDE #
 \begin{frame}{Интеграл Фурье}
 
-	\transdissolve[duration=0.1]
-	\justifying
-	\large
+    \transdissolve[duration=0.1]
+    \justifying
+    \large
 
-	Пусть задано начальное распределение $u \left( x, 0 \right)$. Если это начальное распределение не гармонично, то его можно представить с помощью интеграла Фурье как суперпозицию синусоидальных функций.
+    Пусть задано начальное распределение $u \left( x, 0 \right)$. Если это начальное распределение не гармонично, то его можно представить с помощью интеграла Фурье как суперпозицию синусоидальных функций.
 
     \[
         u \left( x, 0 \right) = \frac{1}{2 \pi} \int\limits_{-\infty}^{\infty} \bar{u} \left( p, 0 \right) e^{i p x} dp ,
@@ -184,9 +184,9 @@
 %SLIDE #
 \begin{frame}{Дисперсия}
 
-	\transdissolve[duration=0.1]
-	\justifying
-	\large
+    \transdissolve[duration=0.1]
+    \justifying
+    \large
 
     Поскольку система предполагается линейной, каждая из гармонических компонент изменяется как $e^{i \theta}$ c частотой $W \left( k \right) = c k$. Полное решение в любой последующий момент времени $t$ может быть получено путем обратного преобразования Фурье.\\
 
@@ -203,9 +203,9 @@
 %SLIDE #
 \begin{frame}{Групповая скорость}
 
-	\transdissolve[duration=0.1]
-	\justifying
-	\large
+    \transdissolve[duration=0.1]
+    \justifying
+    \large
 
     Производная от правой части дисперсионного соотношения имеет размерность скорости
 
@@ -220,9 +220,9 @@
 %SLIDE #
 \begin{frame}{Интерпретация групповой скорости}
 
-	\transdissolve[duration=0.1]
-	\justifying
-	\large
+    \transdissolve[duration=0.1]
+    \justifying
+    \large
 
     Выберем некоторое значение $k$ и соответствующее ему значение $\omega = W \left( k \right)$ как исходные величины и допустим, что кволновому числу добавляется малое возмущение $\pm \triangle k$. Соответствующее возмущенное значение частоты может быть аппроксимировано первыми двумя членами ряда Тейлора:
 
@@ -248,9 +248,9 @@
 
 \begin{frame}{Интерпретация групповой скорости}
 
-	\transdissolve[duration=0.1]
-	\justifying
-	\large
+    \transdissolve[duration=0.1]
+    \justifying
+    \large
 
     Решение, соответствующее этим двум фазам
 
@@ -258,145 +258,323 @@
         \begin{split}
             u \left( x, t \right) & = u_{+} \left( x, t \right) + u_{-} \left( x, t \right) = u_{0} \left( \cos \left( \theta_{+} \right) + \cos \left( \theta_{-} \right) \right) = \\
             & = u_{0} \left( \cos \left( \theta + \triangle k \left( x - C t \right) \right) + \cos \left( \theta - \triangle k \left( x - C t \right) \right) \right) = \\
-            & = 2 u_{0} \cos \left( \theta \right) \cos \left( \triangle k \left( x - C t \right) \right) .
+            & = 2 u_{0} \cos \left( \theta \right) \cos \left( \triangle k \left( x - C t \right) \right).
         \end{split}
     \]
 
-    Его можно рассматривать как волну с исходными волновым числом и частотой, модулированную по амплитуде множителем $\cos \left( \triangle k \left( x - C t \right) \right)$.
+    Его можно рассматривать как волну с исходными волновым числом и частотой, модулированную по амплитуде множителем $\cos \left( \triangle k \left( x - C t \right) \right)$. \\
 
-    \begin{center}
-        \begin{tikzpicture}
-        \begin{axis}[
-	        title=Solution,
-	        xlabel={$x$},
-	        ylabel={$u \left( x, t \right)$},
-	        minor tick num=0,
-	        height=0.4\paperheight, 
-	        width=0.6\paperwidth,
-	        xmin=0,
-	        xmax=3*pi,
-	        ymin=-1.1,
-	        ymax=1.1
-        ]
-        \addplot[
-            blue,
-            very thick,
-            domain=0:3*pi,
-            samples=100
-        ] {cos(deg(x))};
-        \addplot[
-            red,
-            very thick,
-            domain=0:3*pi,
-            samples=100
-        ] {-cos(deg(x))};
-        \addplot[
-            black,
-            very thick,
-            domain=0:3*pi,
-            samples=1000
-        ] {cos(deg(x))*cos(deg(20*x))};
-        \end{axis}
-        \end{tikzpicture}
-    \end{center}
+    Другими словами, происходят биения, соответствующие медленным изменениям амплитуды. Колебания ограничены двумя кривыми
+
+    \[
+        2 u_{0} \cos \left( \triangle k \left( x - C t \right) \right),
+    \]
+
+    которые являются огибающими решения.
+
+%    \begin{center}
+%    \begin{animateinline}[controls]{10}
+%    \multiframe{180}{iIndex=0+1}{
+%        \begin{tikzpicture}
+%        \begin{axis}[
+%           title=Solution,
+%           xlabel={$x$},
+%           ylabel={$u \left( x, t \right)$},
+%           minor tick num=0,
+%           height=0.4\paperheight, 
+%           width=0.6\paperwidth,
+%           xmin=0,
+%           xmax=2*pi,
+%           ymin=-1.1,
+%           ymax=1.1
+%        ]
+%        \addplot[
+%            blue,
+%            very thick,
+%            domain=0:2*pi,
+%            %samples=50
+%        ] {cos(deg(x) - \iIndex)};
+%        \addplot[
+%            red,
+%            very thick,
+%            domain=0:2*pi,
+%            %samples=50
+%        ] {-cos(deg(x) - \iIndex)};
+%        \addplot[
+%            black,
+%            very thick,
+%            domain=0:2*pi,
+%            samples=200
+%        ] {cos(deg(x) - \iIndex)*cos(deg(10*x))};
+%        \end{axis}
+%        \end{tikzpicture}
+%    }
+%    \end{animateinline}
+%    \end{center}
 
 \end{frame}
 
 \begin{frame}{Интерпретация групповой скорости}
 
-	\transdissolve[duration=0.1]
-	\justifying
-	\large
+    \transdissolve[duration=0.1]
+    \justifying
+    \large
 
-    
+    \begin{center}
+        \animategraphics[
+        width=\textwidth,
+        controls=off, loop
+        ]{50}{./pic/groupVelocityInterpretation1/fig.}{0}{360}
+    \end{center}
 
-\end{frame}
-
-%SLIDE #
-\begin{frame}{Диссипация и дисперсия численного решения}
-
-	\transdissolve[duration=0.1]
-	\justifying
-	\large
-
-	Определим диссипацию и диспесиию для дифференциального волнового уравнения. Возьмем решение в виде:
-
-	\[
-		u(x, t) = u_{0} \exp{(i (\omega t - k x))},
-	\]
-
-	где $\omega = 2 \pi \nu$ -- круговая частота, $k = 2 \pi / \lambda$ -- волновое число.\\
-
-	Подставив это решение в волновое уравнение, получим зависимость $\omega = \omega(k)$, которая называется \textbf{дисперсионным соотношением}.\\
-
-	Если $\omega$ -- комплексное число, волна затухает!
-
-	\[
-		\exp{((- Im \omega) t)} = \exp{(- \gamma t)}.
-	\]
+    Огибающая движется в пространстве со скоростью $C$. Каждый участок огибающей длиной $\pi/\triangle k$ можно интерпретировать как группу (пакет) волн, а скорость $C$ -- как скорость этой группы. \\
 
 \end{frame}
 
-%SLIDE #
-\begin{frame}{Фазовая и групповая скорость}
+\begin{frame}{Интерпретация групповой скорости}
 
-	\transdissolve[duration=0.1]
-	\justifying
-	\large
+    \transdissolve[duration=0.1]
+    \justifying
+    \large
 
-	\textbf{Фазовая скорость} -- это скорость, с которой движется фаза или отдельной гармоники:
+    \begin{center}
+        \animategraphics[
+        width=\textwidth,
+        controls=off, loop
+        ]{50}{./pic/groupVelocityInterpretation2/fig.}{0}{360}
+    \end{center}
 
-	\[
-		\frac{Re \omega}{k} = c_{f}.
-	\]
+    \begin{center}
+        \animategraphics[
+        width=\textwidth,
+        controls=off, loop
+        ]{50}{./pic/groupVelocityInterpretation3/fig.}{0}{360}
+    \end{center}
 
-	\textbf{Групповая скорость} -- это скорость волнового пакета, состоящего из гармонических волн с близкими волновыми числами (Передача энергии осуществляется с групповой скоростью!):
-
-	\[
-		\frac{d}{d k} Re \omega = c_{g}.
-	\]
-
-\end{frame}
-
-%SLIDE #
-\begin{frame}{Дисперсия волн}
-
-	\transdissolve[duration=0.1]
-	\justifying
-	\large
-
-	Если фазовая/групповая скорость зависит от $k$, то гармоники с разными волновыми числами распространяются с разными скоростями. Такое явление называется \textbf{дисперсией}.
+    В дисперсионном случае групповая скорость отличается от фазовой и может быть как больше, так и меньше фазовой скорости (и даже иметь обратный знак).
 
 \end{frame}
 
-%SLIDE #
 \begin{frame}{Пример №1}
 
-	\transdissolve[duration=0.1]
-	\justifying
-	\large
+    \transdissolve[duration=0.1]
+    \justifying
+    \large
 
-	\[
-		\frac{\partial^{2} u}{\partial t^{2}} = c^{2} \frac{\partial^{2} u}{\partial x^{2}} \Rightarrow - \omega^{2} = - c^{2} k^{2} \Rightarrow \omega = c k \Rightarrow \frac{Re \omega}{k} = \frac{d}{d k} Re \omega = c.
-	\]
-	
-	Точное решение -- волна без дисперсии и затухания.
+    \[
+        \boxed{
+            \begin{split}
+                &u \left( x, t \right) = u_{0} e^{i \left( \omega t - k x \right)} \\
+                &u_{tt} = - \omega^{2} u \\
+                &u_{xx} = - k^{2} u
+            \end{split}
+        }
+        \Rightarrow
+        \boxed{
+            u_{tt} = a^{2} u_{xx}
+        };
+    \]
+
+    \[
+        - \omega^{2} = - a^{2} k^{2};
+    \]
+
+    \[
+        \omega = W \left( k \right) = a k;
+    \]
+
+    \[
+        \frac{\omega}{k} = \frac{d W}{d k} = a.
+    \]
+
+    \begin{center}
+        Точное решение -- волна без дисперсии.
+    \end{center}
 
 \end{frame}
 
 %SLIDE #
 \begin{frame}{Пример №2}
 
-	\transdissolve[duration=0.1]
-	\justifying
-	\large
+    \transdissolve[duration=0.1]
+    \justifying
+    \large
 
-	\[
-		\frac{\partial u}{\partial t} + c \frac{\partial u}{\partial x} = \mu \frac{\partial^{2} u}{\partial x^{2}} \Rightarrow i \omega - i c k = - \mu k^{2} \Rightarrow \omega(k) = c k + i \mu k^{2}.
-	\]
-	
-	Точное решение -- затухающая недиспергирующая волна.
+    \[
+        \boxed{
+            \begin{split}
+                &u \left( x, t \right) = u_{0} e^{i \left( \omega t - k x \right)} \\
+                &u_{t} = i \omega u \\
+                &u_{x} = - i k u \\
+                &u_{xx} = - k^{2} u
+            \end{split}
+        }
+        \Rightarrow
+        \boxed{
+            u_{t} + a u_{x} = \mu u_{xx}
+        };
+    \]
+
+    \[
+        i \omega - i a k = - \mu k^{2}
+        \Rightarrow
+        \omega = W \left( k \right) = a k + \boxed{i \mu k^{2}};
+    \]
+
+    \[
+        c = \frac{\omega}{k} = a + \boxed{i \mu k}, \; C = \frac{d W}{d k} = a + 2 i \mu k;
+    \]
 
 \end{frame}
+
+%SLIDE #
+\begin{frame}{Пример №2}
+
+    \transdissolve[duration=0.1]
+    \justifying
+    \large
+
+    \[
+         \omega = a k + i \mu k^{2} \Rightarrow u \left( x, t \right) = u_{0} e^{i \left( \omega t - k x \right)};
+    \]
+
+    \[
+        u \left( x, t \right) = u_{0} e^{i \left( \left( a k + i \mu k^{2} \right) t - k x \right)} = e^{- \mu k^{2} t} e^{i \left( a k t - k x \right)} = e^{\operatorname{\mathbb{I}m}\{\omega\} t} e^{i \left( \operatorname{\mathbb{R}e}\{\omega\} t - k x \right)}.
+    \]
+
+    \[
+        \operatorname{\mathbb{I}m}\{\omega\} = \beta \: \mbox{-- коэффициент затухания}.
+    \]
+
+    \begin{center}
+        Точное решение -- затухающая волна без дисперсии.
+    \end{center}
+
+\end{frame}
+
+%SLIDE #
+\begin{frame}{Пример №3. Уравнение КдВ}
+
+    \transdissolve[duration=0.1]
+    \justifying
+    \large
+
+    \[
+        \boxed{
+            \begin{split}
+                &u \left( x, t \right) = u_{0} e^{i \left( \omega t - k x \right)} \\
+                &u_{t} = i \omega u \\
+                &u_{x} = - i k u \\
+                &u_{xxx} = i k^{2} u
+            \end{split}
+        }
+        \Rightarrow
+        \boxed{
+            u_{t} + a u_{x} + \beta u_{xxx} = 0
+        };
+    \]
+
+    \[
+        i \omega - i a k + i \beta k^{3} = 0
+        \Rightarrow
+        \omega = W \left( k \right) = a k - \boxed{\beta k^{3}};
+    \]
+
+    \[
+        c = \frac{\omega}{k} = a - \boxed{ \beta k^{2}}, \; C = \frac{d W}{d k} = a - \boxed{3 \beta k^{2}};
+    \]
+
+    \begin{center}
+        Точное решение -- волна с дисперсией.
+    \end{center}
+
+\end{frame}
+
+%%SLIDE #
+%\begin{frame}{Диссипация и дисперсия численного решения}
+%
+%    \transdissolve[duration=0.1]
+%    \justifying
+%    \large
+%
+%    Определим диссипацию и диспесиию для дифференциального волнового уравнения. Возьмем решение в виде:
+%
+%    \[
+%        u(x, t) = u_{0} \exp{(i (\omega t - k x))},
+%    \]
+%
+%    где $\omega = 2 \pi \nu$ -- круговая частота, $k = 2 \pi / \lambda$ -- волновое число.\\
+%
+%    Подставив это решение в волновое уравнение, получим зависимость $\omega = \omega(k)$, которая называется \textbf{дисперсионным соотношением}.\\
+%
+%    Если $\omega$ -- комплексное число, волна затухает!
+%
+%    \[
+%        \exp{((- Im \omega) t)} = \exp{(- \gamma t)}.
+%    \]
+%
+%\end{frame}
+%
+%%SLIDE #
+%\begin{frame}{Фазовая и групповая скорость}
+%
+%    \transdissolve[duration=0.1]
+%    \justifying
+%    \large
+%
+%    \textbf{Фазовая скорость} -- это скорость, с которой движется фаза или отдельной гармоники:
+%
+%    \[
+%        \frac{Re \omega}{k} = c_{f}.
+%    \]
+%
+%    \textbf{Групповая скорость} -- это скорость волнового пакета, состоящего из гармонических волн с близкими волновыми числами (Передача энергии осуществляется с групповой скоростью!):
+%
+%    \[
+%        \frac{d}{d k} Re \omega = c_{g}.
+%    \]
+%
+%\end{frame}
+%
+%%SLIDE #
+%\begin{frame}{Дисперсия волн}
+%
+%    \transdissolve[duration=0.1]
+%    \justifying
+%    \large
+%
+%    Если фазовая/групповая скорость зависит от $k$, то гармоники с разными волновыми числами распространяются с разными скоростями. Такое явление называется \textbf{дисперсией}.
+%
+%\end{frame}
+%
+%%SLIDE #
+%\begin{frame}{Пример №1}
+%
+%    \transdissolve[duration=0.1]
+%    \justifying
+%    \large
+%
+%    \[
+%        \frac{\partial^{2} u}{\partial t^{2}} = c^{2} \frac{\partial^{2} u}{\partial x^{2}} \Rightarrow - \omega^{2} = - c^{2} k^{2} \Rightarrow \omega = c k \Rightarrow \frac{Re \omega}{k} = \frac{d}{d k} Re \omega = c.
+%    \]
+%    
+%    Точное решение -- волна без дисперсии и затухания.
+%
+%\end{frame}
+%
+%%SLIDE #
+%\begin{frame}{Пример №2}
+%
+%    \transdissolve[duration=0.1]
+%    \justifying
+%    \large
+%
+%    \[
+%        \frac{\partial u}{\partial t} + c \frac{\partial u}{\partial x} = \mu \frac{\partial^{2} u}{\partial x^{2}} \Rightarrow i \omega - i c k = - \mu k^{2} \Rightarrow \omega(k) = c k + i \mu k^{2}.
+%    \]
+%    
+%    Точное решение -- затухающая недиспергирующая волна.
+%
+%\end{frame}
 
 \end{document}
