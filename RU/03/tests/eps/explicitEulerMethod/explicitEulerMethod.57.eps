@@ -1,7 +1,7 @@
 %!PS-Adobe-2.0 EPSF-2.0
 %%Title: explicitEulerMethod.57.eps
-%%Creator: gnuplot 5.0 patchlevel 5
-%%CreationDate: Fri Oct 13 17:01:39 2017
+%%Creator: gnuplot 5.2 patchlevel 2
+%%CreationDate: Sun May  3 16:13:30 2020
 %%DocumentFonts: (atend)
 %%BoundingBox: 50 50 410 302
 %%EndComments
@@ -429,15 +429,27 @@ Level1 {Level1PatternFill} {Level2PatternFill} ifelse
 dup length dict begin {1 index /FID eq {pop pop} {def} ifelse} forall
 currentdict end definefont pop
 %
+/Metrics {ExtendTextBox Gswidth} def
+/Lwidth {currentpoint stroke M 0 vshift R Metrics} def
+/Rwidth {currentpoint stroke M dup stringwidth pop neg vshift R Metrics} def
+/Cwidth {currentpoint stroke M dup stringwidth pop -2 div vshift R Metrics} def
+/GLwidth {currentpoint stroke M 0 vshift R {ExtendTextBox} forall} def
+/GRwidth {currentpoint stroke M dup Gwidth vshift R {ExtendTextBox} forall} def
+/GCwidth {currentpoint stroke M dup Gwidth 2 div vshift R {ExtendTextBox} forall} def
+/GLwidth2 {0 Gwidth AddGlyphWidth} def
+/GRwidth2 {Gwidth -1 mul 0 AddGlyphWidth} def
+/GCwidth2 {Gwidth 2 div dup -1 mul AddGlyphWidth} def
+/AddGlyphWidth { dup TBx2 gt {userdict /TBx2 3 -1 roll put} {pop} ifelse
+                 dup TBx1 lt {userdict /TBx1 3 -1 roll put} {pop} ifelse } def
 /MFshow {
    { dup 5 get 3 ge
      { 5 get 3 eq {gsave} {grestore} ifelse }
      {dup dup 0 get findfont exch 1 get scalefont setfont
      [ currentpoint ] exch dup 2 get 0 exch R dup 5 get 2 ne {dup dup 6
-     get exch 4 get {textshow} {stringwidth pop 0 R} ifelse }if dup 5 get 0 eq
+     get exch 4 get {textshow} {Metrics pop 0 R} ifelse }if dup 5 get 0 eq
      {dup 3 get {2 get neg 0 exch R pop} {pop aload pop M} ifelse} {dup 5
-     get 1 eq {dup 2 get exch dup 3 get exch 6 get stringwidth pop -2 div
-     dup 0 R} {dup 6 get stringwidth pop -2 div 0 R 6 get
+     get 1 eq {dup 2 get exch dup 3 get exch 6 get Gswidth pop -2 div
+     dup 0 R} {dup 6 get Gswidth pop -2 div 0 R 6 get
      textshow 2 index {aload pop M neg 3 -1 roll neg R pop pop} {pop pop pop
      pop aload pop M} ifelse }ifelse }ifelse }
      ifelse }
@@ -466,41 +478,39 @@ systemdict /pdfmark known not {
 SDict begin [
   /Title (explicitEulerMethod.57.eps)
   /Subject (gnuplot plot)
-  /Creator (gnuplot 5.0 patchlevel 5)
+  /Creator (gnuplot 5.2 patchlevel 2)
 %  /Producer (gnuplot)
 %  /Keywords ()
-  /CreationDate (Fri Oct 13 17:01:39 2017)
+  /CreationDate (Sun May  3 16:13:30 2020)
   /DOCINFO pdfmark
 end
 } ifelse
 %
-% Support for boxed text - Ethan A Merritt May 2005
+% Support for boxed text - Ethan A Merritt Sep 2016
 %
 /InitTextBox { userdict /TBy2 3 -1 roll put userdict /TBx2 3 -1 roll put
            userdict /TBy1 3 -1 roll put userdict /TBx1 3 -1 roll put
 	   /Boxing true def } def
-/ExtendTextBox { Boxing
-    { gsave dup false charpath pathbbox
+/ExtendTextBox { dup type /stringtype eq
+    { Boxing { gsave dup false charpath pathbbox
       dup TBy2 gt {userdict /TBy2 3 -1 roll put} {pop} ifelse
       dup TBx2 gt {userdict /TBx2 3 -1 roll put} {pop} ifelse
       dup TBy1 lt {userdict /TBy1 3 -1 roll put} {pop} ifelse
       dup TBx1 lt {userdict /TBx1 3 -1 roll put} {pop} ifelse
-      grestore } if } def
+      grestore } if }
+    {} ifelse} def
 /PopTextBox { newpath TBx1 TBxmargin sub TBy1 TBymargin sub M
                TBx1 TBxmargin sub TBy2 TBymargin add L
 	       TBx2 TBxmargin add TBy2 TBymargin add L
 	       TBx2 TBxmargin add TBy1 TBymargin sub L closepath } def
 /DrawTextBox { PopTextBox stroke /Boxing false def} def
-/FillTextBox { gsave PopTextBox 1 1 1 setrgbcolor fill grestore /Boxing false def} def
+/FillTextBox { gsave PopTextBox fill grestore /Boxing false def} def
 0 0 0 0 InitTextBox
 /TBxmargin 20 def
 /TBymargin 20 def
 /Boxing false def
 /textshow { ExtendTextBox Gshow } def
 %
-% redundant definitions for compatibility with prologue.ps older than 5.0.2
-/LTB {BL [] LCb DL} def
-/LTb {PL [] LCb DL} def
 end
 %%EndProlog
 %%Page: 1 1
@@ -511,7 +521,7 @@ doclip
 0.050 0.050 scale
 0 setgray
 newpath
-(Times-Roman) findfont 240 scalefont setfont
+(Helvetica) findfont 240 scalefont setfont
 BackgroundColor 0 lt 3 1 roll 0 lt exch 0 lt or or not {BackgroundColor C 1.000 0 0 7200.00 5040.00 BoxColFill} if
 1.000 UL
 LTb
@@ -531,7 +541,7 @@ LCb setrgbcolor
 -63 0 V
 stroke
 1032 768 M
-[ [(Times-Roman) 240.0 0.0 true true 0 ( 0)]
+[ [(Helvetica) 240.0 0.0 true true 0 ( 0)]
 ] -80.0 MRshow
 1.000 UL
 LTb
@@ -539,19 +549,19 @@ LCb setrgbcolor
 2.000 UL
 LTa
 LCb setrgbcolor
-1176 1478 M
+1176 1360 M
 5591 0 V
 stroke
 1.000 UL
 LTb
 LCb setrgbcolor
-1176 1478 M
+1176 1360 M
 63 0 V
 5528 0 R
 -63 0 V
 stroke
-1032 1478 M
-[ [(Times-Roman) 240.0 0.0 true true 0 ( 0.2)]
+1032 1360 M
+[ [(Helvetica) 240.0 0.0 true true 0 ( 0.2)]
 ] -80.0 MRshow
 1.000 UL
 LTb
@@ -559,19 +569,19 @@ LCb setrgbcolor
 2.000 UL
 LTa
 LCb setrgbcolor
-1176 2188 M
+1176 1952 M
 5591 0 V
 stroke
 1.000 UL
 LTb
 LCb setrgbcolor
-1176 2188 M
+1176 1952 M
 63 0 V
 5528 0 R
 -63 0 V
 stroke
-1032 2188 M
-[ [(Times-Roman) 240.0 0.0 true true 0 ( 0.4)]
+1032 1952 M
+[ [(Helvetica) 240.0 0.0 true true 0 ( 0.4)]
 ] -80.0 MRshow
 1.000 UL
 LTb
@@ -579,19 +589,19 @@ LCb setrgbcolor
 2.000 UL
 LTa
 LCb setrgbcolor
-1176 2899 M
+1176 2544 M
 5591 0 V
 stroke
 1.000 UL
 LTb
 LCb setrgbcolor
-1176 2899 M
+1176 2544 M
 63 0 V
 5528 0 R
 -63 0 V
 stroke
-1032 2899 M
-[ [(Times-Roman) 240.0 0.0 true true 0 ( 0.6)]
+1032 2544 M
+[ [(Helvetica) 240.0 0.0 true true 0 ( 0.6)]
 ] -80.0 MRshow
 1.000 UL
 LTb
@@ -599,19 +609,39 @@ LCb setrgbcolor
 2.000 UL
 LTa
 LCb setrgbcolor
-1176 3609 M
+1176 3135 M
 5591 0 V
 stroke
 1.000 UL
 LTb
 LCb setrgbcolor
-1176 3609 M
+1176 3135 M
 63 0 V
 5528 0 R
 -63 0 V
 stroke
-1032 3609 M
-[ [(Times-Roman) 240.0 0.0 true true 0 ( 0.8)]
+1032 3135 M
+[ [(Helvetica) 240.0 0.0 true true 0 ( 0.8)]
+] -80.0 MRshow
+1.000 UL
+LTb
+LCb setrgbcolor
+2.000 UL
+LTa
+LCb setrgbcolor
+1176 3727 M
+5591 0 V
+stroke
+1.000 UL
+LTb
+LCb setrgbcolor
+1176 3727 M
+63 0 V
+5528 0 R
+-63 0 V
+stroke
+1032 3727 M
+[ [(Helvetica) 240.0 0.0 true true 0 ( 1)]
 ] -80.0 MRshow
 1.000 UL
 LTb
@@ -631,7 +661,7 @@ LCb setrgbcolor
 -63 0 V
 stroke
 1032 4319 M
-[ [(Times-Roman) 240.0 0.0 true true 0 ( 1)]
+[ [(Helvetica) 240.0 0.0 true true 0 ( 1.2)]
 ] -80.0 MRshow
 1.000 UL
 LTb
@@ -651,7 +681,7 @@ LCb setrgbcolor
 0 -63 V
 stroke
 1176 528 M
-[ [(Times-Roman) 240.0 0.0 true true 0 ( 0)]
+[ [(Helvetica) 240.0 0.0 true true 0 ( 0)]
 ] -80.0 MCshow
 1.000 UL
 LTb
@@ -671,7 +701,7 @@ LCb setrgbcolor
 0 -63 V
 stroke
 2294 528 M
-[ [(Times-Roman) 240.0 0.0 true true 0 ( 0.2)]
+[ [(Helvetica) 240.0 0.0 true true 0 ( 0.2)]
 ] -80.0 MCshow
 1.000 UL
 LTb
@@ -691,7 +721,7 @@ LCb setrgbcolor
 0 -63 V
 stroke
 3412 528 M
-[ [(Times-Roman) 240.0 0.0 true true 0 ( 0.4)]
+[ [(Helvetica) 240.0 0.0 true true 0 ( 0.4)]
 ] -80.0 MCshow
 1.000 UL
 LTb
@@ -711,7 +741,7 @@ LCb setrgbcolor
 0 -63 V
 stroke
 4531 528 M
-[ [(Times-Roman) 240.0 0.0 true true 0 ( 0.6)]
+[ [(Helvetica) 240.0 0.0 true true 0 ( 0.6)]
 ] -80.0 MCshow
 1.000 UL
 LTb
@@ -731,7 +761,7 @@ LCb setrgbcolor
 0 -63 V
 stroke
 5649 528 M
-[ [(Times-Roman) 240.0 0.0 true true 0 ( 0.8)]
+[ [(Helvetica) 240.0 0.0 true true 0 ( 0.8)]
 ] -80.0 MCshow
 1.000 UL
 LTb
@@ -751,7 +781,7 @@ LCb setrgbcolor
 0 -63 V
 stroke
 6767 528 M
-[ [(Times-Roman) 240.0 0.0 true true 0 ( 1)]
+[ [(Helvetica) 240.0 0.0 true true 0 ( 1)]
 ] -80.0 MCshow
 1.000 UL
 LTb
@@ -770,29 +800,29 @@ Z stroke
 LTb
 LCb setrgbcolor
 LCb setrgbcolor
-192 2543 M
+216 2543 M
 currentpoint gsave translate -270 rotate 0 0 moveto
-[ [(Times-Roman) 240.0 0.0 true true 0 (u)]
+[ [(Helvetica) 240.0 0.0 true true 0 (u)]
 ] -80.0 MCshow
 grestore
 LTb
 LCb setrgbcolor
 3971 168 M
-[ [(Times-Roman) 240.0 0.0 true true 0 (x)]
+[ [(Helvetica) 240.0 0.0 true true 0 (x)]
 ] -80.0 MCshow
 LTb
 LCb setrgbcolor
 3971 4679 M
-[ [(Times-Roman) 240.0 0.0 true true 0 (time=0.285427, Co=0.1, N)]
-[(Times-Roman) 192.0 -72.0 true true 0 (x)]
-[(Times-Roman) 240.0 0.0 true true 0 (=200)]
+[ [(Helvetica) 240.0 0.0 true true 0 (time=0.285427, Co=0.1, N)]
+[(Helvetica) 192.0 -72.0 true true 0 (x)]
+[(Helvetica) 240.0 0.0 true true 0 (=200)]
 ] -56.0 MCshow
 % Begin plot #1
 1.000 UP
 2.000 UL
 LTb
 LCb setrgbcolor
-/Times-Roman findfont 240 scalefont setfont
+/Helvetica findfont 240 scalefont setfont
 /vshift -80 def
 1176 768 M
 28 0 V
@@ -848,95 +878,94 @@ LCb setrgbcolor
 28 0 V
 28 0 V
 28 1 V
-28 1 V
+28 0 V
 28 1 V
 28 2 V
 28 3 V
-29 5 V
-28 7 V
-28 11 V
-28 16 V
-28 22 V
-28 30 V
-28 40 V
-28 51 V
-28 65 V
-28 79 V
-28 97 V
-29 113 V
-28 131 V
-28 148 V
-28 163 V
-28 177 V
-28 187 V
-28 195 V
-28 198 V
-28 197 V
-28 193 V
-29 186 V
-28 175 V
-28 162 V
+29 4 V
+28 6 V
+28 9 V
+28 13 V
+28 19 V
+28 25 V
+28 33 V
+28 42 V
+28 54 V
+28 67 V
+28 80 V
+29 95 V
+28 109 V
+28 123 V
+28 136 V
 28 147 V
-28 131 V
-28 115 V
-28 100 V
-28 84 V
-28 69 V
+28 156 V
+28 162 V
+28 165 V
+28 165 V
+28 161 V
+29 154 V
+28 146 V
+28 135 V
+28 123 V
+28 109 V
+28 96 V
+28 83 V
+28 70 V
 28 58 V
-28 46 V
-29 36 V
-28 28 V
-28 22 V
-28 16 V
-28 12 V
-28 7 V
-28 5 V
+28 48 V
+28 38 V
+29 30 V
+28 24 V
+28 18 V
+28 13 V
+28 10 V
+28 6 V
+28 4 V
 28 1 V
-28 -2 V
+28 -1 V
 28 -5 V
-29 -9 V
-28 -15 V
-28 -21 V
-28 -30 V
-28 -39 V
-stroke 4098 4180 M
-28 -51 V
-28 -65 V
+29 -7 V
+28 -13 V
+28 -17 V
+28 -25 V
+28 -33 V
+28 -42 V
+28 -54 V
+28 -67 V
 28 -80 V
-28 -96 V
-28 -113 V
-29 -131 V
-28 -148 V
-28 -163 V
-28 -177 V
-28 -187 V
-28 -195 V
-28 -198 V
-28 -197 V
-28 -193 V
-28 -186 V
-28 -175 V
-29 -162 V
+28 -95 V
+29 -109 V
+28 -123 V
+28 -136 V
 28 -147 V
-28 -131 V
-28 -115 V
-28 -100 V
-28 -84 V
-28 -69 V
+28 -156 V
+28 -162 V
+28 -165 V
+28 -164 V
+28 -162 V
+28 -154 V
+28 -146 V
+29 -135 V
+28 -123 V
+28 -109 V
+28 -96 V
+28 -83 V
+28 -70 V
 28 -58 V
-28 -46 V
-28 -36 V
-29 -29 V
-28 -22 V
-28 -16 V
-28 -12 V
-28 -9 V
-28 -7 V
+28 -48 V
+28 -38 V
+28 -30 V
+29 -24 V
+28 -18 V
+28 -14 V
+28 -10 V
+28 -8 V
+28 -5 V
 28 -4 V
 28 -3 V
-28 -3 V
 28 -1 V
-28 -1 V
+28 -2 V
+28 0 V
 29 -1 V
 28 0 V
 28 -1 V
@@ -1049,93 +1078,93 @@ stroke 4098 4180 M
 2609 768 Circle
 2637 768 Circle
 2665 769 Circle
-2693 770 Circle
-2721 771 Circle
-2749 773 Circle
-2777 776 Circle
-2806 781 Circle
-2834 788 Circle
-2862 799 Circle
-2890 815 Circle
-2918 837 Circle
-2946 867 Circle
-2974 907 Circle
-3002 958 Circle
-3030 1023 Circle
-3058 1102 Circle
-3086 1199 Circle
-3115 1312 Circle
-3143 1443 Circle
-3171 1591 Circle
-3199 1754 Circle
-3227 1931 Circle
-3255 2118 Circle
-3283 2313 Circle
-3311 2511 Circle
-3339 2708 Circle
-3367 2901 Circle
-3396 3087 Circle
-3424 3262 Circle
-3452 3424 Circle
-3480 3571 Circle
-3508 3702 Circle
-3536 3817 Circle
-3564 3917 Circle
-3592 4001 Circle
-3620 4070 Circle
-3648 4128 Circle
-3676 4174 Circle
-3705 4210 Circle
-3733 4238 Circle
-3761 4260 Circle
-3789 4276 Circle
-3817 4288 Circle
-3845 4295 Circle
-3873 4300 Circle
-3901 4301 Circle
-3929 4299 Circle
-3957 4294 Circle
-3986 4285 Circle
-4014 4270 Circle
-4042 4249 Circle
-4070 4219 Circle
-4098 4180 Circle
-4126 4129 Circle
-4154 4064 Circle
-4182 3984 Circle
-4210 3888 Circle
-4238 3775 Circle
-4267 3644 Circle
-4295 3496 Circle
-4323 3333 Circle
-4351 3156 Circle
-4379 2969 Circle
-4407 2774 Circle
-4435 2576 Circle
-4463 2379 Circle
-4491 2186 Circle
-4519 2000 Circle
-4547 1825 Circle
-4576 1663 Circle
-4604 1516 Circle
-4632 1385 Circle
-4660 1270 Circle
-4688 1170 Circle
-4716 1086 Circle
-4744 1017 Circle
-4772 959 Circle
-4800 913 Circle
-4828 877 Circle
-4857 848 Circle
-4885 826 Circle
-4913 810 Circle
-4941 798 Circle
-4969 789 Circle
-4997 782 Circle
-5025 778 Circle
-5053 775 Circle
+2693 769 Circle
+2721 770 Circle
+2749 772 Circle
+2777 775 Circle
+2806 779 Circle
+2834 785 Circle
+2862 794 Circle
+2890 807 Circle
+2918 826 Circle
+2946 851 Circle
+2974 884 Circle
+3002 926 Circle
+3030 980 Circle
+3058 1047 Circle
+3086 1127 Circle
+3115 1222 Circle
+3143 1331 Circle
+3171 1454 Circle
+3199 1590 Circle
+3227 1737 Circle
+3255 1893 Circle
+3283 2055 Circle
+3311 2220 Circle
+3339 2385 Circle
+3367 2546 Circle
+3396 2700 Circle
+3424 2846 Circle
+3452 2981 Circle
+3480 3104 Circle
+3508 3213 Circle
+3536 3309 Circle
+3564 3392 Circle
+3592 3462 Circle
+3620 3520 Circle
+3648 3568 Circle
+3676 3606 Circle
+3705 3636 Circle
+3733 3660 Circle
+3761 3678 Circle
+3789 3691 Circle
+3817 3701 Circle
+3845 3707 Circle
+3873 3711 Circle
+3901 3712 Circle
+3929 3711 Circle
+3957 3706 Circle
+3986 3699 Circle
+4014 3686 Circle
+4042 3669 Circle
+4070 3644 Circle
+4098 3611 Circle
+4126 3569 Circle
+4154 3515 Circle
+4182 3448 Circle
+4210 3368 Circle
+4238 3273 Circle
+4267 3164 Circle
+4295 3041 Circle
+4323 2905 Circle
+4351 2758 Circle
+4379 2602 Circle
+4407 2440 Circle
+4435 2275 Circle
+4463 2111 Circle
+4491 1949 Circle
+4519 1795 Circle
+4547 1649 Circle
+4576 1514 Circle
+4604 1391 Circle
+4632 1282 Circle
+4660 1186 Circle
+4688 1103 Circle
+4716 1033 Circle
+4744 975 Circle
+4772 927 Circle
+4800 889 Circle
+4828 859 Circle
+4857 835 Circle
+4885 817 Circle
+4913 803 Circle
+4941 793 Circle
+4969 785 Circle
+4997 780 Circle
+5025 776 Circle
+5053 773 Circle
 5081 772 Circle
-5109 771 Circle
+5109 770 Circle
 5137 770 Circle
 5166 769 Circle
 5194 769 Circle
@@ -1200,7 +1229,7 @@ stroke 4098 4180 M
 2.000 UL
 LTb
 LCb setrgbcolor
-/Times-Roman findfont 240 scalefont setfont
+/Helvetica findfont 240 scalefont setfont
 1176 768 M
 28 0 V
 28 0 V
@@ -1278,7 +1307,7 @@ LCb setrgbcolor
 28 0 V
 28 0 V
 28 0 V
-28 3551 V
+28 2959 V
 28 0 V
 29 0 V
 28 0 V
@@ -1306,7 +1335,6 @@ LCb setrgbcolor
 28 0 V
 28 0 V
 28 0 V
-stroke 4098 4319 M
 28 0 V
 28 0 V
 28 0 V
@@ -1424,4 +1452,4 @@ grestore
 end
 showpage
 %%Trailer
-%%DocumentFonts: Times-Roman
+%%DocumentFonts: Helvetica

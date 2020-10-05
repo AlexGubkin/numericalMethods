@@ -1,12 +1,13 @@
 reset
-set terminal postscript eps enhanced font "Times-Roman" 24
+set terminal postscript eps enhanced font 'Helvetica,24'
+#set terminal postscript eps enhanced font "Times-Roman" 24
 unset title
 unset key
 set grid linecolor rgb "black" linewidth 2
 set xlabel "x"
 set ylabel "u"
 set xrange [0:1]
-set yrange [0:*]
+set yrange [0:1.2]
 set title "time=0, Co=0.1, N_{x}=200"
 set output "BursteinMirinMethod.0.eps"
 plot '-' using 1:2 with linespoints linetype -1 pointtype 6 linewidth 2, '' using 1:2 with lines linetype -1 linewidth 2
