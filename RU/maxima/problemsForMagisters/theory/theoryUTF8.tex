@@ -1,0 +1,19 @@
+\section{Приложение}
+
+    \subsection{Задание №2}
+
+        Необходимые условия экстремума функции $f(x, y, \ldots)$ в точке $A$ заключаются в выполнении в этой точке равенств: $\frac{\partial f}{\partial x} = 0, \: \frac{\partial f}{\partial x} = 0, \: \ldots$. При этом функция двух переменных $z = f(x, y)$ имеет в данной точке максимум, если $\triangle = \frac{\partial^{2} f}{\partial x^{2}} \frac{\partial^{2} f}{\partial y^{2}} - \left( \frac{\partial^{2} f}{\partial x \partial y} \right)^2 > 0$ и $\frac{\partial^{2} f}{\partial x^{2}}$ или $\frac{\partial^{2} f}{\partial y^{2}} < 0$, и минимум, если $\triangle > 0$ и $\frac{\partial^{2} f}{\partial x^{2}}$ или $\frac{\partial^{2} f}{\partial y^{2}} > 0$ (при условии непрерывности частных производных).\\
+
+    \subsection{Задание №7}
+
+        Если функция $f(x)$ задана на сегменте $[-l,l]$, где $l$ -- произвольное число, то при выполнении на этом сегменте условий Дирихле указанная функция может быть представлена в виде суммы ряда Фурье:
+
+        \[
+            \frac{a_{0}}{2} + \sum_{m = 1}^{\infty} \left( a_{m} \cos \frac{m \pi x}{l} + b_{m} \sin \frac{m \pi x}{l} \right),
+        \]
+
+        где
+
+        \[
+            a_{0} =  \frac{1}{l} \int_{-l}^{l} f(x) dx, \qquad a_{m} = \frac{1}{l} \int_{-l}^{l} f(x) \cos \frac{m \pi x}{l} dx, \qquad b_{m} = \frac{1}{l} \int_{-l}^{l} f(x) \sin \frac{m \pi x}{l} dx.
+        \]

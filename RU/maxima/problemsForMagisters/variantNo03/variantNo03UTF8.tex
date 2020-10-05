@@ -1,0 +1,143 @@
+\begin{center}
+    \textbf{\huge Вариант №3}
+\end{center}
+
+\begin{flushright}
+    Подготовил: \textit{Губкин А.С.}\\
+    E-mail: \textit{alexshtil@gmail.com}\\
+\end{flushright}
+
+\section*{Задание №1}
+
+    Решить СЛАУ $A \cdot \mathbf{x} = \mathbf{b}$. Найти собственные числа матрицы $A$.
+
+    \[
+        \left\{
+            \begin{aligned}
+                2 x_{1} + 5 x_{2} + x_{3} + x_{4} &= -8,\\
+                5 x_{1} + x_{2} + 3 x_{3} + 4 x_{4} &= 15,\\
+                -2 x_{1} + 4 x_{2} + 2 x_{3} - 2 x_{4} &= -6,\\
+                4 x_{1} + 14 x_{2} + 3 x_{3} + 3 x_{4} &= -25.
+            \end{aligned}
+        \right.
+    \]
+    
+    Необходимы знания по функциям \textbf{Maxima}: {\tt matrix(), solve(), invert(), transpose(), ., ^^, eigenvalues() (из пакета \textit{eigen})}. Уметь задавать переменные и функции в \textbf{Maxima}. Уметь работать с массивами.
+
+\section*{Задание №2}
+
+	Привести к каноническому виду квадратичную форму: 
+
+	\[
+		f = 3 x^{2}_{1} + 2 x^{2}_{2} + x^{2}_{3} + 4 x_{1} x_{2} + 4 x_{2} x_{3}.
+	\]
+
+	Необходимы знания по функциям \textbf{Maxima}: {\tt matrix(), ratcoeff(), ., eigenvalues(), uniteigenvectors() (из пакета \textit{eigen}), transpose(), fullratsimp(), subst()}.
+
+\section*{Задание №3}
+
+	Найти экстремальные значения заданной неявно функции $z$ от переменных $x$ и $y$:
+
+	\[
+		\left( x^{2} + y^{2} + z^{2} \right)^{2} = a^{2} \left( x^{2} + y^{2} - z^{2} \right), \: a = const.
+	\]
+
+	Построить график.
+
+	Необходимы знания по функциям \textbf{Maxima}: {\tt depends(), define(), diff(), solve(), rhs(), subst(), ratsimp(), fullratsimp(), draw3d() (из пакета \textit{draw})}.
+
+\section*{Задание №4}
+
+    Вычислить двойной интеграл $\iint\limits_{D} f(x,y) dx dy$ и построить область $D$.
+
+    \[
+        f(x,y) = x + 2 y, \qquad D \{ y = x, \: y = 2 x, \: x = 2, \: x = 3 \}.
+    \]
+
+    Необходимы знания по функциям \textbf{Maxima}: {\tt integrate(), implicit\_plot() (из пакета \textit{implicit\_plot})}.
+
+%    \section*{Задание №4}
+%
+%    Исследовать на максимум и минимум функцию двух переменных. Построить график.
+%
+%    \[
+%        z = 2 x^{3} - x y^{2} + 5 x^{2} + y^{2}.
+%    \]
+%
+%    Необходимые условия экстремума функции $f(x, y, \ldots)$ в точке $A$ заключаются в выполнении в этой точке равенств: $\frac{\partial f}{\partial x} = 0, \: \frac{\partial f}{\partial x} = 0, \: \ldots$. При этом функция двух переменных $z = f(x, y)$ имеет в данной точке максимум, если $\triangle = \frac{\partial^{2} f}{\partial x^{2}} \frac{\partial^{2} f}{\partial y^{2}} - \left( \frac{\partial^{2} f}{\partial x \partial y} \right)^2 > 0$ и $\frac{\partial^{2} f}{\partial x^{2}}$ или $\frac{\partial^{2} f}{\partial y^{2}} < 0$, и минимум, если $\triangle > 0$ и $\frac{\partial^{2} f}{\partial x^{2}}$ или $\frac{\partial^{2} f}{\partial y^{2}} > 0$ (при условии непрерывности частных производных).\\
+%
+%    Необходимы знания по функциям \textbf{Maxima}: {\tt diff(), solve(), ratsimp(), fullratsimp(), wxplot3d()}. Необходимо уметь задавать переменные и функции в \textbf{Maxima}.
+
+\section*{Задание №5}
+
+    Исследовать фунцию:
+
+    \[
+        y = x^2 e^{\frac{1}{x}}.
+    \]
+    
+    Необходимы знания по функциям \textbf{Maxima}: {\tt limit(), diff(), solve(), denom(), ratsimp(), fullratsimp(), wxplot2d()}.
+
+\section*{Задание №6}
+
+	Исследовать неявно заданную фунцию:
+
+	\[
+		x^{\frac{2}{3}} + y^{\frac{2}{3}} = a^{\frac{2}{3}}, \: a = const > 0.
+	\]
+
+	Необходимы знания по функциям \textbf{Maxima}: {\tt limit(), diff(), solve(), subst(), denom(), ratsimp(), fullratsimp(), wximplicit\_plot() (из пакета \textit{implicit\_plot})}.
+
+\section*{Задание №7}
+    
+    Найти общее и частное решение обыкновенного дифференциального уравния. Построить график частного решения.
+
+    \[
+        x y' - y = x \tan \left( \frac{y}{x} \right); \qquad y(1) = \frac{\pi}{2}.
+    \]
+
+    Необходимы знания по функциям \textbf{Maxima}: {\tt diff(), ode2(), ic1(), ic2(), ratsimp(), fullratsimp(), wxplot2d(), implicit\_plot()}.
+
+\section*{Задание №8}
+    
+    Разложить в ряд Фурье периодическую функцию $f(x)$ с периодом $T$, заданную на указанном сегменте. Привести первые 10 членов разложения. Построить графики исходной функции и первых 10-и членов разложения.
+
+    \[
+        f(x) =
+            \begin{cases}
+                -2 x \quad &\mbox{при} \quad -\pi \leq x \leq 0\\
+                3 x \quad &\mbox{при} \quad 0 \leq x \leq \pi
+            \end{cases}; \quad T = 2 \pi; \quad [-\pi, \pi].
+    \]
+    
+    Необходимы знания по функциям \textbf{Maxima}: {\tt integrate(), sum(), if, wxplot2d(), ratsimp(), fullratsimp()}.
+
+\section*{Задание №9}
+
+    Найти решение типа бегущей волны нелинейнго уравнения теплопроводности: 
+
+    \[
+        w_{t} + a w_{x} =  \left( w w_{x} \right)_{x}.
+    \]
+
+    Решениями типа бегущей волны называются решения вида:
+
+    \[
+        w(x, t) = W(z), \qquad z = k x - \lambda t.
+    \]
+
+    Поиск решений типа бегущей волны проводится прямой подстановкой этого выражения в исходное уравнение.\\
+
+    Необходимы знания по функциям \textbf{Maxima}: {\tt depends(), diff(), ratsimp(), fullratsimp(), subst(), ode2()}.
+
+\section*{Задание №10}
+
+	Привести к каноническому виду уравнение:
+
+	\[
+		e^{2 x} u_{xx} + 2 e^{x + y} u_{xy} + 2 e^{2 y} u_{yy} = 0.
+	\]
+
+	Необходимы знания по функциям \textbf{Maxima}: {\tt depends(), diff(), ratsimp(), fullratsimp(), subst(), ode2()}.
+
+    \newpage
