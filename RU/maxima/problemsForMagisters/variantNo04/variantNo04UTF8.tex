@@ -1,15 +1,15 @@
-    \begin{center}
-        \textbf{\huge Вариант №4}
-    \end{center}
+\begin{center}
+    \textbf{\huge Вариант №4}
+\end{center}
 
-    \begin{flushright}
-        Подготовил: \textit{Губкин А.С}\\
-        E-mail: \textit{alexshtil@gmail.com}\\
-    \end{flushright}
+\begin{flushright}
+    Подготовил: \textit{Губкин А.С.}\\
+    E-mail: \textit{alexshtil@gmail.com}\\
+\end{flushright}
 
-    \section*{Задание №1}
+\section*{Задание №1}
 
-    Решить СЛАУ $A \cdot \mathbf{x} = \mathbf{b}$. Найти собственные числа и собственные векторы матрицы $A$.
+    Решить СЛАУ $A \cdot \mathbf{x} = \mathbf{b}$. Найти собственные числа матрицы $A$.
 
     \[
         \left\{
@@ -22,19 +22,31 @@
         \right.
     \]
     
-    Необходимы знания по функциям \textbf{Maxima}: {\tt matrix(), solve(), invert(), ., eigenvalues(), eigenvectors(), ratsimp(), fullratsimp()}. Необходимо уметь задавать переменные и функции в \textbf{Maxima}.
+    Необходимы знания по функциям \textbf{Maxima}: {\tt matrix(), solve(), invert(), transpose(), ., $\textasciicircum \textasciicircum$, eigenvalues() (из пакета \textit{eigen})}. Уметь задавать переменные и функции в \textbf{Maxima}. Уметь работать с массивами.
 
-    \section*{Задание №2}
+\section*{Задание №2}
 
-    Вычислить интеграл:
+	Привести к каноническому виду квадратичную форму: 
 
-    \[
-        \int \frac{\sqrt[3]{1 + \sqrt[4]{x}}}{\sqrt{x}} dx.
-    \]
+	\[
+		f = 6 x^{2}_{1} + 3 x^{2}_{2} + 3 x^{2}_{3} + 4 x_{1} x_{2} + 4 x_{1} x_{3} - 8 x_{2} x_{3}.
+	\]
 
-    Необходимы знания по функциям \textbf{Maxima}: {\tt integrate(), ratsimp(), fullratsimp()}.
+	Необходимы знания по функциям \textbf{Maxima}: {\tt matrix(), ratcoeff(), ., eigenvalues(), uniteigenvectors() (из пакета \textit{eigen}), transpose(), fullratsimp(), subst()}.
 
-    \section*{Задание №3}
+\section*{Задание №3}
+
+	Найти точки условного экстремума следующей функции:
+
+	\[
+		z = A x^{2} + 2 B x y + C y^{2}, \; \mbox{если} \; x^{2} + y^{2} = 1; \; A,B,C = const
+	\]
+
+	Построить график.
+
+	Необходимы знания по функциям \textbf{Maxima}: {\tt depends(), define(), diff(), solve(), rhs(), subst(), ratsimp(), fullratsimp(), draw3d() (из пакета \textit{draw})}.
+
+\section*{Задание №4}
 
     Вычислить двойной интеграл $\iint\limits_{D} f(x,y) dx dy$ и построить область $D$.
 
@@ -44,39 +56,39 @@
 
     Необходимы знания по функциям \textbf{Maxima}: {\tt integrate(), implicit\_plot()}.
 
-    \section*{Задание №4}
+%    \section*{Задание №4}
+%
+%    Исследовать на максимум и минимум функцию двух переменных. Построить график.
+%
+%    \[
+%        z = 3 \ln{x} + x y^{2} - y^{3}.
+%    \]
+%
+%    Необходимые условия экстремума функции $f(x, y, \ldots)$ в точке $A$ заключаются в выполнении в этой точке равенств: $\frac{\partial f}{\partial x} = 0, \: \frac{\partial f}{\partial x} = 0, \: \ldots$. При этом функция двух переменных $z = f(x, y)$ имеет в данной точке максимум, если $\triangle = \frac{\partial^{2} f}{\partial x^{2}} \frac{\partial^{2} f}{\partial y^{2}} - \left( \frac{\partial^{2} f}{\partial x \partial y} \right)^2 > 0$ и $\frac{\partial^{2} f}{\partial x^{2}}$ или $\frac{\partial^{2} f}{\partial y^{2}} < 0$, и минимум, если $\triangle > 0$ и $\frac{\partial^{2} f}{\partial x^{2}}$ или $\frac{\partial^{2} f}{\partial y^{2}} > 0$ (при условии непрерывности частных производных).\\
+%
+%    Необходимы знания по функциям \textbf{Maxima}: {\tt diff(), solve(), ratsimp(), fullratsimp(), wxplot3d()}. Необходимо уметь задавать переменные и функции в \textbf{Maxima}.
 
-    Исследовать на максимум и минимум функцию двух переменных. Построить график.
-
-    \[
-        z = 3 \ln{x} + x y^{2} - y^{3}.
-    \]
-
-    Необходимые условия экстремума функции $f(x, y, \ldots)$ в точке $A$ заключаются в выполнении в этой точке равенств: $\frac{\partial f}{\partial x} = 0, \: \frac{\partial f}{\partial x} = 0, \: \ldots$. При этом функция двух переменных $z = f(x, y)$ имеет в данной точке максимум, если $\triangle = \frac{\partial^{2} f}{\partial x^{2}} \frac{\partial^{2} f}{\partial y^{2}} - \left( \frac{\partial^{2} f}{\partial x \partial y} \right)^2 > 0$ и $\frac{\partial^{2} f}{\partial x^{2}}$ или $\frac{\partial^{2} f}{\partial y^{2}} < 0$, и минимум, если $\triangle > 0$ и $\frac{\partial^{2} f}{\partial x^{2}}$ или $\frac{\partial^{2} f}{\partial y^{2}} > 0$ (при условии непрерывности частных производных).\\
-
-    Необходимы знания по функциям \textbf{Maxima}: {\tt diff(), solve(), ratsimp(), fullratsimp(), wxplot3d()}. Необходимо уметь задавать переменные и функции в \textbf{Maxima}.
-
-    \section*{Задание №5}
+\section*{Задание №5}
 
     Исследовать фунцию:
 
     \[
         y = \ln \left( \frac{1 + x}{1 - x} \right).
     \]
-
-    Исследование рекомендуется проводить по следующий схеме:
     
-    \begin{enumerate}
-        \item Установить точки разразрыва. Исследовать функцию на четность, нечетность, периодичность.
-        \item Найти точки максимума и минимума функции, вычислить значение функции в этих точках.
-        \item Найти точки перегиба графика функции, вычислить значения функции в этих точках.
-        \item Найти асимптоты графика функции. Вычислить предельные значения функции в точках, граничных для ее области существования.
-        \item Построить график функции.
-    \end{enumerate}
-    
-    Необходимы знания по функциям \textbf{Maxima}: {\tt limit(), diff(), solve(), denom(), ratsimp(), fullratsimp(), wxplot2d()}. Необходимо уметь задавать переменные и функции в \textbf{Maxima}.
+    Необходимы знания по функциям \textbf{Maxima}: {\tt limit(), diff(), solve(), denom(), ratsimp(), fullratsimp(), wxplot2d()}.
 
-    \section*{Задание №6}
+\section*{Задание №6}
+
+	Исследовать неявно заданную фунцию:
+
+	\[
+		x^{5} + y^{5} = x y^{2}, \: a = const > 0.
+	\]
+
+	Необходимы знания по функциям \textbf{Maxima}: {\tt limit(), diff(), solve(), subst(), denom(), ratsimp(), fullratsimp(), wximplicit\_plot() (из пакета \textit{implicit\_plot})}.
+
+\section*{Задание №7}
     
     Найти общее и частное решение обыкновенного дифференциального уравния. Построить график частного решения.
 
@@ -84,9 +96,9 @@
         y'' - y' e^{y} = 0; \qquad y(0) = 0, \qquad y'(0) = 1.
     \]
 
-    Необходимы знания по функциям \textbf{Maxima}: {\tt diff(), ode2(), ic1(), ic2(), ratsimp(), fullratsimp(), wxplot2d(), implicit\_plot()}.
+	Необходимы знания по функциям \textbf{Maxima}: {\tt diff(), ode2(), ic1(), ic2(), ratsimp(), fullratsimp(), wxplot2d(), implicit\_plot()}.
 
-    \section*{Задание №7}
+\section*{Задание №8}
     
     Разложить в ряд Фурье периодическую функцию $f(x)$ с периодом $T$, заданную на указанном сегменте. Привести первые 10 членов разложения. Построить графики исходной функции и первых 10-и членов разложения.
 
@@ -98,21 +110,21 @@
             \end{cases}; \quad T = 2 \pi; \quad [-\pi, \pi].
     \]
 
-    Если функция $f(x)$ задана на сегменте $[-l,l]$, где $l$ -- произвольное число, то при выполнении на этом сегменте условий Дирихле указанная функция может быть представлена в виде суммы ряда Фурье:
-
-    \[
-        \frac{a_{0}}{2} + \sum_{m = 1}^{\infty} \left( a_{m} \cos \frac{m \pi x}{l} + b_{m} \sin \frac{m \pi x}{l} \right),
-    \]
-
-    где
-
-    \[
-        a_{0} =  \frac{1}{l} \int_{-l}^{l} f(x) dx, \qquad a_{m} = \frac{1}{l} \int_{-l}^{l} f(x) \cos \frac{m \pi x}{l} dx, \qquad b_{m} = \frac{1}{l} \int_{-l}^{l} f(x) \sin \frac{m \pi x}{l} dx.
-    \]
+%    Если функция $f(x)$ задана на сегменте $[-l,l]$, где $l$ -- произвольное число, то при выполнении на этом сегменте условий Дирихле указанная функция может быть представлена в виде суммы ряда Фурье:
+%
+%    \[
+%        \frac{a_{0}}{2} + \sum_{m = 1}^{\infty} \left( a_{m} \cos \frac{m \pi x}{l} + b_{m} \sin \frac{m \pi x}{l} \right),
+%    \]
+%
+%    где
+%
+%    \[
+%        a_{0} =  \frac{1}{l} \int_{-l}^{l} f(x) dx, \qquad a_{m} = \frac{1}{l} \int_{-l}^{l} f(x) \cos \frac{m \pi x}{l} dx, \qquad b_{m} = \frac{1}{l} \int_{-l}^{l} f(x) \sin \frac{m \pi x}{l} dx.
+%    \]
     
     Необходимы знания по функциям \textbf{Maxima}: {\tt integrate(), sum(), if, wxplot2d(), ratsimp(), fullratsimp()}.
 
-    \section*{Задание №8}
+\section*{Задание №9}
 
     Найти решение типа бегущей волны нелинейного волнового уравнения: 
 
@@ -128,4 +140,14 @@
 
     Поиск решений типа бегущей волны проводится прямой подстановкой этого выражения в исходное уравнение.\\
 
-    Необходимы знания по функциям \textbf{Maxima}: {\tt depends(), diff(), ratsimp(), fullratsimp(), subst(), ode2()}. Необходимо уметь задавать переменные и функции в \textbf{Maxima}.
+    Необходимы знания по функциям \textbf{Maxima}: {\tt depends(), diff(), ratsimp(), fullratsimp(), subst(), ode2()}.
+
+\section*{Задание №10}
+
+	Привести к каноническому виду уравнение:
+
+	\[
+		u_{xx} + \left( 1 + y \right)^{2} u_{yy} = 0.
+	\]
+
+	Необходимы знания по функциям \textbf{Maxima}: {\tt depends(), diff(), ratsimp(), fullratsimp(), subst(), ode2()}.
