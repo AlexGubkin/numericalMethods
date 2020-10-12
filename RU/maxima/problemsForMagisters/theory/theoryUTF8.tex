@@ -182,31 +182,31 @@
         \lim_{x \rightarrow \pm \infty} f(x) = b,
     \]
 
-вертикальную асимптоту $x = a$, если при $x \rightarrow a$, или $x \rightarrow a + 0$, или $x \rightarrow a - 0$
+	вертикальную асимптоту $x = a$, если при $x \rightarrow a$, или $x \rightarrow a + 0$, или $x \rightarrow a - 0$
 
-\[
-\lim_{x \rightarrow a} f(x) = \pm \infty,
-\]
+	\[
+		\lim_{x \rightarrow a} f(x) = \pm \infty,
+	\]
 
-\[
-\lim_{x \rightarrow a + 0} f(x) = \pm \infty,
-\]
+	\[
+		\lim_{x \rightarrow a + 0} f(x) = \pm \infty,
+	\]
 
-\[
-\lim_{x \rightarrow a - 0} f(x) = \pm \infty,
-\]
+	\[
+		\lim_{x \rightarrow a - 0} f(x) = \pm \infty,
+	\]
 
-наклонную асимптоту $y = k x + b$, если
+	наклонную асимптоту $y = k x + b$, если
 
-\[
-k_{1} = \lim_{x \rightarrow + \infty} \frac{f(x)}{x} \: \mbox{или} \: k_{2} = \lim_{x \rightarrow - \infty} \frac{f(x)}{x}
-\]
+	\[
+		k_{1} = \lim_{x \rightarrow + \infty} \frac{f(x)}{x} \: \mbox{или} \: k_{2} = \lim_{x \rightarrow - \infty} \frac{f(x)}{x}
+	\]
 
-\[
-b_{1} = \lim_{x \rightarrow + \infty} \left[ f(x) - k_{1} x \right] \: \mbox{или} \: b_{2} = \lim_{x \rightarrow - \infty} \left[ f(x) - k_{2} x \right].
-\]
+	\[
+		b_{1} = \lim_{x \rightarrow + \infty} \left[ f(x) - k_{1} x \right] \: \mbox{или} \: b_{2} = \lim_{x \rightarrow - \infty} \left[ f(x) - k_{2} x \right].
+	\]
 
-\subsubsection{Графики неявно заданных функций}
+	\subsubsection{Графики неявно заданных функций}
 
 Пусть функция $y = y \left( x \right)$ определяется неявно уравнением $F \left( x, y \right) = 0$.\\
 
@@ -379,3 +379,49 @@ f(x) = \frac{a_{0}}{2} + \sum_{m = 1}^{\infty} \left( a_{m} \cos \frac{m \pi x}{
 \[
 a_{0} =  \frac{1}{l} \int_{-l}^{l} f(x) dx, \qquad a_{m} = \frac{1}{l} \int_{-l}^{l} f(x) \cos \frac{m \pi x}{l} dx, \qquad b_{m} = \frac{1}{l} \int_{-l}^{l} f(x) \sin \frac{m \pi x}{l} dx.
 \]
+
+\subsection{Приведение к каноническому виду уравнения второго порядка с двумя независимыми переменными}
+
+    Рассмотрим уравнение второго порядка с двумя независимыми переменными
+
+    \[
+        A \left( x, y \right) u_{xx} + 2 B \left( x, y \right) u_{xy} + C \left( x, y \right) u_{yy} + F \left( x, y, u, u_{x}, u_{y} \right) = 0.
+    \]
+
+    Уравнению соответствует квадратичная форма
+
+    \[
+        f \left( t_{1}, t_{2} \right) = A t^{2}_{1} + 2 B t_{1} t_{2} + C t^{2}_{2}.
+    \]
+
+    Дифференциальное уравнение принадлежит:
+    
+    \begin{enumerate}
+        \item гиперболическому типу, если $B^{2} - AC > 0$ (квадратичная форма знакопеременная);
+        \item параболическому типу, если $B^{2} - AC = 0$ (квадратичная форма знакопостоянная)
+        \item эллиптическому типу, если $B^{2} - AC < 0$ (квадратичная форма знакоопределенная)
+    \end{enumerate}
+
+    Введем вместо $\left(x, y \right)$ новые независимые переменные $\left( \xi \left( x, y \right), \eta \left( x, y \right) \right)$, причем якобиан
+
+    \[
+        \frac{D \left( \xi, \eta \right)}{D \left( x, y \right)} \neq 0
+    \]
+
+    в области $D$.
+
+    Функции $\xi \left( x, y \right)$ и $\eta \left( x, y \right)$ можно выбрать так, чтобы исходное уравнение приняло наиболее простой вид.
+
+    \subsubsection{$B^{2} - AC > 0$}
+
+        В рассматриваемой области исходное уравнение принадлежит гиперболическому типу.
+
+        Функции $\xi \left( x, y \right)$ и $\eta \left( x, y \right)$ можно найти как интегралы следующих дифференциальных уравнений
+
+        \[
+            A \frac{\partial \varphi_{1}}{\partial x} + \left( B + \sqrt{B^{2} - A C} \right) \frac{\partial \varphi_{1}}{\partial y} = 0,
+        \]
+
+        \[
+            A \frac{\partial \varphi_{2}}{\partial x} + \left( B - \sqrt{B^{2} - A C} \right) \frac{\partial \varphi_{2}}{\partial y} = 0.
+        \]
