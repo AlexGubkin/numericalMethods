@@ -1,0 +1,98 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[english,russian]{babel}
+\usepackage[OT1]{fontenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
+\author{}
+\title{\textbf{Расчет обтекания профилей NACA}}
+\date{}
+\begin{document}
+
+	\maketitle
+
+	\begin{flushright}
+
+		Подготовил: \textit{Губкин А.С}\\
+		E-mail: \textit{alexshtil@gmail.com}\\
+
+	\end{flushright}
+    
+    \textbf{Задачи обтекания} или \textbf{внешние задачи гидродинамики} -- это задачи, в  которых размеры  области  вокруг  объектов считаются бесконечными. Задачи внешней аэродинамики наиболее часто встречаются в автомобильной и аэрокосмической промышленности. Типичными  задачами  являются  задачи  определения аэродинамических  характеристик  самолетов,  ракет  и  корпусов автомобилей. Для их решения широко применяются методы математического моделирования.\\
+
+    В авиационной отрасли часто требуется найти коэффициентов подъемной силы, сопротивления и давления, соответственно:
+
+    \begin{equation}
+        C_{y} = \frac{F_{y}}{\frac{\rho_{\infty} U^{2}_{\infty} S}{2}}
+        \label{eqn:Cy_coefficient}
+    \end{equation}
+
+    \begin{equation}
+        C_{x} = \frac{F_{x}}{\frac{\rho_{\infty} U^{2}_{\infty} S}{2}}
+        \label{eqn:Cx_coefficient}
+    \end{equation}
+
+    \begin{equation}
+        C_{p} = \frac{p - p_{\infty}}{\frac{\rho_{\infty} U^{2}_{\infty}}{2}}
+        \label{eqn:Cp_coefficient}
+    \end{equation}
+
+    где $p$ -- давление на обтекаемом объекте, $p_{\infty}$ -- давление в набегающем потоке, $\rho$ -- плотность набегающего потока, $U_{\infty}$ -- скорость набегающего потока, $S$ -- характерная площадь.\\
+
+    Такого рода задачи, как правило, напрямую связаны с промышленностью и наукой и решаются большыми группами ученых и инженеров, которые работают в соответствующих институтах, лабораториях и исследовательских центрах.\\
+
+    Подобного рода организации возникали в различное время в разных странах. В Британии -- ACA, США -- NACA, в России -- ЦАГИ.\\
+
+    Национальный консультативный комитет по воздухоплаванию (англ. National Advisory Committee for Aeronautics, сокр. NACA, сокр. рус. НАКА) -- федеральное агентство США, занимавшееся проведением исследований в области авиации.\\
+
+    NACA было создано в 1915 году в связи с необходимостью координации авиационной отрасли в условиях участия США в Первой мировой войне и было реорганизовано в 1958 году в другую известную организацию: национаальное управлеание (агентство) по воздухоплааванию и исслеадованию космиаческого пространства (англ. National Aeronautics and Space Administration, сокр. NASA).\\
+
+    NASA ответственно за гражданскую космическую программу США, а также за научные исследования воздушного и космического пространств и научно-технологические исследования в области авиации, воздухоплавания и космонавтики.\\
+
+    \section*{Математическая модель}
+
+    Математическая модель для задач обтекания представляет из себя систему законов сохранения массы, импульса и энергии:
+
+    \begin{equation}
+        \begin{split}
+            &\frac{\partial \rho}{\partial t} + \vec{\nabla} \cdot \rho \vec{v} = 0,\\
+            &\frac{\partial \rho \vec{v}}{\partial t} + \vec{\nabla} \cdot \left( \rho \vec{v} \otimes \vec{v} \right) = \vec{\nabla} \cdot \sigma + \rho \vec{F},\\
+            &\frac{\partial \rho E}{\partial t} + \vec{\nabla} \cdot \rho E \vec{v} = \vec{\nabla} \cdot \left( \sigma \cdot \vec{v} - \vec{q} \right) + \rho \vec{F} \cdot \vec{v},
+        \end{split}
+        \label{eqn:MME}
+    \end{equation}
+
+    \noindent где $\rho$ -- плотность, $\vec{v}$ -- скорость, $E$ -- полная энергия, $\sigma$ -- тензор напряжений, $\vec{q}$ -- тепловой поток, $\vec{F}$ -- плотность равнодействующей внешних массовых сил.\\
+
+    Связь тензора напряжений $\sigma$ с характеристиками сплошной среды и ее движением устанавливает наука реология (от греч. $\rho \varepsilon o \varsigma$ -- течение).\\
+
+    Так, в случае движения ньютоновской несжимаемой жидкости тензор напряжений имеет вид:
+
+    \begin{equation}
+        \sigma = - p I + \mu \left( \nabla_{i} v^{j} + \nabla_{j} v^{i} \right),
+        \label{eqn:Nmedia}
+    \end{equation}
+
+    \noindent где $p$ -- давление, $\mu$ -- динамическая вязкость жидкости, $I$ -- единичный тензор. И предыдущая система преобразуется к следующему виду:
+
+    \begin{equation}
+        \begin{split}
+            &\vec{\nabla} \cdot \vec{v} = 0,\\
+            &\frac{\partial \vec{v}}{\partial t} + \vec{\nabla} \cdot \left( \vec{v} \otimes \vec{v} \right) = - \frac{1}{\rho} \vec{\nabla} p + \vec{F}.
+        \end{split}
+        \label{eqn:NS}
+    \end{equation}
+
+    \section*{Профили NACA четырехзначной серии}
+
+    Одной из задач NACA была разработка специальных крыловых профилей заданных характеристик для различных летательных аппаратов. Форма данных профилей задается с помощью кусочно-непрерывных функций содержащих некоторое количество числовых параметров параметров. Эти параметры указываются в виде числовой последовательности после слова "NACA". К примеру NACA 2412.\\
+
+    The parameters in the numerical code can be entered into equations to precisely generate the cross-section of the airfoil and calculate its properties.
+    
+    NACA 4 digit airfoil specification
+    This NACA airfoil series is controlled by 4 digits e.g. NACA 2412, which designate the camber, position of the maximum camber and thickness. If an airfoil number is
+ 
+\end{document}

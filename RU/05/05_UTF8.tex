@@ -1,0 +1,1140 @@
+\documentclass[10pt,xcolor=pst,aspectratio=169]{beamer}
+
+\usepackage{etex}
+
+%\usetheme{Boadilla}
+%\usecolortheme{wolverine}
+\usecolortheme{dolphin}
+%\setbeamercovered{transparent}
+%\setbeamercolor{block body}{bg=yellow}
+
+\addtobeamertemplate{navigation symbols}{}{%
+	\usebeamerfont{footline}%
+	\usebeamercolor[fg]{footline}%
+	\hspace{1em}%
+	\insertframenumber/\inserttotalframenumber
+}
+
+\usepackage[utf8]{inputenc}
+\usepackage[english,russian]{babel}
+\usepackage[OT1]{fontenc}
+\usepackage{amsmath, bm}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\usepackage[3D]{movie15}
+\usepackage{animate}
+\usepackage{ragged2e}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{pst-all}
+
+\usepackage{tikz}
+\usetikzlibrary{
+	mindmap,
+	arrows, % стрелки
+	shapes.misc, % фигуры
+	chains, % цепочки
+	positioning, % позиционирование элементов
+	scopes, % создание дополнительных веток
+	shadows % тени
+}
+
+\graphicspath{{pic/}}
+
+\author{\textbf{Губкин А.С.}}
+
+\title[Численные методы в физике]{Численные методы в физике}
+
+\logo{\includegraphics[width=0.1\linewidth]{LOGO_2.EPS}}
+
+\institute[ТюмФ ИТПМ СО РАН]{Тюменский филиал Института теоретической и прикладной механики\\ им. С. А. Христиановича СО РАН, г. Тюмень}
+
+%\date{6 октября 2015 г.}
+
+\begin{document}
+
+\lstset{ %
+	language=[ANSI]C++,                 % выбор языка для подсветки (здесь это С++)
+	keywordstyle=\color{blue},
+	commentstyle=\color{gray},
+	basicstyle=\scriptsize,
+%basicstyle=\small\sffamily, % размер и начертание шрифта для подсветки кода
+	numbers=left,               % где поставить нумерацию строк (слева\справа)
+	numberstyle=\tiny,           % размер шрифта для номеров строк
+%stepnumber=1,                   % размер шага между двумя номерами строк
+	numbersep=4pt,                % как далеко отстоят номера строк от подсвечиваемого кода
+%backgroundcolor=\color{white}, % цвет фона подсветки - используем \usepackage{color}
+	showspaces=false,            % показывать или нет пробелы специальными отступами
+	showstringspaces=false,      % показывать или нет пробелы в строках
+	showtabs=false,             % показывать или нет табуляцию в строках
+	frame=single,              % рисовать рамку вокруг кода
+%tabsize=2,                 % размер табуляции по умолчанию равен 2 пробелам
+	captionpos=t,              % позиция заголовка вверху [t] или внизу [b] 
+	breaklines=true,           % автоматически переносить строки (да\нет)
+	breakatwhitespace=true, % переносить строки только если есть пробел
+	escapeinside={\%*}{*)}   % если нужно добавить комментарии в коде
+}
+
+%SLIDE #1
+\begin{frame}
+
+	\transdissolve[duration=0.1]
+	\titlepage
+
+\end{frame}
+
+%SLIDE #?
+\begin{frame}{Уравнение Бюргерса и Баклея - Леверетта}
+
+	\transdissolve[duration=0.1]
+	\justifying
+	\large
+
+	Будем рассматривать уравнение Бюргерса и Баклея - Леверетта. Соответствующи потоки:
+
+	\[
+		f(u) = \frac{1}{2} u^{2},
+	\]
+
+	\[
+		f(u) = \frac{u^{2}}{u^{2} + \frac{1}{4}(1 - u^{2})^2}.
+	\]
+
+\end{frame}
+
+%SLIDE #?
+\begin{frame}{Уравнение Бюргерса и Баклея - Леверетта}
+
+	\transdissolve[duration=0.1]
+	\justifying
+	\large
+
+	Уравнение Бюргерса в консервативной форме:
+
+	\[
+		u_{t} + \left( \frac{1}{2} u^{2} \right)_{x} = 0.
+	\]
+
+	Уравнение Баклея - Леверетта в консервативной форме:
+
+	\[
+		u_{t} + \left(\frac{u^{2}}{u^{2} + \frac{1}{4}(1 - u^{2})^2} \right)_{x} = 0.
+	\]
+
+\end{frame}
+
+%SLIDE #?
+\begin{frame}{Пояснение к задаче Баклея - Леверетта}
+
+	\transdissolve[duration=0.1]
+	\justifying
+	\large
+
+	Уравнение Дарси для каждой фазы в дифференциальной форме:
+
+	\[
+		w_{1} = \frac{Q_{1}}{S} = - k \frac{k_{1}(s)}{\mu_{1}} p_{x},
+	\]
+
+	\[
+		w_{2} = \frac{Q_{2}}{S} = - k \frac{k_{2}(s)}{\mu_{2}} p_{x}.
+	\]
+
+	Предполагается, что $s = s_{1}$ (либо $s = s_{2}$).\\
+
+	Для двухфазного течения $s_{1}$ и $s_{2}$ связаны очевидным соотношением
+
+	\[
+		s_{1} + s_{2} = 1.
+	\]
+
+\end{frame}
+
+%SLIDE #?
+\begin{frame}{Пояснение к задаче Баклея - Леверетта}
+
+	\transdissolve[duration=0.1]
+	\justifying
+	\large
+
+	Уравнение неразрывности для каждой фазы:
+
+	\[
+		m s_{1t} + w_{1x} = 0,
+	\]
+
+	\[
+		m s_{2t} + w_{2x} = 0.
+	\]
+
+	Складывая уравнения неразрывности, получим:
+
+	\[
+		\left( w_{1} + w_{2} \right)_{x} = 0,
+	\]
+
+	откуда найдем интеграл:
+
+	\[
+		w_{1} + w_{2} = w(t) \: \mbox{или} \: Q_{1} + Q_{2} = Q(t).
+	\]
+
+\end{frame}
+
+%SLIDE #?
+\begin{frame}{Пояснение к задаче Баклея - Леверетта}
+
+	\transdissolve[duration=0.1]
+	\justifying
+	\large
+
+	Исключим градиент давления:
+
+	\[
+		\frac{w_{1}}{w_{2}} = \frac{k_{1}(s)}{\frac{\mu_{1}}{\mu_{2}} k_{2}(s)}.
+	\]
+
+	Используя соотношение $w_{1} + w_{2} = w(t)$, получим
+
+	\[
+		\frac{w_{1}}{w(t)} = \frac{k_{1}(s)}{k_{1}(s) + \frac{\mu_{1}}{\mu_{2}} k_{2}(s)} = f(s) \: \mbox{- функция Баклея-Леверетта}.
+	\]
+
+	Поэтому
+
+	\[
+		w_{1} = f(s) w(t) \: \mbox{и} \: w_{2} = (1 - f(s)) w(t).
+	\]
+
+\end{frame}
+
+%SLIDE #?
+\begin{frame}{Пояснение к задаче Баклея - Леверетта}
+
+	\transdissolve[duration=0.1]
+	\justifying
+	\large
+
+	Подставим последнее соотношение для $w_{1}$ в уравнение неразрывности для первой фазы, получим:
+
+	\[
+		m s_{t} + w(t) f(s)_{x} = 0.
+	\]
+
+	Для случая, когда $w(t)/m = 1$
+
+	\[
+		s_{t} + f(s)_{x} = 0.
+	\]
+
+\end{frame}
+
+%SLIDE #?
+\begin{frame}{Уравнение Бюргерса}
+
+	\transdissolve[duration=0.1]
+	\justifying
+	\large
+
+	Рассмотрим аналитическое решение уравнения Бюргерса для различных начальных условий:
+
+	\[
+		\begin{split}
+			&u_{t} + \left( \frac{1}{2} u^{2} \right)_{x} = 0, \\
+			&f(u) = \frac{1}{2} u^{2}, \\
+			&a(u) = u, \\
+			&\frac{d x}{d t} = a(u), \\
+			&x(t) = u_{0} (t - t_{0}) + x_{0}.
+		\end{split}
+	\]
+
+\end{frame}
+
+%SLIDE #?
+\begin{frame}{Начальное условие №1}
+
+	\transdissolve[duration=0.1]
+	\justifying
+	\large
+
+	\[
+		u(x,0) =
+		\begin{cases}
+			&\frac{1}{2} \qquad x = 0,\\
+			&0 \qquad x \geq 0.
+		\end{cases}
+	\]
+
+	\begin{center}
+		\psset{xunit=4cm,yunit=4cm,algebraic=true}
+		\begin{pspicture}(0,0)(2,1)
+			\psgrid[griddots=20, gridwidth=0pt, gridcolor=gray, gridlabels=0pt, subgriddiv=5, subgriddots=20, subgridcolor=gray](0,0)(0,0)(2,1)
+			\psaxes[Dx=0.2, Dy=0.2, subticks=2, labelFontSize=\scriptscriptstyle]{-}(0,0)(0,0)(2,1)[$x$,0][$u$,90]
+			\psline[linewidth=2pt, linecolor=blue]{*}(0,0.5)(0,0.5)
+			\uput[0](0,0.5){$u = \frac{1}{2}$}
+			\psplot[linewidth=2pt, linecolor=blue, yMaxValue=1, yMinValue=0]{0}{2} {0}
+		\end{pspicture}
+	\end{center}
+
+\end{frame}
+
+%SLIDE #?
+\begin{frame}{Поток уравнения Бюргерса и начальное условие}
+
+	\transdissolve[duration=0.1]
+	\justifying
+	\large
+
+	\begin{center}
+		\psset{xunit=4cm,yunit=4cm,algebraic=true}
+		\begin{pspicture}(-1,0)(1,1)
+			\psgrid[griddots=20, gridwidth=0pt, gridcolor=gray, gridlabels=0pt, subgriddiv=2, subgriddots=20, subgridcolor=gray](0,0)(-1,0)(1,1)
+			\psaxes[Dx=0.5, Dy=0.5, subticks=2, labelFontSize=\scriptscriptstyle]{->}(0,0)(-1,0)(1,1)[$u$,0][$f(u)$,90]
+			\psplot[linewidth=2pt, linecolor=blue, yMaxValue=1, yMinValue=0]{-1}{1} {x^2}
+			\psline[linewidth=2pt, linecolor=red]{o->}(0,0)(0.5,0.25)
+			\uput[-45](0,0){$u = 0$}
+			\uput[0](0.5,0.25){$u = \frac{1}{2}$}
+			\uput[0]{26.56}(0.01,0.1){разрыв} 
+		\end{pspicture}
+	\end{center}
+
+\end{frame}
+
+%SLIDE #?
+\begin{frame}{Харатеристики}
+
+	\transdissolve[duration=0.1]
+	\justifying
+	\large
+
+	Характеристики будут иметь вид:
+
+	\[
+		\frac{d x}{d t} = u \Rightarrow 
+			\begin{cases}
+				&u = u_0 =
+				\begin{cases}
+					&\frac{1}{2} \mbox{ для } t > 0 \: x > 0, \\
+					&0 \mbox{ для } x > 0 \: t > 0,
+				\end{cases} \\
+				&x(t) = u_{0} t + x_{0} \mbox{ - начинаются на оси } \: x, \\
+				&x(t) = u_{0} (t - t_{0}) \mbox{ - начинаются на оси } \: t.
+			\end{cases}
+	\]
+	\textbf{До того момента пока они не пересекутся!}
+
+\end{frame}
+
+%SLIDE #?
+\begin{frame}{Харатеристики}
+
+	\transdissolve[duration=0.1]
+	\justifying
+	\large
+
+	Интегрируя предыдущее уравнение, получим:
+
+	\[
+		x =
+		\begin{cases}
+			&\frac{1}{2} (t - t_{0}) \mbox{ для } t > 0 \: x > 0, \\
+			&x_{0} \mbox{ для } x > 0 \: t > 0. 
+		\end{cases}
+	\]
+
+\end{frame}
+
+%SLIDE #?
+\begin{frame}{Скорость распространения скачка}
+
+	\transdissolve[duration=0.1]
+	\justifying
+	\large
+
+	Раcчитаем скорость распространения скачка с помощью соотношения Ренкина - Гюгонио:
+
+	\[
+		S = \frac{[f]}{[u]} = \frac{f(u_{L}) - f(u_{R})}{u_{L} - u_{R}} = \frac{\frac{1}{2} \left( \frac{1}{2} \right)^{2} - \frac{1}{2} \left( 0 \right)^{2}}{\frac{1}{2} - 0} = \frac{1}{4}.
+	\]
+
+\end{frame}
+
+%SLIDE #?
+\begin{frame}{Аналитическое решение}
+
+	\transdissolve[duration=0.1]
+	\justifying
+	\large
+
+	Таким образом решение будет иметь следующий вид:
+
+	\[
+		u =
+		\begin{cases}
+			&\frac{1}{2}, \qquad t > 0, \qquad x > \frac{1}{4} t, \\
+			&0, \qquad t > 0, \qquad x < \frac{1}{4} t.
+		\end{cases}
+	\]
+
+	\begin{center}
+		\psset{xunit=2cm,yunit=0.25cm,algebraic=true}
+		\begin{pspicture}(0,0)(5,17)
+			\psgrid[griddots=20, gridwidth=0pt, gridcolor=gray, gridlabels=0pt, subgriddiv=2, subgriddots=20, subgridcolor=gray](0,0)(0,0)(5,17)
+			\psaxes[Dx=1, Dy=1, subticks=2, labelFontSize=\scriptscriptstyle]{->}(0,0)(0,0)(5,17)[$x$,0][$t$,90]
+
+			\psline[linewidth=2pt, linecolor=green]{o->}(0,2)(1,4)
+			\psline[linewidth=2pt, linecolor=green]{o->}(0,4)(2,8)
+			\psline[linewidth=2pt, linecolor=green]{o->}(0,6)(3,12)
+			\psline[linewidth=2pt, linecolor=green]{o->}(0,8)(4,16)
+
+			\psplot[linewidth=2pt, linecolor=blue, yMaxValue=17, yMinValue=0]{0}{4} {4*x}
+
+			\psline[linewidth=2pt, linecolor=red]{o->}(1,0)(1,4)
+			\psline[linewidth=2pt, linecolor=red]{o->}(2,0)(2,8)
+			\psline[linewidth=2pt, linecolor=red]{o->}(3,0)(3,12)
+			\psline[linewidth=2pt, linecolor=red]{o->}(4,0)(4,16)
+			\uput[0](0.5,15){$x = \frac{1}{2} (t - t_{0})$} 
+			\uput[0](4,16){$x = \frac{1}{4} t$} 
+			\uput[45]{90}(1,0){$x = 1$} 
+			\uput[45]{90}(2,0){$x = 2$} 
+			\uput[45]{90}(3,0){$x = 3$} 
+			\uput[45]{90}(4,0){$x = 4$} 
+		\end{pspicture}
+	\end{center}
+
+\end{frame}
+
+%SLIDE #?
+\begin{frame}{Аналитическое решение}
+
+	\transdissolve[duration=0.1]
+	\justifying
+	\large
+
+	\begin{center}
+		\psset{xunit=1.2cm,yunit=5cm,algebraic=true}
+		\begin{pspicture}(0,0)(8,1)
+			\psgrid[griddots=20, gridwidth=0pt, gridcolor=gray, gridlabels=0pt, subgriddiv=2, subgriddots=20, subgridcolor=gray](0,0)(0,0)(8,1)
+			\psaxes[Dx=1, Dy=0.5, subticks=2, labelFontSize=\scriptscriptstyle]{->}(0,0)(0,0)(8,1)[$x$,0][$u$,90]
+
+			\psplot[linewidth=2pt, linecolor=blue, yMaxValue=1, yMinValue=0]{0}{7} {0.5}
+			\psline[linewidth=2pt, linecolor=blue]{-}(1,0)(1,0.5)
+			\psline[linewidth=2pt, linecolor=blue]{-}(2,0)(2,0.5)
+			\psline[linewidth=2pt, linecolor=blue]{-}(3,0)(3,0.5)
+			\psline[linewidth=2pt, linecolor=blue]{-}(4,0)(4,0.5)
+			\psline[linewidth=2pt, linecolor=blue]{-}(5,0)(5,0.5)
+			\psline[linewidth=2pt, linecolor=blue]{-}(6,0)(6,0.5)
+			\psline[linewidth=2pt, linecolor=blue]{-}(7,0)(7,0.5)
+			\uput[135]{90}(1,0){$t = 4$}
+			\uput[135]{90}(2,0){$t = 8$}
+			\uput[135]{90}(3,0){$t = 12$}
+			\uput[135]{90}(4,0){$t = 16$}
+			\uput[135]{90}(5,0){$t = 20$}
+			\uput[135]{90}(6,0){$t = 24$}
+			\uput[135]{90}(7,0){$t = 28$}
+		\end{pspicture}
+	\end{center}
+
+\end{frame}
+
+%SLIDE #?
+\begin{frame}{Начальное условие №2}
+
+	\transdissolve[duration=0.1]
+	\justifying
+	\large
+
+	\[
+		u(x,0) =
+			\begin{cases}
+				&0 \qquad x < -1,\\
+				&\frac{1}{2} \qquad -1 < x < 0,\\
+				&0 \qquad x > 0.
+			\end{cases}
+	\]
+
+	\begin{center}
+		\psset{xunit=3cm,yunit=3cm,algebraic=true}
+		\begin{pspicture}(-2,0)(1,1)
+			\psgrid[griddots=20, gridwidth=0pt, gridcolor=gray, gridlabels=0pt, subgriddiv=2, subgriddots=20, subgridcolor=gray](0,0)(-2,0)(1,1)
+			\psaxes[Dx=0.5, Dy=0.5, subticks=2, labelFontSize=\scriptscriptstyle]{-}(0,0)(-2,0)(1,1)[$x$,0][$u$,90]
+
+			\psplot[linewidth=2pt, linecolor=blue, yMaxValue=1, yMinValue=0]{-2}{-1} {0}
+			\psline[linewidth=2pt, linecolor=blue]{-}(-1,0)(-1,0.5)
+			\psplot[linewidth=2pt, linecolor=blue, yMaxValue=1, yMinValue=0]{-1}{0} {0.5}
+			\psline[linewidth=2pt, linecolor=blue]{-}(0,0)(0,0.5)
+			\psplot[linewidth=2pt, linecolor=blue, yMaxValue=1, yMinValue=0]{0}{1} {0}
+			\uput[0](-0.7,0.7){$u = \frac{1}{2}$}
+		\end{pspicture}
+	\end{center}
+
+\end{frame}
+
+%SLIDE #?
+\begin{frame}{Поток уравнения Бюргерса и начальное условие}
+
+	\transdissolve[duration=0.1]
+	\justifying
+	\large
+
+	\begin{center}
+		\psset{xunit=4cm,yunit=4cm,algebraic=true}
+		\begin{pspicture}(-1,0)(1,1)
+			\psgrid[griddots=20, gridwidth=0pt, gridcolor=gray, gridlabels=0pt, subgriddiv=2, subgriddots=20, subgridcolor=gray](0,0)(-1,0)(1,1)
+			\psaxes[Dx=0.5, Dy=0.5, subticks=2, labelFontSize=\scriptscriptstyle]{->}(0,0)(-1,0)(1,1)[$u$,0][$f(u)$,90]
+			\psplot[linewidth=2pt, linecolor=blue, yMaxValue=1, yMinValue=0]{-1}{1} {x^2}
+			\psline[linewidth=2pt, linecolor=red]{o->}(0,0)(0.5,0.25)
+			\pscurve[linewidth=2pt, linecolor=red, yMaxValue=1, yMinValue=0]{->}(0.5,0.25)(0.375,0.140625)(0.25,0.0625)
+			\uput[-45](0,0){$u = 0$}
+			\uput[0](0.5,0.25){$u = \frac{1}{2}$}
+			\uput[0]{26.56}(0.01,0.1){разрыв} 
+			\uput[0]{0}(0.35,0.1){разрежение} 
+		\end{pspicture}
+	\end{center}
+ 
+\end{frame}
+
+%SLIDE #?
+\begin{frame}{Харатеристики}
+
+	\transdissolve[duration=0.1]
+	\justifying
+	\large
+
+	Уравнение характеристик будет иметь вид:
+
+	\[
+		\frac{d x}{d t} = u_{0} =
+			\begin{cases}
+				&0 \qquad x_{0} < -1,\\
+				&\frac{1}{2} \qquad -1 < x_{0} < 0,\\
+				&0 \qquad x_{0} > 0,
+			\end{cases}
+	\]
+
+	или
+
+	\[
+		\frac{d x}{d t} =
+			\begin{cases}
+				&0 \quad (u = 0) \qquad t > 0 \quad x < -1,\\
+				&\frac{1}{2} \quad (u = \frac{1}{2}) \qquad t > 0 \quad -1 < x < 0,\\
+				&0 \quad (u = 0) \qquad t > 0 \quad x > 0.
+			\end{cases}
+	\]
+
+	пока они не пересекутся.
+
+\end{frame}
+
+%SLIDE #?
+\begin{frame}{Харатеристики}
+
+	\transdissolve[duration=0.1]
+	\justifying
+	\large
+
+	Интегрируя предыдущее уравнение, получим:
+
+	\[
+		x =
+			\begin{cases}
+				&x_{0} \qquad t > 0 \quad x < -1,\\
+				&\frac{1}{2}(t - t_{0})  \qquad t > 0 \quad -1 < x < 0,\\
+				&x_{0} \qquad t > 0 \quad x > 0.
+			\end{cases}
+	\]
+
+\end{frame}
+
+%SLIDE #?
+\begin{frame}{Скорость распространения скачка}
+
+	\transdissolve[duration=0.1]
+	\justifying
+	\large
+
+	Раcчитаем скорость распространения скачка с помощью соотношения Ренкина - Гюгонио:
+
+	\[
+		S = \frac{[f]}{[u]} = \frac{f(u_{L}) - f(u_{R})}{u_{L} - u_{R}} = \frac{ \frac{1}{2} \left( \frac{1}{2} \right)^{2} - \frac{1}{2}  \left( 0 \right)^{2}}{ \frac{1}{2} - 0} = \frac{1}{4}.
+	\]
+
+	Таким образом, разрыв движется из точки $x = 0$ со скоростью $S = \frac{1}{4}$.\\
+
+	Траектория движения скачка $x_{s}(t)$  будет иметь вид:
+
+	\[
+		x_{s}(t) = 0 + \frac{1}{4} t = \frac{1}{4} t.
+	\]
+
+\end{frame}
+
+%SLIDE #?
+\begin{frame}{Веер волн разрежения}
+
+	\transdissolve[duration=0.1]
+	\justifying
+	\large
+
+	Чтобы удовлетворить энтропийному условию нужно заполнить "вакуум" между двумя семействами характеристик веером волн разрежения, который задается следующим уравнением:
+
+	\[
+		\frac{d x}{d t} = A = \frac{x + 1}{t},
+	\]
+
+	следовательно
+
+	\[
+		x + 1 = A t, \qquad 0 \leq A \leq \frac{1}{2}.
+	\]
+
+\end{frame}
+
+%SLIDE #?
+\begin{frame}{Веер волн разрежения}
+
+	\transdissolve[duration=0.1]
+	\justifying
+	\large
+
+	Волна разрежения с наклоном $A = \frac{1}{2}$ достигнет разрыв в момент времени:
+
+	\[
+		- 1 + \frac{1}{2} t = \frac{1}{4} t \Rightarrow t = 4.
+	\]
+
+	Левая часть этого уравнения представляет собой траекторию движения "хвоста" волны разрежения со значением наклона $u = \frac{1}{2}$ из точки $x = -1$, а правая - траектория движения разрыва.
+
+\end{frame}
+
+%SLIDE #?
+\begin{frame}{Аналитическое решение для $t \leq 4$}
+
+	\transdissolve[duration=0.1]
+	\justifying
+	\large
+
+	$u = 0$ для $x < -1$ и справа от траектории движения разрыва $x_{s}(t)$.\\
+
+	$u = \frac{1}{2}$ в области $\frac{1}{2} t - 1 < x < \frac{1}{4} t$.\\
+
+	Таким образом, для промежутка времени $0 \leq t \leq 4$ решение будет иметь следующий вид
+
+	\[
+		u(x, t) =
+			\begin{cases}
+				&0 \qquad x < -1\\
+				&\frac{x+1}{t} \qquad -1 < x < \frac{t}{2} - 1\\
+				&\frac{1}{2} \qquad \frac{t}{2} - 1 < x < \frac{1}{4} t\\
+				&0 \qquad \frac{1}{4} t > x
+			\end{cases}.
+	\]
+
+\end{frame}
+
+%SLIDE #?
+\begin{frame}{Траектория скачка для $t \geq 4$}
+
+	\transdissolve[duration=0.1]
+	\justifying
+	\large
+
+	Рассмотрим траекторию движения скачка когда он пересечется с волной разрежения ($t \geq 4$). Для этого приравняем скорость движения скачка к средней скорости слева и справа от него:
+
+	\[
+		\frac{d x_{s}}{d t} = \frac{1}{2} \left( u_{L} + u_{R} \right) = \frac{1}{2} \left( \frac{x + 1}{t} + 0 \right).
+	\]
+
+	Таким образом, уравнение траектории скачка для $t \geq 4$:
+
+	\[
+		\frac{d x_{s}}{d t} = \frac{x + 1}{2 t}.
+	\]
+
+\end{frame}
+
+%SLIDE #?
+\begin{frame}{Траектория скачка для $t \geq 4$}
+
+	\transdissolve[duration=0.1]
+	\justifying
+	\large
+
+	Интегрируя последнее уравнение, получаем:
+
+	\[
+		\int \frac{d x_{s}}{x_{s} + 1} = \int \frac{d t}{2 t},
+	\]
+
+	\[
+		\ln (x_{s} + 1) = \frac{1}{2} \ln (t) + \ln B,
+	\]
+
+	\[
+		x_{s} + 1 = B t^{\frac{1}{2}}.
+	\]
+
+\end{frame}
+
+%SLIDE #?
+\begin{frame}{Траектория скачка для $t \geq 4$}
+
+	\transdissolve[duration=0.1]
+	\justifying
+	\large
+
+	Найдем константу $B$: мы знаем, что в момент времени $t = 4$ траектория движения скачка имеет координату $x = 1$, таким образм, $1 + 1 = B 4^{\frac{1}{2}} \Rightarrow B = 1$. \\
+
+	Окончательно траектория движения скачка для $t \geq 4$, будет иметь вид:
+
+	\[
+		x_{s} = - 1 + t^{\frac{1}{2}}.
+	\]
+
+\end{frame}
+
+%SLIDE #?
+\begin{frame}{Аналитическое решение на характеристической плоскости}
+
+	\transdissolve[duration=0.1]
+	\justifying
+	\large
+
+	\begin{center}
+		\psset{xunit=2cm,yunit=0.25cm,algebraic=true}
+		\begin{pspicture}(-2,0)(3,16)
+			\psgrid[griddots=20, gridwidth=0pt, gridcolor=gray, gridlabels=0pt, subgriddiv=2, subgriddots=20, subgridcolor=gray](0,0)(-2,0)(3,16)
+			\psaxes[Dx=1, Dy=4, subticks=2, labelFontSize=\scriptscriptstyle]{->}(0,0)(-2,0)(3,16)[$x$,0][$t$,90]
+
+			\psline[linewidth=0.5pt, linecolor=red]{o->}(-2,0)(-2,16)
+			\psline[linewidth=0.5pt, linecolor=red]{o->}(-1.5,0)(-1.5,16)
+			\psline[linewidth=0.5pt, linecolor=red]{o->}(-1,0)(-1,16)
+
+			\psline[linewidth=0.5pt, linecolor=green]{o->}(-1,0)(-0.5,16)
+			\psline[linewidth=0.5pt, linecolor=green]{o->}(-1,0)(0,16)
+			\psline[linewidth=0.5pt, linecolor=green]{o->}(-1,0)(0.5,16)
+			\psline[linewidth=0.5pt, linecolor=green]{o->}(-1,0)(1,16)
+			\psline[linewidth=0.5pt, linecolor=green]{o->}(-1,0)(1.5,16)
+			\psline[linewidth=0.5pt, linecolor=green]{o->}(-1,0)(2,16)
+			\psline[linewidth=0.5pt, linecolor=green]{o->}(-1,0)(2.5,16)
+			\psline[linewidth=0.5pt, linecolor=green]{o->}(-1,0)(1.5,6)
+			\psline[linewidth=0.5pt, linecolor=green]{o->}(-1,0)(2,9)
+			\psline[linewidth=0.5pt, linecolor=green]{o->}(-1,0)(2.5,12.25)
+			\psline[linewidth=0.5pt, linecolor=green]{o->}(-1,0)(3,16)
+
+			\psplot[linewidth=1pt, linecolor=blue, yMaxValue=4, yMinValue=0]{-1}{1} {2*(x + 1)}
+			\psplot[linewidth=1pt, linecolor=blue, yMaxValue=4, yMinValue=0]{0}{1} {4*x}
+			\psplot[linewidth=1pt, linecolor=blue, yMaxValue=16, yMinValue=0]{1}{3} {(x + 1)^2}
+
+			\psline[linewidth=0.5pt, linecolor=red]{o->}(0.5,0)(0.5,2)
+			\psline[linewidth=0.5pt, linecolor=red]{o->}(1,0)(1,4)
+			\psline[linewidth=0.5pt, linecolor=red]{o->}(1.5,0)(1.5,6.25)
+			\psline[linewidth=0.5pt, linecolor=red]{o->}(2,0)(2,9)
+			\psline[linewidth=0.5pt, linecolor=red]{o->}(2.5,0)(2.5,12.25)
+			\psline[linewidth=0.5pt, linecolor=red]{o->}(3,0)(3,16)
+
+			\psline[linewidth=0.5pt, linecolor=black]{-}(-2,4)(3,4)
+			\uput[0](-2,6){$t = 4$} 
+
+			\uput[0](-0.5,13){веер волн разрежения} 
+			\uput[0](-2,2){$\frac{d x}{d t} = 0$}
+			\uput[0](2,2){$\frac{d x}{d t} = 0$}
+			\uput[0]{45}(2,8){$x = - 1 + t^{\frac{1}{2}}$}
+			\uput[0]{30}(0.25,0){$x = \frac{1}{4} t$}
+			\uput[0]{15}(-0.9,2){$x = \frac{1}{2} t$}
+		\end{pspicture}
+	\end{center}
+
+\end{frame}
+
+%SLIDE #?
+\begin{frame}{Уравнение Баклея - Леверетта}
+
+	\transdissolve[duration=0.1]
+	\justifying
+	\large
+	Рассмотрим уравнение Баклея - Леверетта в консервативной форме:
+	\[
+		u_{t} + \left(\frac{u^{2}}{u^{2} + \frac{1}{4}(1 - u^{2})^2} \right)_{x} = 0.
+	\]
+	Скорость распространения возмущений:
+	\[
+		\begin{split}
+			&a(u) = f'(u) = \frac{(5 u^{2} - 2 u + 1) 8 u - 4 u^{2} (10 u - 2)}{(5 u^{2} - 2 u + 1)^{2}} =\\
+			&= \frac{8 u - 8 u^{2}}{(5 u^{2} - 2 u + 1)^{2}}.
+		\end{split}
+	\]
+
+\end{frame}
+
+%SLIDE #?
+\begin{frame}{Схема к задаче Баклея - Леверетта}
+
+	\transdissolve[duration=0.1]
+	\justifying
+	\large
+
+\end{frame}
+
+%SLIDE #?
+\begin{frame}{Поток уравнения Баклея - Леверетта}
+
+	\transdissolve[duration=0.1]
+	\justifying
+	\large
+
+	\begin{center}
+		\psset{xunit=6cm,yunit=6cm,algebraic=true}
+		\begin{pspicture}(0,0)(1,1)
+			\psgrid[griddots=20, gridwidth=0pt, gridcolor=gray, gridlabels=0pt, subgriddiv=2, subgriddots=20, subgridcolor=gray](0,0)(0,0)(1,1)
+			\psaxes[Dx=0.25, Dy=0.25, subticks=2, labelFontSize=\scriptscriptstyle]{->}(0,0)(0,0)(1,1)[$u$,0][$f(u)$,90]
+			\psplot[linewidth=2pt, linecolor=blue, yMaxValue=1, yMinValue=0]{0}{1} {x^2/(x^2 + 0.25*(1 - x^2)^2)}
+			\psplot[linewidth=2pt, linecolor=red, yMaxValue=1, yMinValue=0]{0}{1} {x^2}
+
+			\uput[0]{50}(0.6,0.25){$f(u) = u^{2}$}
+			\uput[90]{60}(0.15,0.25){$f(u) = \frac{u^{2}}{u^{2} + \frac{1}{4} (1 - u^{2})^{2}}$}
+		\end{pspicture}
+	\end{center}
+ 
+\end{frame}
+
+%SLIDE #?
+\begin{frame}{Начальное условие №1}
+
+	\transdissolve[duration=0.1]
+	\justifying
+	\large
+	\[
+		u(x,0) =
+		\begin{cases}
+			&\frac{1}{2} \qquad x = 0\\
+			&0 \qquad x \geq 0
+		\end{cases}
+	\]
+
+	\begin{center}
+		\psset{xunit=4cm,yunit=4cm,algebraic=true}
+		\begin{pspicture}(0,0)(2,1)
+			\psgrid[griddots=20, gridwidth=0pt, gridcolor=gray, gridlabels=0pt, subgriddiv=5, subgriddots=20, subgridcolor=gray](0,0)(0,0)(2,1)
+			\psaxes[Dx=0.2, Dy=0.2, subticks=2, labelFontSize=\scriptscriptstyle]{-}(0,0)(0,0)(2,1)[$x$,0][$u$,90]
+			\psline[linewidth=2pt, linecolor=blue]{*}(0,0.5)(0,0.5)
+			\uput[0](0,0.5){$u = \frac{1}{2}$}
+			\psplot[linewidth=2pt, linecolor=blue, yMaxValue=1, yMinValue=0]{0}{2} {0}
+\end{pspicture}
+	\end{center}
+ 
+\end{frame}
+
+%SLIDE #?
+\begin{frame}{Поток уравнения Баклея - Леверетта и начальное условие}
+
+	\transdissolve[duration=0.1]
+	\justifying
+	\large
+
+	\begin{center}
+		\psset{xunit=6cm,yunit=6cm,algebraic=true}
+		\begin{pspicture}(0,0)(1,1)
+			\psgrid[griddots=20, gridwidth=0pt, gridcolor=gray, gridlabels=0pt, subgriddiv=2, subgriddots=20, subgridcolor=gray](0,0)(0,0)(1,1)
+			\psaxes[Dx=0.25, Dy=0.25, subticks=2, labelFontSize=\scriptscriptstyle]{->}(0,0)(0,0)(1,1)[$u$,0][$f(u)$,90]
+			\psplot[linewidth=2pt, linecolor=blue, yMaxValue=1, yMinValue=0]{0}{1} {x^2/(x^2 + 0.25*(1 - x^2)^2)}	
+			\psline[linewidth=2pt, linecolor=red]{o->}(0,0)(0.5,0.64)
+
+			\uput[-45](0,0){$u_{R} = 0$}
+			\uput[0](0.5,0.64){$u_{L} = \frac{1}{2}$}
+			\uput[0]{51}(0.1,0.25){разрыв} 
+		\end{pspicture}
+	\end{center}
+ 
+\end{frame}
+
+%SLIDE #?
+\begin{frame}{Харатеристики}
+
+	\transdissolve[duration=0.1]
+	\justifying
+	\large
+	Уравнение характеристик будет иметь вид:
+	\[
+		\frac{d x}{d t} = a(u_{0}) = \frac{8 u_{0} - 8 u_{0}^{2}}{(5 u_{0}^{2} - 2 u_{0} + 1)^{2}}.
+	\]
+	Интегрируя это уравнение, получим характеристики:
+	\[
+		x = \left( \frac{8 u_{0} - 8 u_{0}^{2}}{(5 u_{0}^{2} - 2 u_{0} + 1)^{2}} \right) t + x_{0}.
+	\]
+	Подставляя начальное условие $u_{0} = \frac{1}{2}$, получим:
+	\[
+		x = \frac{32}{25} t + x_{0}.
+	\]
+
+\end{frame}
+
+%SLIDE #?
+\begin{frame}{Харатеристики}
+
+	\transdissolve[duration=0.1]
+	\justifying
+	\large
+	Окончательно, характеристики будут иметь вид:
+	\[
+		x =
+		\begin{cases}
+			&\frac{32}{25} t + x_{0} \mbox{ для } t > 0 \: x > 0 \mbox{ (берут начало на оси) } t, \\
+			&x_{0} \mbox{ для } x > 0 \: t > 0 \mbox{ (берут начало на оси) } x. 
+		\end{cases}
+	\]
+
+\end{frame}
+
+%SLIDE #?
+\begin{frame}{Скорость распространения разрыва}
+
+	\transdissolve[duration=0.1]
+	\justifying
+	\large
+	Раcчитаем скорость распространения разрыва с помощью соотношения Ренкина - Гюгонио:
+	\[
+		S = \frac{[f]}{[u]} = \frac{f(u_{L}) - f(u_{R})}{u_{L} - u_{R}} = \frac{ \left( \frac{\frac{1}{4}}{\frac{1}{4} + \frac{1}{4} \left(1 - \frac{1}{2} \right)^{2}} \right)^{2} - 0}{\frac{1}{2} - 0} = \frac{8}{5}.
+	\]
+
+\end{frame}
+
+%SLIDE #?
+\begin{frame}{Аналитическое решение на характеристической плоскости}
+
+	\transdissolve[duration=0.1]
+	\justifying
+	\large
+	Таким образом решение будет иметь следующий вид:
+	\[
+		u =
+		\begin{cases}
+			&\frac{1}{2}, \qquad t > 0, \qquad x > \frac{8}{5} t, \\
+			&0, \qquad t > 0, \qquad x < \frac{8}{5} t.
+		\end{cases}
+	\]
+	
+	\begin{center}
+		\psset{xunit=2cm,yunit=1cm,algebraic=true}
+		\begin{pspicture}(0,0)(5,3)
+			\psgrid[griddots=20, gridwidth=0pt, gridcolor=gray, gridlabels=0pt, subgriddiv=2, subgriddots=20, subgridcolor=gray](0,0)(5,3)
+			\psaxes[Dx=1, Dy=1, subticks=2, labelFontSize=\scriptscriptstyle]{->}(0,0)(5,3)[$x$,0][$t$,90]
+
+			\psline[linewidth=2pt, linecolor=green]{o->}(0,0.15625)(1,0.625)
+			\psline[linewidth=2pt, linecolor=green]{o->}(0,0.3125)(2,1.25)
+			\psline[linewidth=2pt, linecolor=green]{o->}(0,0.46875)(3,1.875)
+			\psline[linewidth=2pt, linecolor=green]{o->}(0,0.625)(4,2.5)
+
+			\psplot[linewidth=2pt, linecolor=blue, yMaxValue=3, yMinValue=0]{0}{5} {5/8*x}
+
+			\psline[linewidth=2pt, linecolor=red]{o->}(1,0)(1,0.625)
+			\psline[linewidth=2pt, linecolor=red]{o->}(2,0)(2,1.25)
+			\psline[linewidth=2pt, linecolor=red]{o->}(3,0)(3,1.875)
+			\psline[linewidth=2pt, linecolor=red]{o->}(4,0)(4,2.5)
+			\uput[0](0.5,2.3){$x = \frac{32}{25} t + x_{0}$}
+			\uput[0](4.2,2.3){$x = \frac{8}{5} t$}
+			\uput[45]{90}(1,0){$x = 1$}
+			\uput[45]{90}(2,0){$x = 2$}
+			\uput[45]{90}(3,0){$x = 3$}
+			\uput[45]{90}(4,0){$x = 4$}
+		\end{pspicture}
+	\end{center}
+
+\end{frame}
+
+%SLIDE #?
+\begin{frame}{Аналитическое решение}
+
+	\transdissolve[duration=0.1]
+	\justifying
+	\large	
+	\begin{center}
+		\psset{xunit=1.2cm,yunit=5cm,algebraic=true}
+		\begin{pspicture}(0,0)(8,1)
+			\psgrid[griddots=20, gridwidth=0pt, gridcolor=gray, gridlabels=0pt, subgriddiv=2, subgriddots=20, subgridcolor=gray](0,0)(0,0)(8,1)
+			\psaxes[Dx=1, Dy=0.5, subticks=2, labelFontSize=\scriptscriptstyle]{->}(0,0)(0,0)(8,1)[$x$,0][$u$,90]
+
+			\psplot[linewidth=2pt, linecolor=blue, yMaxValue=1, yMinValue=0]{0}{8} {0.5}
+			\psline[linewidth=2pt, linecolor=blue]{-}(1.6,0)(1.6,0.5)
+			\psline[linewidth=2pt, linecolor=blue]{-}(3.2,0)(3.2,0.5)
+			\psline[linewidth=2pt, linecolor=blue]{-}(4.8,0)(4.8,0.5)
+			\psline[linewidth=2pt, linecolor=blue]{-}(6.4,0)(6.4,0.5)
+			\psline[linewidth=2pt, linecolor=blue]{-}(8,0)(8,0.5)
+			\uput[135]{90}(1.6,0){$x = 1.6$}
+			\uput[135]{90}(3.2,0){$x = 3.2$}
+			\uput[135]{90}(4.8,0){$x = 4.8$}
+			\uput[135]{90}(6.4,0){$x = 6.4$}
+			\uput[135]{90}(8,0){$x = 8$}
+			
+			\uput[135]{90}(1.6,0.5){$t = 1$}
+			\uput[135]{90}(3.2,0.5){$t = 2$}
+			\uput[135]{90}(4.8,0.5){$t = 3$}
+			\uput[135]{90}(6.4,0.5){$t = 4$}
+			\uput[135]{90}(8,0.5){$t = 5$}
+
+		\end{pspicture}
+	\end{center}
+
+\end{frame}
+
+%SLIDE #?
+\begin{frame}{Начальное условие №2}
+
+	\transdissolve[duration=0.1]
+	\justifying
+	\large
+	\[
+		u(x,0) =
+		\begin{cases}
+			&\frac{3}{4} \qquad x = 0\\
+			&0 \qquad x \geq 0
+		\end{cases}
+	\]
+
+	\begin{center}
+		\psset{xunit=4cm,yunit=4cm,algebraic=true}
+		\begin{pspicture}(0,0)(2,1)
+			\psgrid[griddots=20, gridwidth=0pt, gridcolor=gray, gridlabels=0pt, subgriddiv=5, subgriddots=20, subgridcolor=gray](0,0)(0,0)(2,1)
+			\psaxes[Dx=0.2, Dy=0.2, subticks=2, labelFontSize=\scriptscriptstyle]{-}(0,0)(0,0)(2,1)[$x$,0][$u$,90]
+			\psline[linewidth=2pt, linecolor=blue]{*}(0,0.75)(0,0.75)
+			\uput[0](0,0.75){$u = \frac{3}{4}$}
+			\psplot[linewidth=2pt, linecolor=blue, yMaxValue=1, yMinValue=0]{0}{2} {0}
+\end{pspicture}
+	\end{center}
+ 
+\end{frame}
+
+%SLIDE #?
+\begin{frame}{Поток уравнения Баклея - Леверетта и начальное условие}
+
+	\transdissolve[duration=0.1]
+	\justifying
+	\large
+
+	\begin{center}
+		\psset{xunit=6cm,yunit=6cm,algebraic=true}
+		\begin{pspicture}(0,0)(1,1)
+			\psgrid[griddots=20, gridwidth=0pt, gridcolor=gray, gridlabels=0pt, subgriddiv=2, subgriddots=20, subgridcolor=gray](0,0)(0,0)(1,1)
+			\psaxes[Dx=0.25, Dy=0.25, subticks=2, labelFontSize=\scriptscriptstyle]{->}(0,0)(0,0)(1,1)[$u$,0][$f(u)$,90]
+			\psplot[linewidth=2pt, linecolor=blue, yMaxValue=1, yMinValue=0]{0}{1} {x^2/(x^2 + 0.25*(1 - x^2)^2)}	
+			\psline[linewidth=2pt, linecolor=red]{o->}(0,0)(0.75,0.9216)
+
+			\uput[-45](0,0){$u_{R} = 0$}
+			\uput[0](0.75,0.9216){$u_{L} = \frac{3}{4}$}
+			\uput[0]{50}(0.1,0.25){разрыв}
+			\uput[90](0.25,0.8){!?}
+
+			\psline[linewidth=2pt, linecolor=red]{->}(0.25,0.8)(0.55,0.75)
+		\end{pspicture}
+	\end{center}
+ 
+\end{frame}
+
+%SLIDE #?
+\begin{frame}{Поток уравнения Баклея - Леверетта и начальное условие}
+
+	\transdissolve[duration=0.1]
+	\justifying
+	\large
+
+	\begin{center}
+		\psset{xunit=6cm,yunit=6cm,algebraic=true}
+		\begin{pspicture}(0,0)(1,1)
+			\psgrid[griddots=20, gridwidth=0pt, gridcolor=gray, gridlabels=0pt, subgriddiv=2, subgriddots=20, subgridcolor=gray](0,0)(0,0)(1,1)
+			\psaxes[Dx=0.25, Dy=0.25, subticks=2, labelFontSize=\scriptscriptstyle]{->}(0,0)(0,0)(1,1)[$u$,0][$f(u)$,90]
+			\psplot[linewidth=2pt, linecolor=blue, yMaxValue=1, yMinValue=0]{0}{1} {x^2/(x^2 + 0.25*(1 - x^2)^2)}	
+			\psline[linewidth=2pt, linecolor=red]{o->}(0,0)(0.617403,0.799268753)
+			\psplot[linewidth=2pt, linecolor=red, yMaxValue=1, yMinValue=0]{0.617403}{0.75} {x^2/(x^2 + 0.25*(1 - x^2)^2)}
+			\psline[linewidth=2pt, linecolor=red]{o}(0.617403,0.799268753)(0.617403,0.799268753)
+			\psline[linewidth=2pt, linecolor=red]{o}(0.75,0.9216)(0.75,0.9216)
+
+			\uput[-45](0,0){$u_{R} = 0$}
+			\uput[0](0.75,0.9216){$u_{L} = \frac{3}{4}$}
+			\uput[0](0.617403,0.799268753){$u_{T}$}
+			\uput[0]{52}(0.1,0.25){разрыв}
+			\uput[90](0.25,0.9){разрежение}
+
+			\psline[linewidth=2pt, linecolor=red]{->}(0.25,0.9)(0.65,0.85)
+		\end{pspicture}
+	\end{center}
+ 
+\end{frame}
+
+%SLIDE #?
+\begin{frame}{Волна разрежения}
+
+	\transdissolve[duration=0.1]
+	\justifying
+	\large
+	В данном случае в решение будет присутствовать волна разрежения, поскольку нельзя соединить точки $(0,0)$ и $\left( \frac{3}{4},f \left( \frac{3}{4} \right) \right)$ одной линией и удовлетворить условию энтропии.\\
+	Поэтому нужно найти точку $\left( u_{T}, f \left( u_{T} \right) \right)$ в которой наклон касательной к кривой $f(u)$ будет совпадать с наклоном прямой, соединящей точки $(0,0)$ и $\left( u_{T}, f \left( u_{T} \right) \right)$:
+	\[
+		f' \left( u_{T} \right) = \frac{f \left( u_{T} \right) - 0}{u_{T} - 0}.
+	\]
+
+\end{frame}
+
+%SLIDE #?
+\begin{frame}{Волна разрежения}
+
+	\transdissolve[duration=0.1]
+	\justifying
+	\large
+	Получим следующее нелинейное уравнение:
+	\[
+		\frac{8 u_{T} - 8 u_{T}^2}{\left( 5 u_{T}^{2} - 2 u_{T} + 1 \right)^{2}} = \frac{u_{T}}{u_{T}^{2} + \frac{1}{4} \left(1 - u_{T}^{2} \right)^{2}}.
+	\]
+	Его решение можно получить, например, с помощью метода Ньютона:
+	\[
+		\begin{split}
+			&F \left( u_{T} \right) = \frac{8 u_{T} - 8 u_{T}^2}{\left( 5 u_{T}^{2} - 2 u_{T} + 1 \right)^{2}} - \frac{u_{T}}{u_{T}^{2} + \frac{1}{4} \left(1 - u_{T}^{2} \right)^{2}},\\
+			& u_{T}^{(n + 1)} = u_{T}^{(n)} - \frac{ F \left( u_{T}^{(n)} \right)}{F' \left( u_{T}^{(n)} \right)} \Rightarrow u_{T} \approx 0.617403.
+		\end{split}
+	\]
+
+\end{frame}
+
+%SLIDE #?
+\begin{frame}{Аналитическое решение на характеристической плоскости}
+
+	\transdissolve[duration=0.1]
+	\justifying
+	\large
+
+	\begin{center}
+		\psset{xunit=2cm,yunit=2cm,algebraic=true}
+		\begin{pspicture}(0,0)(3,3)
+			\psgrid[griddots=20, gridwidth=0pt, gridcolor=gray, gridlabels=0pt, subgriddiv=2, subgriddots=20, subgridcolor=gray](0,0)(3,3)
+			\psaxes[Dx=1, Dy=1, subticks=2, labelFontSize=\scriptscriptstyle]{->}(0,0)(3,3)[$x$,0][$t$,90]
+
+			\psline[linewidth=2pt, linecolor=green]{o->}(0,0.5)(0.5,1)
+			\psline[linewidth=2pt, linecolor=green]{o->}(0,1)(1,2)
+			\psline[linewidth=2pt, linecolor=green]{o->}(0,1.5)(1.5,3)
+			\psline[linewidth=2pt, linecolor=green]{o->}(0,2)(1,3)
+			\psline[linewidth=2pt, linecolor=green]{o->}(0,2.5)(0.5,3)
+
+
+			\psplot[linewidth=2pt, linecolor=blue, yMaxValue=3, yMinValue=0]{0}{3} {2*x}
+
+			\psplot[linewidth=2pt, linecolor=yellow, yMaxValue=3, yMinValue=0]{0}{3} {1.7*x}
+			\psplot[linewidth=2pt, linecolor=yellow, yMaxValue=3, yMinValue=0]{0}{3} {1.4*x}
+			\psplot[linewidth=2pt, linecolor=yellow, yMaxValue=3, yMinValue=0]{0}{3} {1.1*x}
+			\psplot[linewidth=2pt, linecolor=yellow, yMaxValue=3, yMinValue=0]{0}{3} {0.9*x}
+
+			\psplot[linewidth=2pt, linecolor=blue, yMaxValue=3, yMinValue=0]{0}{3} {625/768*x}
+
+			\psline[linewidth=2pt, linecolor=red]{o->}(1,0)(1,0.813802083)
+			\psline[linewidth=2pt, linecolor=red]{o->}(2,0)(2,1.627604167)
+			\psline[linewidth=2pt, linecolor=red]{o->}(3,0)(3,2.44140625)
+
+			\uput[0]{50}(0.6,1){веер волн разрежения}
+			\uput[0]{40}(0.5,0.2){траектория движения разрыва}
+		\end{pspicture}
+	\end{center}
+
+\end{frame}
+
+\end{document}
