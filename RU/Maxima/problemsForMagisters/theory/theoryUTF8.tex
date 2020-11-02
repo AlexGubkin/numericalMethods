@@ -513,4 +513,49 @@
 				u_{\alpha \alpha} + u_{\beta \beta} = F_{3} \left( \alpha, \beta, u, u_{\alpha}, u_{\beta} \right).
 			\end{equation}
 
+	\subsection*{Гиперболические системы уравнений}
+
+		Пусть дана система уравнений в частных производных
+
+		\begin{equation}
+			\mathbf{U}_{t} + \mathbf{\nabla} \cdot \mathbf{F} = \mathbf{c}, \;
+			\mathbf{U} =
+			\begin{bmatrix}
+				U_{1} \\
+				U_{2} \\
+				\vdots \\
+				U_{n}
+			\end{bmatrix}, \;
+			\mathbf{F} =
+			\begin{bmatrix}
+				F_{11} & F_{12} & \ldots & F_{1m} \\
+				F_{21} & F_{22} & \ldots & F_{2m} \\
+				\vdots & \vdots & \ddots & \vdots \\
+				F_{n1} & F_{n2} & \ldots & F_{nm}
+			\end{bmatrix}, \;
+			\begin{bmatrix}
+				c_{1} \\
+				c_{2} \\
+				\vdots \\
+				c_{n}
+			\end{bmatrix},
+		\end{equation}
+
+		которую, зная определяющие уравнения $\mathbf{U} = \mathbf{U} \left( \mathbf{u}, \mathbf{x}, t \right)$, $\mathbf{F} = \mathbf{F} \left( \mathbf{u}, \mathbf{x}, t \right)$, можно записать в следующей форме
+
+		\begin{equation}
+			\tilde{A} \mathbf{u}_{t} + \sum_{j = 1}^{m} \tilde{B}_{j} \mathbf{u}_{x_{j}} = \mathbf{c},
+		\end{equation}
+
+		где $\tilde{A}$ и $\tilde{B}_{j}$ - квадратные матрицы размерности $(n \times n)$.
+
+		Если матрица $\tilde{A}$ не сингулярна, то систему можно записать в следующей форме
+
+		\begin{equation}
+			\mathbf{u}_{t} + \sum_{j = 1}^{m} \tilde{A}_{j} \mathbf{u}_{x_{j}} = \mathbf{b},
+			\label{eqn:1}
+		\end{equation}
+
+		Система (\ref{eqn:1}) называется гиперболической в точке $\left( \mathbf{x}, t, \mathbf{u} \right)$
+
 	\newpage

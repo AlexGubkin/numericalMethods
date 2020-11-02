@@ -207,4 +207,43 @@
 	
 	Необходимы знания по функциям \textbf{Maxima}: {\tt depends(), diff(), ratsimp(), fullratsimp(), subst()}.
 
+\section*{Задание №12}
+
+	Найти собственные числа и собственные векторы уравнений теории мелкой воды:
+	
+	\begin{equation}
+		\mathbf{U}_{t} + \mathbf{F}_{x} + \mathbf{G}_{x} = \mathbf{S},
+	\end{equation}
+	
+	\begin{equation}
+		\mathbf{U} =
+		\begin{bmatrix}
+			h \\
+			h u \\
+			h v
+		\end{bmatrix}, \;
+		\mathbf{F} =
+		\begin{bmatrix}
+			h u \\
+			h u^{2} + \frac{1}{2} g h^{2} \\
+			h u v
+		\end{bmatrix}, \;
+		\mathbf{G} =
+		\begin{bmatrix}
+			h v \\
+			h u v \\
+			h v^{2} + \frac{1}{2} g h^{2}
+		\end{bmatrix},
+		\mathbf{S} =
+		\begin{bmatrix}
+			0 \\
+			-g h b_{x} \\
+			-g h b_{y}
+		\end{bmatrix}.
+	\end{equation}
+	
+	Функция $b \left( x, y \right)$ описывает профиль дна.\\
+	
+	Необходимы знания по функциям \textbf{Maxima}: {\tt depends(), diff(), ratsimp(), fullratsimp(), subst()}.
+
 	\newpage

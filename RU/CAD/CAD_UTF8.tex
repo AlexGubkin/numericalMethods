@@ -1,0 +1,110 @@
+\documentclass[12pt,xcolor=pst]{beamer}
+
+\usepackage{etex}
+
+\usetheme{Boadilla}
+\usecolortheme{wolverine}
+\setbeamercovered{transparent}
+\setbeamercolor{block body}{bg=yellow}
+
+\usepackage[utf8]{inputenc}
+\usepackage[english,russian]{babel}
+\usepackage[OT1]{fontenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage[3D]{movie15}
+\usepackage{ragged2e}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{pst-all}
+
+\usepackage{tikz}
+\usetikzlibrary{
+	mindmap,
+	arrows, % стрелки
+	shapes.misc, % фигуры
+	chains, % цепочки
+	positioning, % позиционирование элементов
+	scopes, % создание дополнительных веток
+	shadows % тени
+	}
+
+\graphicspath{{pic/}}
+
+\author{\textbf{Губкин А.С.}}
+
+\title[CAD/CAE]{CAD/CAE}
+
+\logo{\includegraphics[width=0.1\linewidth]{LOGO_2.PNG}}
+
+\institute[ТюмФ ИТПМ СО РАН]{Тюменский филиал Института теоретической и прикладной механики\\ им. С. А. Христиановича СО РАН, г. Тюмень}
+
+\date{6 октября 2015 г.}
+
+\begin{document}
+
+\lstset{ %
+	language=[ANSI]C++,                 % выбор языка для подсветки (здесь это С++)
+	keywordstyle=\color{blue},
+	commentstyle=\color{gray},
+	basicstyle=\scriptsize,
+%basicstyle=\small\sffamily, % размер и начертание шрифта для подсветки кода
+	numbers=left,               % где поставить нумерацию строк (слева\справа)
+	numberstyle=\tiny,           % размер шрифта для номеров строк
+%stepnumber=1,                   % размер шага между двумя номерами строк
+	numbersep=4pt,                % как далеко отстоят номера строк от подсвечиваемого кода
+%backgroundcolor=\color{white}, % цвет фона подсветки - используем \usepackage{color}
+	showspaces=false,            % показывать или нет пробелы специальными отступами
+	showstringspaces=false,      % показывать или нет пробелы в строках
+	showtabs=false,             % показывать или нет табуляцию в строках
+	frame=single,              % рисовать рамку вокруг кода
+%tabsize=2,                 % размер табуляции по умолчанию равен 2 пробелам
+	captionpos=t,              % позиция заголовка вверху [t] или внизу [b] 
+	breaklines=true,           % автоматически переносить строки (да\нет)
+	breakatwhitespace=true, % переносить строки только если есть пробел
+	escapeinside={\%*}{*)}   % если нужно добавить комментарии в коде
+}
+
+%SLIDE #1
+\begin{frame}
+
+	\transdissolve[duration=0.1]
+	\titlepage
+
+\end{frame}
+
+%SLIDE #?
+\begin{frame}{CAD}
+
+	\transdissolve[duration=0.1]
+	\justifying
+	\large
+	\textbf{Computer-aided drafting (CAD)} is the use of computer systems to aid in the creation, modification, analysis, or optimization of a design. CAD software is used to increase the productivity of the designer, improve the quality of design, improve communications through documentation, and to create a database for manufacturing. CAD output is often in the form of electronic files for print, machining, or other manufacturing operations. The term CADD, (for Computer Aided Design and Drafting) is also used.
+	
+	\begin{flushright}
+
+		\textit{Wikipedia}
+
+	\end{flushright}
+
+\end{frame}
+
+%SLIDE #?
+\begin{frame}{CAE}
+
+	\transdissolve[duration=0.1]
+	\justifying
+	\large
+	\textbf{Computer-aided engineering (CAE)} is the broad usage of computer software to aid in engineering analysis tasks. It includes Finite Element Analysis (FEA), Computational Fluid Dynamics (CFD), Multibody dynamics (MBD), and optimization.
+	
+	\begin{flushright}
+
+		\textit{Wikipedia}
+
+	\end{flushright}
+
+\end{frame}
+
+\end{document}
