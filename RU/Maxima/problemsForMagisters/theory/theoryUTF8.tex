@@ -554,16 +554,18 @@
 		Если матрица $\tilde{A}$ не сингулярна, то систему можно записать в следующей форме
 
 		\begin{equation}
-			\mathbf{u}_{t} + \sum_{j = 1}^{m} \tilde{A}_{j} \mathbf{u}_{x_{j}} = \mathbf{b},
+			\mathbf{u}_{t} + \sum_{j = 1}^{m} A_{j} \mathbf{u}_{x_{j}} = \mathbf{b},
 			\label{eqn:1}
 		\end{equation}
 
-		Система (\ref{eqn:1}) называется гиперболической в точке $\left( \mathbf{x}, t, \mathbf{u} \right)$ если задача на собственные числа и на собственные векторы для матрицы $\mathbf{P} = \sum_{j = 1}^{m} \alpha_{j} \tilde{A}_{j}$
+		где $A_{j} = \tilde{A}^{-1} \tilde{B}_{j}$.
+
+		Система (\ref{eqn:1}) называется гиперболической в точке $\left( \mathbf{x}, t, \mathbf{u} \right)$ если задача на собственные числа и векторы для матрицы $\mathbf{P} = \sum_{j = 1}^{m} \alpha_{j} A_{j}$
 		
 		\begin{equation}
 			\left( \mathbf{P} - \lambda_{k} \mathbf{I} \right) \cdot \mathbf{r}^{k} = 0
 		\end{equation}
 		
-		имеет решение, причем все собственные числа $\lambda_{k}$ вещественны и из правых собственных векторов $ \mathbf{r}^{k}$ можно составить базис в $\mathbf{E}^{n} \left( \mathbf{u} \right)$.
+		имеет нетривиальное решение, причем все собственные числа $\lambda_{k}$ вещественны и из правых собственных векторов $ \mathbf{r}^{k}$ можно составить базис в $\mathbf{E}^{n} \left( \mathbf{u} \right)$.
 
 		\newpage
